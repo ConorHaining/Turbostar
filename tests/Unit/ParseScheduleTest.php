@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Console\Commands\ParseSchedule;
+use Carbon\Carbon;
 
 class ParseScheduleTest extends TestCase
 {
@@ -23,10 +24,13 @@ class ParseScheduleTest extends TestCase
 
     public function testFullFileDownload()
     {
-      
+
       self::$command->downloadFullFile();
 
-      $this->assertFileExists(__DIR__.'/ParseScheduleTestTemp/file.gz2', "SCHEDULE should exist");
+      $date = Carbon::today();
+      $date = $date->format('Y-m-d');
+
+      $this->assertFileExists(__DIR__.'/ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
 
     }
 

@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use Carbon\Carbon;
+
 class ParseSchedule extends Command
 {
     /**
@@ -49,7 +51,7 @@ class ParseSchedule extends Command
      public function downloadFullFile()
      {
        $fileURL = env("NR_FULL_SCHEDULE_URL");
-       $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . "file.gz2";
+       $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
 
        $fileHandler = fopen($fileLocalPath, "w+");
 
@@ -58,4 +60,16 @@ class ParseSchedule extends Command
        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
        curl_exec($curl);
      }
+
+     /**
+      * Create SCHEDULE filename of the format YYYY-MM-DD
+      *
+      * @return string
+      */
+      private function formatFilename()
+      {
+        $date = Carbon::today();
+
+        return $date->format('Y-m-d');
+      }
 }
