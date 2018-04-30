@@ -34,11 +34,17 @@ class ParseScheduleTest extends TestCase
 
     }
 
-    // public function testDailyFileDownload()
-    // {
-    //   // run function
-    //   // asset file is created
-    // }
+    public function testDailyFileDownload()
+    {
+
+      self::$command->downloadDailyFile();
+
+      $date = Carbon::today();
+      $date = $date->format('Y-m-d');
+
+      $this->assertFileExists(__DIR__.'/ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
+
+    }
 
     public function tearDown()
     {

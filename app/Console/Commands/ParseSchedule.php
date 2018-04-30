@@ -62,6 +62,25 @@ class ParseSchedule extends Command
      }
 
      /**
+      * Download the daily SCHEDULE file and store it
+      *
+      * @see https://wiki.openraildata.com/index.php/SCHEDULE
+      * @return void
+      */
+      public function downloadDailyFile()
+      {
+        $fileURL = env("NR_DAILY_SCHEDULE_URL");
+        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
+
+        $fileHandler = fopen($fileLocalPath, "w+");
+
+        $curl = curl_init($fileURL);
+        curl_setopt($curl, CURLOPT_FILE, $fileHandler);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_exec($curl);
+      }
+
+     /**
       * Create SCHEDULE filename of the format YYYY-MM-DD
       *
       * @return string
