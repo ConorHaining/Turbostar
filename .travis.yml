@@ -9,4 +9,12 @@ before_script:
   - composer install --no-interaction
 
 script:
-- ./vendor/bin/phpunit
+- ./vendor/bin/phpunit --testdox
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      - jdmc-team:PLAjCONQPBv9xHabM1fAQ4RT
+    on_success: always # default: always
+    on_failure: always # default: always
