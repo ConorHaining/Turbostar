@@ -10,6 +10,7 @@ use App\Console\Commands\ParseSchedule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\ScheduleCreate;
+use App\Jobs\AssociationCreate;
 
 class ParseScheduleTest extends TestCase
 {
@@ -99,6 +100,41 @@ class ParseScheduleTest extends TestCase
 
       Queue::assertNotPushed('schedule-create');
       Queue::assertNotPushed('schedule-delete');
+    }
+
+    public function testCreateAssociation()
+    {
+      Queue::fake();
+
+      $association = '{"JsonAssociationV1":{"transaction_type":"Create"}}';
+
+      self::$command->queueAssociation($association);
+
+      Queue::assertPushedOn('association-create', AssociationCreate::class);
+    }
+
+    public function testDeleteAssociation()
+    {
+      Queue::fake();
+
+      $association = '{"JsonAssociationV1":{"transaction_type":"Delete"}}';
+
+      self::$command->queueAssociation($association);
+
+      Queue::assertPushedOn('association-delete', AssociationCreate::class);
+    }
+
+    public function testInvalidAssociation()
+    {
+      Queue::fake();
+
+      $association = '{"JsonAssociationV1":{"transaction_type":"Invalid"}}';
+
+      $this->expectException(\Exception::class);
+      self::$command->queueAssociation($association);
+
+      Queue::assertNotPushed('association-create');
+      Queue::assertNotPushed('association-delete');
     }
 
     public function tearDown()

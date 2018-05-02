@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\ScheduleCreate;
+use App\Jobs\AssociationCreate;
 
 class ParseSchedule extends Command
 {
@@ -137,8 +138,34 @@ class ParseSchedule extends Command
           } else {
 
             throw new \Exception("Unknown Schedule Transaction Type", 1);
-            // TODO Log this if it ever happens 
+            // TODO Log this if it ever happens
           }
 
         }
+
+        /**
+         *
+         *
+         *
+         *
+         */
+         public function queueAssociation($payload)
+         {
+           $associationJSON = json_decode($payload);
+           $associationJSON =  $associationJSON->JsonAssociationV1;
+           if ($associationJSON->transaction_type == "Create") {
+
+             AssociationCreate::dispatch($associationJSON)->onQueue('association-create');
+
+           } else if ($associationJSON->transaction_type == "Delete") {
+
+             AssociationCreate::dispatch($associationJSON)->onQueue('association-delete');
+
+           } else {
+
+             throw new \Exception("Unknown Schedule Transaction Type", 1);
+             // TODO Log this if it ever happens
+           }
+
+         }
 }
