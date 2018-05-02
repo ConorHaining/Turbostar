@@ -7,7 +7,7 @@ php:
   - 7.2
 
 before_script:
-  - pecl install mongo
+  - pecl install mongodb
   - composer self-update
   - composer install --no-interaction
   - mongo < tests/build/travis-mongo-setup.js
