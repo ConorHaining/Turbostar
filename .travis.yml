@@ -1,5 +1,7 @@
 language: php
 
+services: mongodb
+
 php:
   - 7.1
   - 7.2
@@ -7,6 +9,8 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - mongo < tests/build/travis-mongo-setup.js
+
 
 script:
 - ./vendor/bin/phpunit --testdox
