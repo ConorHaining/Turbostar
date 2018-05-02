@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Console\Commands\ParseSchedule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\ScheduleCreate;
 
 class ParseScheduleTest extends TestCase
 {
@@ -62,6 +64,41 @@ class ParseScheduleTest extends TestCase
       $doesHeaderExist = self::$command->isHeaderValid($header);
 
       $this->assertFalse($doesHeaderExist, "This header shouldn't exist in the database");
+    }
+
+    public function testCreateSchedule()
+    {
+      Queue::fake();
+
+      $schedule = '{"JsonScheduleV1":{"transaction_type":"Create"}}';
+
+      self::$command->queueSchedule($schedule);
+
+      Queue::assertPushedOn('schedule-create', ScheduleCreate::class);
+    }
+
+    public function testDeleteSchedule()
+    {
+      Queue::fake();
+
+      $schedule = '{"JsonScheduleV1":{"transaction_type":"Delete"}}';
+
+      self::$command->queueSchedule($schedule);
+
+      Queue::assertPushedOn('schedule-delete', ScheduleCreate::class);
+    }
+
+    public function testInvalidSchedule()
+    {
+      Queue::fake();
+
+      $schedule = '{"JsonScheduleV1":{"transaction_type":"Invalid"}}';
+
+      $this->expectException(\Exception::class);
+      self::$command->queueSchedule($schedule);
+
+      Queue::assertNotPushed('schedule-create');
+      Queue::assertNotPushed('schedule-delete');
     }
 
     public function tearDown()

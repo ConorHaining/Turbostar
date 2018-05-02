@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\ScheduleCreate;
 
 class ParseSchedule extends Command
 {
@@ -114,4 +115,30 @@ class ParseSchedule extends Command
          }
 
        }
+
+       /**
+        *
+        *
+        *
+        *
+        */
+        public function queueSchedule($payload)
+        {
+          $scheduleJSON = json_decode($payload);
+          $scheduleJSON =  $scheduleJSON->JsonScheduleV1;
+          if ($scheduleJSON->transaction_type == "Create") {
+
+            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-create');
+
+          } else if ($scheduleJSON->transaction_type == "Delete") {
+
+            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-delete');
+
+          } else {
+
+            throw new \Exception("Unknown Schedule Transaction Type", 1);
+            // TODO Log this if it ever happens 
+          }
+
+        }
 }
