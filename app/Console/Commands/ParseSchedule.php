@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ParseSchedule extends Command
 {
@@ -91,4 +92,26 @@ class ParseSchedule extends Command
 
         return $date->format('Y-m-d');
       }
+
+      /**
+       * Check if the header for the SCHEDULE has already been downloaded
+       *
+       * @return boolean
+       */
+       public function isHeaderValid(string $header)
+       {
+
+         $json = json_decode($header);
+
+         $sequenceNumber = $json->JsonTimetableV1->Metadata->sequence;
+
+         $sequenceQuery = DB::collection('header')->where('sequence', $sequenceNumber)->first();
+
+         if (is_null($sequenceQuery)) {
+           return true;
+         } else {
+           return false;
+         }
+
+       }
 }
