@@ -23,7 +23,7 @@ class ParseScheduleTest extends TestCase
 
       self::$command = new ParseSchedule();
 
-      mkdir(__DIR__.'/ParseScheduleTestTemp');
+      mkdir(__DIR__.'/../ParseScheduleTestTemp');
     }
 
     public function testFullFileDownload()
@@ -34,7 +34,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
+      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
 
     }
 
@@ -46,7 +46,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
+      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
 
     }
 
@@ -189,6 +189,6 @@ class ParseScheduleTest extends TestCase
     {
         parent::tearDown();
 
-        exec('rm -rf '.__DIR__.'/ParseScheduleTestTemp');
+        exec('rm -rf '.__DIR__.'/../ParseScheduleTestTemp');
     }
 }
