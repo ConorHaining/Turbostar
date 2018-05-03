@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\ScheduleCreate;
 use App\Jobs\AssociationCreate;
+use App\Jobs\TiplocCreate;
 
 class ParseScheduleTest extends TestCase
 {
@@ -135,6 +136,53 @@ class ParseScheduleTest extends TestCase
 
       Queue::assertNotPushed('association-create');
       Queue::assertNotPushed('association-delete');
+    }
+
+    public function testCreateTiploc()
+    {
+      Queue::fake();
+
+      $tiploc = '{"TiplocV1":{"transaction_type":"Create"}}';
+
+      self::$command->queueTiploc($tiploc);
+
+      Queue::assertPushedOn('tiploc-create', TiplocCreate::class);
+    }
+
+    public function testDeleteTipcloc()
+    {
+      Queue::fake();
+
+      $tiploc = '{"TiplocV1":{"transaction_type":"Delete"}}';
+
+      self::$command->queueTiploc($tiploc);
+
+      Queue::assertPushedOn('tiploc-delete', TiplocCreate::class);
+    }
+
+    public function testUpdateTipcloc()
+    {
+      Queue::fake();
+
+      $tiploc = '{"TiplocV1":{"transaction_type":"Update"}}';
+
+      self::$command->queueTiploc($tiploc);
+
+      Queue::assertPushedOn('tiploc-update', TiplocCreate::class);
+    }
+
+    public function testInvalidTiploc()
+    {
+      Queue::fake();
+
+      $tiploc = '{"TiplocV1":{"transaction_type":"Invalid"}}';
+
+      $this->expectException(\Exception::class);
+      self::$command->queueTiploc($tiploc);
+
+      Queue::assertNotPushed('tiploc-create');
+      Queue::assertNotPushed('tiploc-delete');
+      Queue::assertNotPushed('tiploc-update');
     }
 
     public function tearDown()
