@@ -6,6 +6,9 @@ use Illuminate\Console\Command;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\ScheduleCreate;
+use App\Jobs\AssociationCreate;
+use App\Jobs\TiplocCreate;
 
 class ParseSchedule extends Command
 {
@@ -14,14 +17,14 @@ class ParseSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'parse:schedule {--full}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Downloads and queues the daily Schedule file from Network Rail';
 
     /**
      * Create a new command instance.
@@ -114,4 +117,80 @@ class ParseSchedule extends Command
          }
 
        }
+
+       /**
+        *
+        *
+        *
+        *
+        */
+        public function queueSchedule($payload)
+        {
+          $scheduleJSON = json_decode($payload);
+          $scheduleJSON =  $scheduleJSON->JsonScheduleV1;
+          if ($scheduleJSON->transaction_type == "Create") {
+
+            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-create');
+
+          } else if ($scheduleJSON->transaction_type == "Delete") {
+
+            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-delete');
+
+          } else {
+
+            throw new \Exception("Unknown Schedule Transaction Type", 1);
+            // TODO Log this if it ever happens
+          }
+
+        }
+
+        /**
+         *
+         *
+         *
+         *
+         */
+         public function queueAssociation($payload)
+         {
+           $associationJSON = json_decode($payload);
+           $associationJSON =  $associationJSON->JsonAssociationV1;
+           if ($associationJSON->transaction_type == "Create") {
+
+             AssociationCreate::dispatch($associationJSON)->onQueue('association-create');
+
+           } else if ($associationJSON->transaction_type == "Delete") {
+
+             AssociationCreate::dispatch($associationJSON)->onQueue('association-delete');
+
+           } else {
+
+             throw new \Exception("Unknown Association Transaction Type", 1);
+             // TODO Log this if it ever happens
+           }
+
+         }
+
+         public function queueTiploc($payload)
+         {
+           $tiplocJSON = json_decode($payload);
+           $tiplocJSON =  $tiplocJSON->TiplocV1;
+           if ($tiplocJSON->transaction_type == "Create") {
+
+             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-create');
+
+           } else if ($tiplocJSON->transaction_type == "Delete") {
+
+             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-delete');
+
+           } else if ($tiplocJSON->transaction_type == "Update") {
+
+             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-update');
+
+           } else {
+
+             throw new \Exception("Unknown Tiploc Transaction Type", 1);
+             // TODO Log this if it ever happens
+           }
+
+         }
 }
