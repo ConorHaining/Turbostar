@@ -17,14 +17,14 @@ class ParseSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'parse:schedule {--full}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Downloads and queues the daily Schedule file from Network Rail';
 
     /**
      * Create a new command instance.
