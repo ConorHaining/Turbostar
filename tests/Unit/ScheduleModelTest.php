@@ -50,4 +50,34 @@ class ScheduleModelTest extends TestCase
 
     }
 
+    public function testSetBankHolidayRunningValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setBankHolidayRunningAttribute'),  'Class does not have setBankHolidayRunningAttribute method');
+
+      $bankholidayRunning = "X";
+
+      $schedule->bank_holiday_running = $bankholidayRunning;
+      
+      $this->assertEquals($bankholidayRunning, $schedule->bank_holiday_running);
+
+      $schedule = new ScheduleModel();
+
+      $bankholidayRunning = "G";
+
+      $schedule->bank_holiday_running = $bankholidayRunning;
+
+      $this->assertEquals($bankholidayRunning, $schedule->bank_holiday_running);
+    }
+
+    public function testSetBankHolidayRunningInvalid()
+    {
+      $schedule = new ScheduleModel();
+
+      $bankholidayRunning = "invalid";
+
+      $schedule->bank_holiday_running = $bankholidayRunning;
+
+      $this->assertTrue($schedule->fails_validation, "Fails for invalid character");
+    }
 }

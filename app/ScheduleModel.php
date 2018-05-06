@@ -78,4 +78,31 @@ class ScheduleModel extends Model
      $this->attributes['running_days'] = $runningDays;
    }
 
+   /**
+    * A mutator to validate bank holiday runnings of schedules.
+    * They should only contain 'X and 'G'.
+    *
+    * @param string $bankholidayRunning
+    * @return void
+    */
+    public function setBankHolidayRunningAttribute($bankholidayRunning)
+    {
+
+      if ($bankholidayRunning == null) {
+
+        $this->attributes['bank_holiday_running'] = null;
+
+      } else if ($bankholidayRunning != 'G' && $bankholidayRunning != 'X') {
+
+        $this->attributes['fails_validation'] = true;
+        return;
+
+      } else {
+
+        $this->attributes['bank_holiday_running'] = $bankholidayRunning;
+
+      }
+
+    }
+
 }
