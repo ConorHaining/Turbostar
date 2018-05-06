@@ -62,19 +62,18 @@ class ScheduleModel extends Model
    *
    *
    */
-   public function setRunningDays($runningDays)
+   public function setRunningDaysAttribute($runningDays)
    {
 
      preg_match('/(0|1)*/', $runningDays, $characterCheck);
 
      if( strlen($runningDays) != 7 || in_array("", $characterCheck))
      {
-       return false;
+       $this->attributes['fails_validation'] = true;
+       return;
      }
 
-     $this->running_days = $runningDays;
-
-    return true;
+     $this->attributes['running_days'] = $runningDays;
    }
 
 }

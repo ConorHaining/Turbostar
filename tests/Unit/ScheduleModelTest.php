@@ -16,10 +16,9 @@ class ScheduleModelTest extends TestCase
 
       $runningDays = "0100101";
 
-      $result = $schedule->setRunningDays($runningDays);
+      $schedule->running_days = $runningDays;
 
-      $this->assertTrue($result);
-      $this->assertEquals($schedule->running_days, $runningDays);
+      $this->assertEquals($runningDays, $schedule->running_days);
     }
 
     public function testSetRunningDaysInvalid()
@@ -28,25 +27,25 @@ class ScheduleModelTest extends TestCase
 
       $runningDays = "010010"; // Too few characters
 
-      $result = $schedule->setRunningDays($runningDays);
+      $schedule->running_days = $runningDays;
 
-      $this->assertFalse($result, "Fails for too few characters");
+      $this->assertTrue($schedule->fails_validation, "Fails for too few characters");
 
       $schedule = new ScheduleModel();
 
       $runningDays = "abc1234"; // Invalid characters but valid length
 
-      $result = $schedule->setRunningDays($runningDays);
+      $schedule->running_days = $runningDays;
 
-      $this->assertFalse($result, "Fails for invalid characters but valid length");
+      $this->assertTrue($schedule->fails_validation, "Fails for invalid characters but valid length");
 
       $schedule = new ScheduleModel();
 
       $runningDays = "abc101"; // Invalid characters and invlaid length
 
-      $result = $schedule->setRunningDays($runningDays);
+      $schedule->running_days = $runningDays;
 
-      $this->assertFalse($result, "Fails for invalid characters and invalid length");
+      $this->assertTrue($schedule->fails_validation, "Fails for invalid characters and invalid length");
 
     }
 
