@@ -13,6 +13,7 @@ class ScheduleModelTest extends TestCase
     public function testSetRunningDaysValid()
     {
       $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setRunningDaysAttribute'),  'Class does not have setRunningDaysAttribute method');
 
       $runningDays = "0100101";
 
