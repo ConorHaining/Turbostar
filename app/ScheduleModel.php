@@ -58,9 +58,11 @@ class ScheduleModel extends Model
   ];
 
   /**
+   * A mutator to validate the running days of a schedule.
+   * It should be 7 characters long and only contain '0's and '1's
    *
-   *
-   *
+   * @param string $runningDays
+   * @return void
    */
    public function setRunningDaysAttribute($runningDays)
    {
