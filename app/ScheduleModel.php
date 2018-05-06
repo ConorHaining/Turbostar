@@ -41,7 +41,7 @@ class ScheduleModel extends Model
      */
   protected $guarded = [
     'running_days',
-    'bank_running',
+    'bank_holiday_running',
     'train_status',
     'train_category',
     'power_type',
