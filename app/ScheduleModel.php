@@ -57,4 +57,24 @@ class ScheduleModel extends Model
     'applicable_timetable',
   ];
 
+  /**
+   *
+   *
+   *
+   */
+   public function setRunningDays($runningDays)
+   {
+
+     preg_match('/(0|1)*/', $runningDays, $characterCheck);
+
+     if( strlen($runningDays) != 7 || in_array("", $characterCheck))
+     {
+       return false;
+     }
+
+     $this->running_days = $runningDays;
+
+    return true;
+   }
+
 }
