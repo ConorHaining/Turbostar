@@ -206,4 +206,21 @@ class ScheduleModel extends Model
 
           }
         }
+
+        public function setTrainClassAttribute($trainClass)
+        {
+          $validValues = ['B', null, 'S'];
+
+          if (in_array($trainClass, $validValues)) {
+
+            $this->attributes['train_class'] = $trainClass;
+
+          } else {
+
+            $this->attributes['fails_validation'] = true;
+
+          }
+
+
+        }
 }

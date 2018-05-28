@@ -221,6 +221,43 @@ class ScheduleModelTest extends TestCase
 
       }
 
+    }
+
+    public function testSetTrainClassValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setTrainClassAttribute'),  'Class does not have setTrainClassAttribute method');
+
+      $validValues = ['B', null, 'S'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->train_class = $value;
+
+        $this->assertEquals($value, $schedule->train_class, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetTrainClassInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setTrainClassAttribute'),  'Class does not have setTrainClassAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->train_class = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
 
     }
 }
