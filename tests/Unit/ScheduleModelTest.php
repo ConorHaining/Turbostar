@@ -488,4 +488,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetApplicableTimetableValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setApplicableTimetableAttribute'),  'Class does not have setApplicableTimetableAttribute method');
+
+      $validValues = ['Y', 'N'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->applicable_timetable = $value;
+
+        $this->assertEquals($value, $schedule->applicable_timetable, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetApplicableTimetableInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setApplicableTimetableAttribute'),  'Class does not have setApplicableTimetableAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->applicable_timetable = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }

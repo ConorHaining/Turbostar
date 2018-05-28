@@ -361,4 +361,26 @@ class ScheduleModel extends Model
              }
 
            }
+
+           /**
+            * A mutator to validate the applicable timetable
+            *
+            * @param string $applicableTimetable
+            * @return void
+            */
+            public function setApplicableTimetableAttribute($applicableTimetable)
+            {
+              $validValues = ['Y', 'N'];
+
+              if (in_array($applicableTimetable, $validValues)) {
+
+                $this->attributes['applicable_timetable'] = $applicableTimetable;
+
+              } else {
+
+                $this->attributes['fails_validation'] = true;
+
+              }
+
+            }
 }
