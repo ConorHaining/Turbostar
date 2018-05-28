@@ -450,4 +450,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetAtocCodeValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setAtocCodeAttribute'),  'Class does not have setAtocCodeAttribute method');
+
+      $validValues = ['AR','NT','AW','CC','CS','CH','XC','ZZ','EM','ES','FC','HT','GX','ZZ','GN','TL','GC','LN','GW','LE','HC','HX','IL','LS','LM','LO','LT','LT','LT','ME','LR','TW','NY','SR','SW','SJ','SE','SN','SP','XR','TP','VT','GR','WR'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->atoc_code = $value;
+
+        $this->assertEquals($value, $schedule->atoc_code, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetAtocCodeInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setAtocCodeAttribute'),  'Class does not have setAtocCodeAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->atoc_code = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }

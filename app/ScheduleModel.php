@@ -339,4 +339,26 @@ class ScheduleModel extends Model
             }
 
           }
+
+          /**
+           * A mutator to validate the atoc code
+           *
+           * @param string $atocCode
+           * @return void
+           */
+           public function setAtocCodeAttribute($atocCode)
+           {
+             $validValues = ['AR','NT','AW','CC','CS','CH','XC','ZZ','EM','ES','FC','HT','GX','ZZ','GN','TL','GC','LN','GW','LE','HC','HX','IL','LS','LM','LO','LT','LT','LT','ME','LR','TW','NY','SR','SW','SJ','SE','SN','SP','XR','TP','VT','GR','WR'];
+
+             if (in_array($atocCode, $validValues)) {
+
+               $this->attributes['atoc_code'] = $atocCode;
+
+             } else {
+
+               $this->attributes['fails_validation'] = true;
+
+             }
+
+           }
 }
