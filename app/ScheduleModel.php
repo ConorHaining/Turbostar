@@ -224,10 +224,10 @@ class ScheduleModel extends Model
         }
 
         /**
+        * A mutator to validate sleeper
         *
-        *
-        *
-        *
+        * @param string $sleeper
+        * @return void
         */
         public function setSleepersAttribute($sleeper)
         {
@@ -236,6 +236,27 @@ class ScheduleModel extends Model
           if (in_array($sleeper, $validValues)) {
 
             $this->attributes['sleepers'] = $sleeper;
+
+          } else {
+
+            $this->attributes['fails_validation'] = true;
+
+          }
+        }
+
+        /**
+        * A mutator to validate reservations
+        *
+        * @param string $sleeper
+        * @return void
+        */
+        public function setReservationsAttribute($reservations)
+        {
+          $validValues = ['A', 'E', 'R', 'S'];
+
+          if (in_array($reservations, $validValues)) {
+
+            $this->attributes['reservations'] = $reservations;
 
           } else {
 

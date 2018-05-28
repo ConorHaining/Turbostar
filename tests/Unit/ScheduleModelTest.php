@@ -298,4 +298,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetReservationsValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setReservationsAttribute'),  'Class does not have setReservationsAttribute method');
+
+      $validValues = ['A', 'E', 'R', 'S'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->reservations = $value;
+
+        $this->assertEquals($value, $schedule->reservations, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetReservationsInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setReservationsAttribute'),  'Class does not have setReservationsAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->reservations = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }
