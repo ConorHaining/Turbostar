@@ -336,4 +336,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetCateringCodeValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setCateringCodeAttribute'),  'Class does not have setCateringCodeAttribute method');
+
+      $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T', 'CH', 'MP', 'RT'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->catering_code = $value;
+
+        $this->assertEquals($value, $schedule->catering_code, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetCateringCodeInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setCateringCodeAttribute'),  'Class does not have setCateringCodeAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->catering_code = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }

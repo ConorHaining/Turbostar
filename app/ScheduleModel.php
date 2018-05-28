@@ -264,4 +264,35 @@ class ScheduleModel extends Model
 
           }
         }
+
+        /**
+        * A mutator to validate reservations
+        *
+        * @param string $sleeper
+        * @return void
+        */
+        public function setCateringCodeAttribute($cateringCode)
+        {
+          $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T'];
+
+          $cateringCode = str_split($cateringCode);
+
+          // Empty value to allow for concatenation below
+          $this->attributes['catering_code'] = "";
+
+          foreach ($cateringCode as $value) {
+
+            if (in_array($value, $validValues)) {
+
+              $this->attributes['catering_code'] .= $value;
+
+            } else {
+
+              $this->attributes['fails_validation'] = true;
+
+            }
+
+          }
+
+        }
 }
