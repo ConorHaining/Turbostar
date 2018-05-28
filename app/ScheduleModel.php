@@ -105,4 +105,28 @@ class ScheduleModel extends Model
 
     }
 
+    /**
+     * A mutator to validate train status and ensure it is
+     * from a valid list.
+     *
+     * @param string $trainStatus
+     * @return void
+     * @see https://wiki.openraildata.com/index.php/CIF_Codes#Train_Status
+     */
+     public function setTrainStatusAttribute($trainStatus)
+     {
+       $validValues = ['B', 'F', 'P', 'S', 'T', '1', '2', '3', '4', '5'];
+
+       if (in_array($trainStatus, $validValues)) {
+
+         $this->attributes['train_status'] = $trainStatus;
+
+       } else {
+
+         $this->attributes['fails_validation'] = true;
+
+       }
+
+     }
+
 }

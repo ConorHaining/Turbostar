@@ -58,7 +58,7 @@ class ScheduleModelTest extends TestCase
       $bankholidayRunning = "X";
 
       $schedule->bank_holiday_running = $bankholidayRunning;
-      
+
       $this->assertEquals($bankholidayRunning, $schedule->bank_holiday_running);
 
       $schedule = new ScheduleModel();
@@ -79,5 +79,41 @@ class ScheduleModelTest extends TestCase
       $schedule->bank_holiday_running = $bankholidayRunning;
 
       $this->assertTrue($schedule->fails_validation, "Fails for invalid character");
+    }
+
+    public function testSetTrainStatusValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setTrainStatusAttribute'),  'Class does not have setTrainStatusAttribute method');
+
+      $validValues = ['B', 'F', 'P', 'S', 'T', '1', '2', '3', '4', '5'];
+
+      foreach ($validValues as $value) {
+        $schedule = new ScheduleModel();
+
+        $schedule->train_status = $value;
+
+        $this->assertEquals($value, $schedule->train_status, "Assert failed for value '".$value."'");
+
+      }
+
+    }
+
+    public function testSetTrainStatusInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setTrainStatusAttribute'),  'Class does not have setTrainStatusAttribute method');
+
+      $invalidValues = [null, 3.14, 'ABC', 'b'];
+
+      foreach ($invalidValues as $value) {
+        $schedule = new ScheduleModel();
+
+        $schedule->train_status = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
+
+      }
+
     }
 }
