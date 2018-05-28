@@ -177,4 +177,14 @@ class ScheduleModel extends Model
 
        }
 
-}
+       /**
+        *
+        *
+        *
+        *
+        *
+        */
+        public function setTimingLoadAtrribute($timingLoad)
+        {
+
+        }
