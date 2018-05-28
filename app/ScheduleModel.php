@@ -295,4 +295,26 @@ class ScheduleModel extends Model
           }
 
         }
+
+        /**
+         * A mutator to validate the service branding
+         *
+         * @param string $serviceBranding
+         * @return void
+         */
+         public function setServiceBrandingAttribute($serviceBranding)
+         {
+           $validValues = ['E'];
+           
+           if (in_array($serviceBranding, $validValues)) {
+
+             $this->attributes['service_branding'] = $serviceBranding;
+
+           } else {
+
+             $this->attributes['fails_validation'] = true;
+
+           }
+
+         }
 }

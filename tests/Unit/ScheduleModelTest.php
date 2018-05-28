@@ -374,4 +374,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetServiceBrandingValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setServiceBrandingAttribute'),  'Class does not have setServiceBrandingAttribute method');
+
+      $validValues = ['E'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->service_branding = $value;
+
+        $this->assertEquals($value, $schedule->service_branding, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetServiceBrandingInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setServiceBrandingAttribute'),  'Class does not have setServiceBrandingAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->service_branding = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }
