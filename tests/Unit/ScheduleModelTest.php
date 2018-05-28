@@ -412,4 +412,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetStpIndicatorValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
+
+      $validValues = ['C', 'N', 'O', 'P'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->stp_indicator = $value;
+
+        $this->assertEquals($value, $schedule->stp_indicator, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetStpIndicatorInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->stp_indicator = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }

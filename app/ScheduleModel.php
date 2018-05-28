@@ -305,7 +305,7 @@ class ScheduleModel extends Model
          public function setServiceBrandingAttribute($serviceBranding)
          {
            $validValues = ['E'];
-           
+
            if (in_array($serviceBranding, $validValues)) {
 
              $this->attributes['service_branding'] = $serviceBranding;
@@ -317,4 +317,26 @@ class ScheduleModel extends Model
            }
 
          }
+
+         /**
+          * A mutator to validate the stp indicator
+          *
+          * @param string $stpIndicator
+          * @return void
+          */
+          public function setStpIndicatorAttribute($stpIndicator)
+          {
+            $validValues = ['C', 'N', 'O', 'P'];
+
+            if (in_array($stpIndicator, $validValues)) {
+
+              $this->attributes['stp_indicator'] = $stpIndicator;
+
+            } else {
+
+              $this->attributes['fails_validation'] = true;
+
+            }
+
+          }
 }
