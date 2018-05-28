@@ -221,6 +221,26 @@ class ScheduleModel extends Model
 
           }
 
+        }
 
+        /**
+        *
+        *
+        *
+        *
+        */
+        public function setSleepersAttribute($sleeper)
+        {
+          $validValues = ['B', 'F', 'S'];
+
+          if (in_array($sleeper, $validValues)) {
+
+            $this->attributes['sleepers'] = $sleeper;
+
+          } else {
+
+            $this->attributes['fails_validation'] = true;
+
+          }
         }
 }

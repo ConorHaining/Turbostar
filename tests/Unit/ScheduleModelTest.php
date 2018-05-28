@@ -260,4 +260,42 @@ class ScheduleModelTest extends TestCase
       }
 
     }
+
+    public function testSetSleeperValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setSleepersAttribute'),  'Class does not have setSleepersAttribute method');
+
+      $validValues = ['B', 'F', 'S'];
+
+      foreach ($validValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->sleepers = $value;
+
+        $this->assertEquals($value, $schedule->sleepers, "Fails for invalid string: ".$value);
+
+      }
+
+    }
+
+    public function testSetSleeperInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setSleepersAttribute'),  'Class does not have setSleepersAttribute method');
+
+      $invalidValues = ['BS', '1', 'CAT'];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->sleepers = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+    }
 }
