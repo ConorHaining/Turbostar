@@ -154,12 +154,12 @@ class ScheduleModel extends Model
       }
 
       /**
+       *A mutator to validate power type and ensure it is
+       * from a valid list.
        *
-       *
-       *
-       *
-       *
-       *
+       * @param string $powerType
+       * @return void
+       * @see https://wiki.openraildata.com/index.php/CIF_Codes#Power_Type
        */
        public function setPowerTypeAttribute($powerType)
        {
