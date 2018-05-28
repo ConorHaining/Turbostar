@@ -178,13 +178,32 @@ class ScheduleModel extends Model
        }
 
        /**
+        * A mutator to validate operating characteristics
         *
-        *
-        *
-        *
-        *
+        * @param string $operatingCharacterisitics
+        * @return void
+        * @see https://wiki.openraildata.com/index.php/CIF_Codes#Operating_Characteristics
         */
-        public function setTimingLoadAtrribute($timingLoad)
+        public function setOperatingCharacteristicsAttribute($operatingCharacterisitics)
         {
+          $validValues = ['B', 'C', 'D', 'E', 'G', 'M', 'P', 'Q', 'R', 'S', 'Y', 'Z'];
 
+          $operatingCharacterisitics = str_split($operatingCharacterisitics);
+
+          // Set this to an empty string allows for the concatenation below
+          $this->attributes['operating_characteristics'] = "";
+          foreach ($operatingCharacterisitics as $value) {
+
+            if (in_array($value, $validValues)) {
+
+              $this->attributes['operating_characteristics'] .= $value;
+
+            } else {
+
+              $this->attributes['fails_validation'] = true;
+
+            }
+
+          }
         }
+}

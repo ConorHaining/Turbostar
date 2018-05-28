@@ -184,4 +184,43 @@ class ScheduleModelTest extends TestCase
 
       }
     }
+
+    public function testSetOperatingCharacterisiticsValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setOperatingCharacteristicsAttribute'),  'Class does not have setOperatingCharacteristicsAttribute method');
+
+      $validString = ['B', 'C', 'D', 'E', 'G', 'M', 'P', 'Q', 'R', 'S', 'Y', 'Z', 'BC', 'CDE', 'EGMP', 'GMPQRS'];
+
+      foreach ($validString as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->operating_characteristics = $value;
+
+        $this->assertEquals($value, $schedule->operating_characteristics, "Fails for invalid string: ".$value);
+      }
+
+
+    }
+
+    public function testSetOperatingCharacterisiticsInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setOperatingCharacteristicsAttribute'),  'Class does not have setOperatingCharacteristicsAttribute method');
+
+      $invalidValues = ['CAT', 123];
+
+      foreach ($invalidValues as $value) {
+
+        $schedule = new ScheduleModel();
+
+        $schedule->operating_characteristics = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+
+      }
+
+
+    }
 }
