@@ -153,4 +153,28 @@ class ScheduleModel extends Model
 
       }
 
+      /**
+       *
+       *
+       *
+       *
+       *
+       *
+       */
+       public function setPowerTypeAttribute($powerType)
+       {
+         $validValues = ['D', 'DEM', 'DMU', 'E', 'ED', 'EML', 'EMU', 'HST'];
+
+         if (in_array($powerType, $validValues)) {
+
+           $this->attributes['power_type'] = $powerType;
+
+         } else {
+
+           $this->attributes['fails_validation'] = true;
+
+         }
+
+       }
+
 }

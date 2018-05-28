@@ -137,7 +137,7 @@ class ScheduleModelTest extends TestCase
     public function testSetTrainCategoryInvalid()
     {
       $schedule = new ScheduleModel();
-      $this->assertTrue(method_exists($schedule, 'setTrainStatusAttribute'),  'Class does not have setTrainStatusAttribute method');
+      $this->assertTrue(method_exists($schedule, 'setTrainCategoryAttribute'),  'Class does not have setTrainStatusAttribute method');
 
       $invalidValues = [null, 3.14, 'ABC', 'b'];
 
@@ -145,6 +145,40 @@ class ScheduleModelTest extends TestCase
         $schedule = new ScheduleModel();
 
         $schedule->train_category = $value;
+
+        $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
+
+      }
+    }
+
+    public function testSetPowerTypeValid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setPowerTypeAttribute'),  'Class does not have setPowerTypeAttribute method');
+
+      $validValues = ['D', 'DEM', 'DMU', 'E', 'ED', 'EML', 'EMU', 'HST'];
+
+      foreach ($validValues as $value) {
+        $schedule = new ScheduleModel();
+
+        $schedule->power_type = $value;
+
+        $this->assertEquals($value, $schedule->power_type, "Assert failed for value '".$value."'");
+
+      }
+    }
+
+    public function testSetPowerTypeInvalid()
+    {
+      $schedule = new ScheduleModel();
+      $this->assertTrue(method_exists($schedule, 'setPowerTypeAttribute'),  'Class does not have setPowerTypeAttribute method');
+
+      $invalidValues = [null, 3.14, 'ABC', 'b'];
+
+      foreach ($invalidValues as $value) {
+        $schedule = new ScheduleModel();
+
+        $schedule->power_type = $value;
 
         $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
 
