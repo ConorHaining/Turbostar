@@ -129,4 +129,28 @@ class ScheduleModel extends Model
 
      }
 
+     /**
+      *A mutator to validate train category and ensure it is
+      * from a valid list.
+      *
+      * @param string $trainCategory
+      * @return void
+      * @see https://wiki.openraildata.com/index.php/CIF_Codes#Train_Category
+      */
+      public function setTrainCategoryAttribute($trainCategory)
+      {
+        $validValues = ['OL', 'OU', 'OO', 'OS', 'OW', 'XC', 'XD', 'XI', 'XR', 'XU', 'XX', 'XZ', 'BR', 'BS', 'SS', 'EE', 'EL', 'ES', 'JJ', 'PM', 'PP', 'PV', 'DD', 'DH', 'DI', 'DQ', 'DT', 'DY', 'ZB', 'ZZ', 'J2', 'H2', 'J3', 'J4', 'J5', 'J6', 'J8', 'H8', 'J9', 'H9', 'A0', 'E0', 'B0', 'B1', 'B4', 'B5', 'B6', 'B7', 'H0', 'H1', 'H3', 'H4', 'H5', 'H6'];
+
+        if (in_array($trainCategory, $validValues)) {
+
+          $this->attributes['train_category'] = $trainCategory;
+
+        } else {
+
+          $this->attributes['fails_validation'] = true;
+
+        }
+
+      }
+
 }
