@@ -53,4 +53,71 @@ class AssociationModel extends Model
     return $this->hasOne('App\LocationRecord');
   }
 
+  /**
+   * Mutator to validate the category
+   *
+   * @param string $category
+   * @return void
+   */
+   public function setCategoryAttribute($category)
+   {
+     $validValues = ['JJ', 'VV', 'NP'];
+
+     if (in_array($category, $validValues)) {
+
+       $this->attributes['category'] = $category;
+
+     } else {
+
+       $this->attributes['fails_validation'] = true;
+
+     }
+
+   }
+
+   /**
+    * Mutator to validate the date indicator
+    *
+    * @param string $dateIndicator
+    * @return void
+    */
+    public function setDateIndicatorAttribute($dateIndicator)
+    {
+      $validValues = ['S', 'N', 'P'];
+
+      if (in_array($dateIndicator, $validValues)) {
+
+        $this->attributes['date_indicator'] = $dateIndicator;
+
+      } else {
+
+        $this->attributes['fails_validation'] = true;
+
+      }
+
+    }
+
+    /**
+     * Mutator to validate the stp indicator
+     *
+     * @param string $stpIndicator
+     * @return void
+     */
+     public function setStpIndicatorAttribute($stpIndicator)
+     {
+       $validValues = ['C', 'N', 'O', 'P'];
+
+       if (in_array($stpIndicator, $validValues)) {
+
+         $this->attributes['stp_indicator'] = $stpIndicator;
+
+       } else {
+
+         $this->attributes['fails_validation'] = true;
+
+       }
+
+     }
+
+
 }
