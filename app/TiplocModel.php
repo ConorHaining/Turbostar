@@ -5,7 +5,7 @@ namespace App;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class TipclocModel extends Model
+class TiplocModel extends Model
 {
   use SoftDeletes;
 
