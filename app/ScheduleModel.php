@@ -383,4 +383,9 @@ class ScheduleModel extends Model
               }
 
             }
+
+            public function locationRecords()
+            {
+              return $this->hasMany('App\LocationRecord');
+            }
 }
