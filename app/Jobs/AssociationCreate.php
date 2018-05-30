@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\ScheduleModel;
 use App\AssociationModel;
+use App\TiplocModel;
 
 class AssociationCreate implements ShouldQueue
 {
@@ -50,6 +51,14 @@ class AssociationCreate implements ShouldQueue
 
       }
 
+      $location = TiplocModel::where('code', $this->association->location)->get();
+
+      if(empty($location))
+      {
+        throw new \Exception("Error Processing Request", 1);
+
+      }
+
       $association = AssociationModel::create([
         'start_date' => $this->association->assoc_start_date,
         'end_date' => $this->association->assoc_end_date,
@@ -63,7 +72,7 @@ class AssociationCreate implements ShouldQueue
       $association->assoc_train = $assocTrain;
       $association->category = $this->association->category;
       $association->date_indicator = $this->association->date_indicator;
-      $association->location = $this->association->location;
+      $association->location = $location;
       $association->stp_indicator = $this->association->CIF_stp_indicator;
 
       if($association->fails_validation)
