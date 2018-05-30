@@ -50,7 +50,7 @@ class AssociationModel extends Model
 
   public function location()
   {
-    return $this->hasOne('App\LocationRecord');
+    return $this->hasOne('App\TiplocModel');
   }
 
   /**
