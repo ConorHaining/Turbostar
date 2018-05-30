@@ -29,6 +29,25 @@ class AssociationModelTest extends TestCase
 
   }
 
+  public function testSetCategoryNull()
+  {
+    $association = new AssociationModel();
+    $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
+
+    $validValues = ['   ', '  ', ''];
+
+    foreach ($validValues as $value) {
+
+      $association = new AssociationModel();
+
+      $association->category = $value;
+
+      $this->assertEquals(null, $association->category, "Fails for invalid string: ".$value);
+
+    }
+
+  }
+
   public function testSetCategoryInvalid()
   {
     $association = new AssociationModel();

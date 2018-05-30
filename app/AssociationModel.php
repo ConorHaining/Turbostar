@@ -40,12 +40,12 @@ class AssociationModel extends Model
 
   public function main_train()
   {
-    return $this->hasOne('App\ScheduleModel');
+    return $this->hasMany('App\ScheduleModel');
   }
 
   public function assoc_train()
   {
-    return $this->hasOne('App\ScheduleModel');
+    return $this->hasMany('App\ScheduleModel');
   }
 
   public function location()
@@ -66,6 +66,10 @@ class AssociationModel extends Model
      if (in_array($category, $validValues)) {
 
        $this->attributes['category'] = $category;
+
+     } else if(empty(trim($category))) {
+
+       $this->attributes['category'] = null;
 
      } else {
 
