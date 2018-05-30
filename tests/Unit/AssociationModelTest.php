@@ -86,6 +86,25 @@ class AssociationModelTest extends TestCase
 
   }
 
+  public function testSetDateIndicatorNull()
+  {
+    $association = new AssociationModel();
+    $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
+
+    $validValues = ['', ' ', '  '];
+
+    foreach ($validValues as $value) {
+
+      $association = new AssociationModel();
+
+      $association->date_indicator = $value;
+
+      $this->assertEquals(null, $association->date_indicator, "Fails for invalid string: ".$value);
+
+    }
+
+  }
+
   public function testSetDateIndicatorInvalid()
   {
     $association = new AssociationModel();

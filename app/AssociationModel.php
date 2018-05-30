@@ -93,6 +93,10 @@ class AssociationModel extends Model
 
         $this->attributes['date_indicator'] = $dateIndicator;
 
+      } else if(empty(trim($dateIndicator))) {
+
+        $this->attributes['date_indicator'] = null;
+
       } else {
 
         $this->attributes['fails_validation'] = true;
