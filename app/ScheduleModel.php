@@ -18,7 +18,6 @@ class ScheduleModel extends Model
    */
   protected $fillable = [
     'uid',
-    'valid',
     'start_date',
     'end_start',
     'signalling_id',
@@ -30,7 +29,6 @@ class ScheduleModel extends Model
     'connection_indicator',
     'traction_class',
     'uic_code',
-    'schedule_locations',
   ];
 
   /**
@@ -231,7 +229,7 @@ class ScheduleModel extends Model
         */
         public function setSleepersAttribute($sleeper)
         {
-          $validValues = ['B', 'F', 'S'];
+          $validValues = ['B', 'F', 'S', null];
 
           if (in_array($sleeper, $validValues)) {
 
@@ -252,7 +250,7 @@ class ScheduleModel extends Model
         */
         public function setReservationsAttribute($reservations)
         {
-          $validValues = ['A', 'E', 'R', 'S'];
+          $validValues = ['A', 'E', 'R', 'S', null];
 
           if (in_array($reservations, $validValues)) {
 
@@ -273,7 +271,7 @@ class ScheduleModel extends Model
         */
         public function setCateringCodeAttribute($cateringCode)
         {
-          $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T'];
+          $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T', null];
 
           $cateringCode = str_split($cateringCode);
 
@@ -304,7 +302,7 @@ class ScheduleModel extends Model
          */
          public function setServiceBrandingAttribute($serviceBranding)
          {
-           $validValues = ['E'];
+           $validValues = ['E', null];
 
            if (in_array($serviceBranding, $validValues)) {
 

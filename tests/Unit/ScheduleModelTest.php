@@ -266,7 +266,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setSleepersAttribute'),  'Class does not have setSleepersAttribute method');
 
-      $validValues = ['B', 'F', 'S'];
+      $validValues = ['B', 'F', 'S', null];
 
       foreach ($validValues as $value) {
 
@@ -304,7 +304,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setReservationsAttribute'),  'Class does not have setReservationsAttribute method');
 
-      $validValues = ['A', 'E', 'R', 'S'];
+      $validValues = ['A', 'E', 'R', 'S', null];
 
       foreach ($validValues as $value) {
 
@@ -342,7 +342,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setCateringCodeAttribute'),  'Class does not have setCateringCodeAttribute method');
 
-      $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T', 'CH', 'MP', 'RT'];
+      $validValues = ['C', 'F', 'H', 'M', 'P', 'R', 'T', 'CH', 'MP', 'RT', null];
 
       foreach ($validValues as $value) {
 
@@ -380,7 +380,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setServiceBrandingAttribute'),  'Class does not have setServiceBrandingAttribute method');
 
-      $validValues = ['E'];
+      $validValues = ['E', null];
 
       foreach ($validValues as $value) {
 
