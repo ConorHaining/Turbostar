@@ -35,8 +35,7 @@ class ScheduleDelete implements ShouldQueue
     {
         $expiredSchedule = ScheduleModel::where('uid', $this->schedule->CIF_train_uid)
                                           ->where('start_date', $this->schedule->schedule_start_date)
-                                          ->where('stp_indicator', $this->schedule->CIF_stp_indicator)
-                                          ->get();
+                                          ->where('stp_indicator', $this->schedule->CIF_stp_indicator);
 
         /**
          * According to the Laravel documentation, the delete() function should return a bool value
