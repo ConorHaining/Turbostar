@@ -29,14 +29,23 @@ class ScheduleDelete implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
         $expiredSchedule = ScheduleModel::where('uid', $this->schedule->CIF_train_uid)
                                           ->where('start_date', $this->schedule->schedule_start_date)
-                                          ->where('stp_indicator', $this->schedule->CIF_stp_indicator);
+                                          ->where('stp_indicator', $this->schedule->CIF_stp_indicator)
+                                          ->get();
 
+        /**
+         * According to the Laravel documentation, the delete() function should return a bool value
+         * depending on the success of the model being deleted.
+         *
+         * However, the package which supports Mongodb returns an int value. I believe it's due to
+         * this line: https://github.com/jenssegers/laravel-mongodb/blob/master/src/Jenssegers/Mongodb/Eloquent/Builder.php#L92
+         */
         return $expiredSchedule->delete();
+
     }
 }
