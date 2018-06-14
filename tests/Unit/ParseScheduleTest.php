@@ -10,8 +10,11 @@ use App\Console\Commands\ParseSchedule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\ScheduleCreate;
+use App\Jobs\ScheduleDelete;
 use App\Jobs\AssociationCreate;
+use App\Jobs\AssociationDelete;
 use App\Jobs\TiplocCreate;
+use App\Jobs\TiplocDelete;
 
 class ParseScheduleTest extends TestCase
 {
@@ -87,7 +90,7 @@ class ParseScheduleTest extends TestCase
 
       self::$command->queueSchedule($schedule);
 
-      Queue::assertPushedOn('schedule-delete', ScheduleCreate::class);
+      Queue::assertPushedOn('schedule-delete', ScheduleDelete::class);
     }
 
     public function testInvalidSchedule()
@@ -122,7 +125,7 @@ class ParseScheduleTest extends TestCase
 
       self::$command->queueAssociation($association);
 
-      Queue::assertPushedOn('association-delete', AssociationCreate::class);
+      Queue::assertPushedOn('association-delete', AssociationDelete::class);
     }
 
     public function testInvalidAssociation()
@@ -157,19 +160,19 @@ class ParseScheduleTest extends TestCase
 
       self::$command->queueTiploc($tiploc);
 
-      Queue::assertPushedOn('tiploc-delete', TiplocCreate::class);
+      Queue::assertPushedOn('tiploc-delete', TiplocDelete::class);
     }
 
-    public function testUpdateTipcloc()
-    {
-      Queue::fake();
-
-      $tiploc = '{"TiplocV1":{"transaction_type":"Update"}}';
-
-      self::$command->queueTiploc($tiploc);
-
-      Queue::assertPushedOn('tiploc-update', TiplocCreate::class);
-    }
+    // public function testUpdateTipcloc()
+    // {
+    //   Queue::fake();
+    //
+    //   $tiploc = '{"TiplocV1":{"transaction_type":"Update"}}';
+    //
+    //   self::$command->queueTiploc($tiploc);
+    //
+    //   Queue::assertPushedOn('tiploc-update', TiplocCreate::class);
+    // }
 
     public function testInvalidTiploc()
     {

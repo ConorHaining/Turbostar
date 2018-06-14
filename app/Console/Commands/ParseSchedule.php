@@ -7,8 +7,11 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\ScheduleCreate;
+use App\Jobs\ScheduleDelete;
 use App\Jobs\AssociationCreate;
+use App\Jobs\AssociationDelete;
 use App\Jobs\TiplocCreate;
+use App\Jobs\TiplocDelete;
 
 class ParseSchedule extends Command
 {
@@ -134,7 +137,7 @@ class ParseSchedule extends Command
 
           } else if ($scheduleJSON->transaction_type == "Delete") {
 
-            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-delete');
+            ScheduleDelete::dispatch($scheduleJSON)->onQueue('schedule-delete');
 
           } else {
 
@@ -160,7 +163,7 @@ class ParseSchedule extends Command
 
            } else if ($associationJSON->transaction_type == "Delete") {
 
-             AssociationCreate::dispatch($associationJSON)->onQueue('association-delete');
+             AssociationDelete::dispatch($associationJSON)->onQueue('association-delete');
 
            } else {
 
@@ -180,11 +183,12 @@ class ParseSchedule extends Command
 
            } else if ($tiplocJSON->transaction_type == "Delete") {
 
-             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-delete');
+             TiplocDelete::dispatch($tiplocJSON)->onQueue('tiploc-delete');
 
            } else if ($tiplocJSON->transaction_type == "Update") {
 
-             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-update');
+             throw new \Exception("Unknown Tiploc Transaction Type", 1);
+             // TODO Log this if it ever happens
 
            } else {
 
