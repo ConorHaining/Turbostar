@@ -53,6 +53,17 @@ class ParseScheduleTest extends TestCase
 
     }
 
+    public function testDecompressFile()
+    {
+      self::$command->downloadDailyFile();
+      self::$command->decompressFile();
+
+      $date = Carbon::today();
+      $date = $date->format('Y-m-d');
+
+      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.json', "File not decompressed");
+    }
+
     public function testNonExistingHeader()
     {
         $header = '{"JsonTimetableV1":{"classification":"public","timestamp":1520294716,"owner":"Network Rail","Sender":{"organisation":"Rockshore","application":"NTROD","component":"SCHEDULE"},"Metadata":{"type":"full","sequence":2091}}}';

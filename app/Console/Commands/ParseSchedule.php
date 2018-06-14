@@ -46,7 +46,7 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
-        //
+
     }
 
     /**
@@ -85,6 +85,21 @@ class ParseSchedule extends Command
         curl_setopt($curl, CURLOPT_FILE, $fileHandler);
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_exec($curl);
+      }
+
+      public function decompressFile()
+      {
+        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
+        $fileLocalPathDecompressed = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.json';
+
+        $sfp = gzopen($fileLocalPath, "rb");
+        $fp = fopen($fileLocalPathDecompressed, "w");
+
+        while ($string = gzread($sfp, 4096)) {
+          fwrite($fp, $string, strlen($string));
+        }
+        gzclose($sfp);
+        fclose($fp);
       }
 
      /**
