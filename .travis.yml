@@ -5,6 +5,7 @@ services: mongodb
 php:
   - 7.1
   - 7.2
+  - nightly
 
 before_script:
   - echo "extension=mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
