@@ -66,6 +66,8 @@ class ParseSchedule extends Command
        curl_setopt($curl, CURLOPT_FILE, $fileHandler);
        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
        curl_exec($curl);
+
+       return $fileLocalPath;
      }
 
      /**
@@ -85,11 +87,12 @@ class ParseSchedule extends Command
         curl_setopt($curl, CURLOPT_FILE, $fileHandler);
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_exec($curl);
+
+        return $fileLocalPath;
       }
 
-      public function decompressFile()
+      public function decompressFile($fileLocalPath)
       {
-        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
         $fileLocalPathDecompressed = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.json';
 
         $sfp = gzopen($fileLocalPath, "rb");
