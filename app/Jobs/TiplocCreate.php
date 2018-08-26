@@ -24,6 +24,7 @@ class TiplocCreate implements ShouldQueue
     public function __construct($tiploc)
     {
         $this->tiploc = $tiploc;
+        // dd($this);
     }
 
     /**
@@ -33,15 +34,14 @@ class TiplocCreate implements ShouldQueue
      */
     public function handle()
     {
-        $tiploc = TiplocModel::create([
-          'code' => $this->tiploc->tiploc_code,
-          'nalco' => $this->tiploc->nalco,
-          'stanox' => $this->tiploc->stanox,
-          'crs' => $this->tiploc->crs_code,
-          'description' => $this->tiploc->description,
-          'name' => $this->tiploc->tps_description
-        ]);
-
+        $tiploc = new TiplocModel();
+        $tiploc->code = $this->tiploc->tiploc_code;
+        $tiploc->nalco = $this->tiploc->nalco;
+        $tiploc->stanox = $this->tiploc->stanox;
+        $tiploc->crs = $this->tiploc->crs_code;
+        $tiploc->description = $this->tiploc->description;
+        $tiploc->name = $this->tiploc->tps_description;
+        
         return $tiploc->save();
     }
 }
