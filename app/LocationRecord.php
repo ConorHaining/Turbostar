@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use Basemkhirat\Elasticsearch\Model;
 
 class LocationRecord extends Model
 {
@@ -59,7 +59,7 @@ class LocationRecord extends Model
 
         if (in_array($type, $validValues)) {
 
-          $this->attributes['type'] = $type;
+          return $type;
 
         } else {
 

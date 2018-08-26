@@ -19,27 +19,19 @@ class AssociationDeleteTest extends TestCase
       $text = json_decode($text);
       $payload = $text->JsonAssociationV1;
 
-      $mainTrain = ScheduleModel::create(['uid' => 'P13474']);
-      $mainTrain->save();
-
-      $assocTrain = ScheduleModel::create(['uid' => 'V00975']);
-      $assocTrain->save();
-
-      $location = TiplocModel::create(['code' => 'CRDFCEN']);
-      $location->save();
-
-      $testAssociation = AssociationModel::create([
-        'start_date' => '2017-12-22T00:00:00Z',
-        'base_location_suffix' => null
-      ]);
-      $testAssociation->main_train = $mainTrain;
-      $testAssociation->assoc_train = $assocTrain;
-      $testAssociation->location = $location;
+      $testAssociation = new AssociationModel();
+      $testAssociation->start_date = '2017-12-22T00:00:00Z';
+      $testAssociation->base_location_suffix = null;
+      $testAssociation->main_train = 'P13474';
+      $testAssociation->assoc_train = 'V00975';
+      $testAssociation->location = 'CRDFCEN';
       $testAssociation->stp_indicator = 'N';
       $testAssociation->save();
 
+      sleep(1);
+
       $job = new AssociationDelete($payload);
 
-      $this->assertGreaterThan(0, $job->handle(), "Model has not deleted");
+      $this->assertFalse($job->handle()->exists, "Model has not deleted");
     }
 }

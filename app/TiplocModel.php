@@ -2,12 +2,16 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Basemkhirat\Elasticsearch\Model;
+// use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class TiplocModel extends Model
 {
-  use SoftDeletes;
+  // use SoftDeletes;
+
+  protected $index = 'tiploc';
+
+  protected $type = 'tiploc';
 
   /**
    * The attributes that are mass assignable.

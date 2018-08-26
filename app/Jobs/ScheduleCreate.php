@@ -41,46 +41,42 @@ class ScheduleCreate implements ShouldQueue
 
         foreach ($locationRecordsRaw as $recordRaw) {
 
+          $record = new LocationRecord();
+          
           switch ($recordRaw->location_type) {
-            case 'LO':
+            case 'LO': 
 
-            $record = LocationRecord::create([
-              'tiploc_instance' => $recordRaw->tiploc_instance,
-              'departure' => $recordRaw->departure,
-              'public_departure' => $recordRaw->public_departure,
-              'platform' => $recordRaw->platform,
-              'line' => $recordRaw->line,
-              'engineering_allowance' => $recordRaw->engineering_allowance,
-              'pathing_allowance' => $recordRaw->pathing_allowance,
-            ]);
+              $record->tiploc_instance = $recordRaw->tiploc_instance;
+              $record->departure = $recordRaw->departure;
+              $record->public_departure = $recordRaw->public_departure;
+              $record->platform = $recordRaw->platform;
+              $record->line = $recordRaw->line;
+              $record->engineering_allowance = $recordRaw->engineering_allowance;
+              $record->pathing_allowance = $recordRaw->pathing_allowance;
 
               break;
             case 'LI':
 
-            $record = LocationRecord::create([
-              'tiploc_instance' => $recordRaw->tiploc_instance,
-              'arrival' => $recordRaw->arrival,
-              'departure' => $recordRaw->departure,
-              'pass' => $recordRaw->pass,
-              'public_arrival' => $recordRaw->public_arrival,
-              'public_departure' => $recordRaw->public_departure,
-              'platform' => $recordRaw->platform,
-              'line' => $recordRaw->line,
-              'path' => $recordRaw->path,
-              'engineering_allowance' => $recordRaw->engineering_allowance,
-              'pathing_allowance' => $recordRaw->pathing_allowance,
-            ]);
+              $record->tiploc_instance = $recordRaw->tiploc_instance;
+              $record->arrival = $recordRaw->arrival;
+              $record->departure = $recordRaw->departure;
+              $record->pass = $recordRaw->pass;
+              $record->public_arrival = $recordRaw->public_arrival;
+              $record->public_departure = $recordRaw->public_departure;
+              $record->platform = $recordRaw->platform;
+              $record->line = $recordRaw->line;
+              $record->path = $recordRaw->path;
+              $record->engineering_allowance = $recordRaw->engineering_allowance;
+              $record->pathing_allowance = $recordRaw->pathing_allowance;
 
               break;
             case 'LT':
 
-            $record = LocationRecord::create([
-              'tiploc_instance' => $recordRaw->tiploc_instance,
-              'arrival' => $recordRaw->arrival,
-              'public_arrival' => $recordRaw->public_arrival,
-              'platform' => $recordRaw->platform,
-              'path' => $recordRaw->path,
-            ]);
+              $record->tiploc_instance = $recordRaw->tiploc_instance;
+              $record->arrival = $recordRaw->arrival;
+              $record->public_arrival = $recordRaw->public_arrival;
+              $record->platform = $recordRaw->platform;
+              $record->path = $recordRaw->path;
 
               break;
 
@@ -89,33 +85,24 @@ class ScheduleCreate implements ShouldQueue
 
           $record->type = $recordRaw->location_type;
 
-          $location = TiplocModel::where('code', $recordRaw->tiploc_code)->get();
-
-          if(empty($location))
-          {
-            throw new \Exception("Error Processing Request", 1);
-
-          }
-
-          array_push($locationRecords, $record);
+          array_push($locationRecords, $record->toArray());
 
         }
 
-        $schedule = ScheduleModel::create([
-          'uid' => $this->schedule->CIF_train_uid,
-          'start_date' => $this->schedule->schedule_start_date,
-          'end_start' => $this->schedule->schedule_end_date,
-          'signalling_id' => $this->schedule->schedule_segment->signalling_id,
-          'headcode' => $this->schedule->schedule_segment->CIF_headcode,
-          'course_indicator' => $this->schedule->schedule_segment->CIF_course_indicator,
-          'train_service_code' => $this->schedule->schedule_segment->CIF_train_service_code,
-          'portion_id' => $this->schedule->schedule_segment->CIF_business_sector,
-          'speed' => $this->schedule->schedule_segment->CIF_speed,
-          'connection_indicator' => $this->schedule->schedule_segment->CIF_connection_indicator,
-          'traction_class' => $this->schedule->new_schedule_segment->traction_class,
-          'uic_code' => $this->schedule->new_schedule_segment->uic_code,
-          'location_records' => $locationRecords,
-        ]);
+        $schedule = new ScheduleModel();
+        $schedule->uid = $this->schedule->CIF_train_uid;
+        $schedule->start_date = $this->schedule->schedule_start_date;
+        $schedule->end_start = $this->schedule->schedule_end_date;
+        $schedule->signalling_id = $this->schedule->schedule_segment->signalling_id;
+        $schedule->headcode = $this->schedule->schedule_segment->CIF_headcode;
+        $schedule->course_indicator = $this->schedule->schedule_segment->CIF_course_indicator;
+        $schedule->train_service_code = $this->schedule->schedule_segment->CIF_train_service_code;
+        $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
+        $schedule->speed = $this->schedule->schedule_segment->CIF_speed;
+        $schedule->connection_indicator = $this->schedule->schedule_segment->CIF_connection_indicator;
+        $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
+        $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
+        $schedule->location_records = $locationRecords;
 
         $schedule->running_days = $this->schedule->schedule_days_runs;
         if($schedule->fails_validation) { echo "running_days"; return false;}

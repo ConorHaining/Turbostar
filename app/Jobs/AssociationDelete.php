@@ -35,21 +35,15 @@ class AssociationDelete implements ShouldQueue
      */
     public function handle()
     {
-      $mainTrain = ScheduleModel::where('uid', $this->association->main_train_uid)->get();
-      $assocTrain = ScheduleModel::where('uid', $this->association->assoc_train_uid)->get();
-      $location = TiplocModel::where('code', $this->association->location)->get();
 
-      $expiredAssociation = AssociationModel::where('start_date', $this->association->assoc_start_date)
-                                        ->where('base_location_suffix', $this->association->base_location_suffix)
-                                        ->where('stp_indicator', $this->association->CIF_stp_indicator);
+        $expiredAssociation = AssociationModel::where('start_date', '=', $this->association->assoc_start_date)
+                                        ->where('stp_indicator', 'like', $this->association->CIF_stp_indicator)
+                                        ->where('main_train', 'like', $this->association->main_train_uid)
+                                        ->where('assoc_train', 'like', $this->association->assoc_train_uid)
+                                        ->get();
 
-      /**
-       * According to the Laravel documentation, the delete() function should return a bool value
-       * depending on the success of the model being deleted.
-       *
-       * However, the package which supports Mongodb returns an int value. I believe it's due to
-       * this line: https://github.com/jenssegers/laravel-mongodb/blob/master/src/Jenssegers/Mongodb/Eloquent/Builder.php#L92
-       */
-      return $expiredAssociation->delete();
+        foreach($expiredAssociation as $association){
+            return $association->delete();
+        }
     }
 }
