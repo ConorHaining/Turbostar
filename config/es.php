@@ -253,6 +253,32 @@ return [
 
         ],
 
+        'headers' => [
+
+            "aliases" => [
+                "fileheaders"
+            ],
+
+            'settings' => [
+                "number_of_shards" => 1,
+                "number_of_replicas" => 0,
+            ],
+
+            'mappings' => [
+                'tiploc' => [
+                    "properties" => [
+                        'date' => [
+                            'type' => 'date'
+                        ],
+                        'sequence' => [
+                            'type' => 'integer'
+                        ],
+                    ]
+                ]
+            ]
+
+        ],
+
     ]
 
 ];
