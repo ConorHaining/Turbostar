@@ -21,6 +21,8 @@ class TiplocDeleteTest extends TestCase
     $testTiploc->code = 'WLGFSTN';
     $testTiploc->save();
 
+    sleep(1);
+
     $job = new TiplocDelete($payload);
 
     $this->assertFalse($job->handle()->exists, "Model has not deleted");
