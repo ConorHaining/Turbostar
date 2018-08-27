@@ -33,10 +33,9 @@ class TiplocDelete implements ShouldQueue
      */
     public function handle()
     {
-        $expiredTiplocs = TiplocModel::where('code', 'like', 'WLGFSTN')->get();
-
-        foreach($expiredTiplocs as $tiploc) {
-            return $tiploc->delete();
-        }
+        $expiredTiploc = TiplocModel::where('code', 'like', 'WLGFSTN')->first();
+        $expiredTiploc->active = false;
+        
+        return $expiredTiploc->save();
     }
 }
