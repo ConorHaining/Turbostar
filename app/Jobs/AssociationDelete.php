@@ -40,10 +40,9 @@ class AssociationDelete implements ShouldQueue
                                         ->where('stp_indicator', 'like', $this->association->CIF_stp_indicator)
                                         ->where('main_train', 'like', $this->association->main_train_uid)
                                         ->where('assoc_train', 'like', $this->association->assoc_train_uid)
-                                        ->get();
+                                        ->first();
+        $expiredAssociation->active = false;
 
-        foreach($expiredAssociation as $association){
-            return $association->delete();
-        }
+        return $expiredAssociation->save();
     }
 }

@@ -212,7 +212,7 @@ return [
             ],
 
             'mappings' => [
-                'associations' => [
+                'association' => [
                     "properties" => [
                         'start_date' => [
                             'type' => 'date'

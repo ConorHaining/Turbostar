@@ -32,6 +32,7 @@ class AssociationDeleteTest extends TestCase
 
       $job = new AssociationDelete($payload);
 
-      $this->assertFalse($job->handle()->exists, "Model has not deleted");
+      $this->assertTrue($job->handle()->exists, "Model still exists");
+      $this->assertFalse($job->handle()->attributes['active'], "Model has been set to inactive");
     }
 }
