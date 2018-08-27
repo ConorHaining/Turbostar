@@ -2,13 +2,17 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Basemkhirat\Elasticsearch\Model;
+// use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class ScheduleModel extends Model
 {
 
-  use SoftDeletes;
+  // use SoftDeletes;
+
+  protected $index = 'schedule';
+
+  protected $type = 'schedule';
 
   /**
    * The attributes that are mass assignable.
@@ -73,7 +77,7 @@ class ScheduleModel extends Model
        return;
      }
 
-     $this->attributes['running_days'] = $runningDays;
+     return $runningDays;
    }
 
    /**
@@ -88,16 +92,16 @@ class ScheduleModel extends Model
 
       if ($bankholidayRunning == null) {
 
-        $this->attributes['bank_holiday_running'] = null;
+        return null;
 
       } else if ($bankholidayRunning != 'G' && $bankholidayRunning != 'X') {
-
+        
         $this->attributes['fails_validation'] = true;
         return;
 
       } else {
 
-        $this->attributes['bank_holiday_running'] = $bankholidayRunning;
+        return $bankholidayRunning;
 
       }
 
@@ -117,7 +121,7 @@ class ScheduleModel extends Model
 
        if (in_array($trainStatus, $validValues)) {
 
-         $this->attributes['train_status'] = $trainStatus;
+         return $trainStatus;
 
        } else {
 
@@ -141,7 +145,7 @@ class ScheduleModel extends Model
 
         if (in_array($trainCategory, $validValues)) {
 
-          $this->attributes['train_category'] = $trainCategory;
+          return $trainCategory;
 
         } else {
 
@@ -165,7 +169,7 @@ class ScheduleModel extends Model
 
          if (in_array($powerType, $validValues)) {
 
-           $this->attributes['power_type'] = $powerType;
+           return $powerType;
 
          } else {
 
@@ -187,22 +191,24 @@ class ScheduleModel extends Model
           $validValues = ['B', 'C', 'D', 'E', 'G', 'M', 'P', 'Q', 'R', 'S', 'Y', 'Z'];
 
           $operatingCharacterisitics = str_split($operatingCharacterisitics);
-
+          
           // Set this to an empty string allows for the concatenation below
-          $this->attributes['operating_characteristics'] = "";
+          $permitedValues = '';
           foreach ($operatingCharacterisitics as $value) {
 
             if (in_array($value, $validValues)) {
 
-              $this->attributes['operating_characteristics'] .= $value;
+              $permitedValues .= $value;
 
             } else {
 
               $this->attributes['fails_validation'] = true;
+              return;
 
             }
-
           }
+
+          return $permitedValues;
         }
 
         public function setTrainClassAttribute($trainClass)
@@ -211,7 +217,7 @@ class ScheduleModel extends Model
 
           if (in_array($trainClass, $validValues)) {
 
-            $this->attributes['train_class'] = $trainClass;
+            return $trainClass;
 
           } else {
 
@@ -233,7 +239,7 @@ class ScheduleModel extends Model
 
           if (in_array($sleeper, $validValues)) {
 
-            $this->attributes['sleepers'] = $sleeper;
+            return $sleeper;
 
           } else {
 
@@ -254,7 +260,7 @@ class ScheduleModel extends Model
 
           if (in_array($reservations, $validValues)) {
 
-            $this->attributes['reservations'] = $reservations;
+            return $reservations;
 
           } else {
 
@@ -276,21 +282,23 @@ class ScheduleModel extends Model
           $cateringCode = str_split($cateringCode);
 
           // Empty value to allow for concatenation below
-          $this->attributes['catering_code'] = "";
+          $permitedValues = '';
 
           foreach ($cateringCode as $value) {
 
             if (in_array($value, $validValues)) {
 
-              $this->attributes['catering_code'] .= $value;
+              $permitedValues .= $value;
 
             } else {
 
               $this->attributes['fails_validation'] = true;
+              return;
 
             }
-
           }
+          
+          return $permitedValues;
 
         }
 
@@ -306,7 +314,7 @@ class ScheduleModel extends Model
 
            if (in_array($serviceBranding, $validValues)) {
 
-             $this->attributes['service_branding'] = $serviceBranding;
+             return $serviceBranding;
 
            } else {
 
@@ -328,7 +336,7 @@ class ScheduleModel extends Model
 
             if (in_array($stpIndicator, $validValues)) {
 
-              $this->attributes['stp_indicator'] = $stpIndicator;
+              return $stpIndicator;
 
             } else {
 
@@ -350,7 +358,7 @@ class ScheduleModel extends Model
 
              if (in_array($atocCode, $validValues)) {
 
-               $this->attributes['atoc_code'] = $atocCode;
+               return $atocCode;
 
              } else {
 
@@ -372,7 +380,7 @@ class ScheduleModel extends Model
 
               if (in_array($applicableTimetable, $validValues)) {
 
-                $this->attributes['applicable_timetable'] = $applicableTimetable;
+                return $applicableTimetable;
 
               } else {
 

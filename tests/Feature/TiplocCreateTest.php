@@ -18,8 +18,8 @@ class TiplocCreateTest extends TestCase
         $payload = $text->TiplocV1;
 
         $job = new TiplocCreate($payload);
-
-        $this->assertTrue($job->handle(), "Model has not saved");
+        
+        $this->assertTrue($job->handle()->exists, "Model has not saved");
 
     }
 
@@ -32,7 +32,7 @@ class TiplocCreateTest extends TestCase
 
         $job = new TiplocCreate($payload);
 
-        $this->assertTrue($job->handle(), "Model has not saved");
+        $this->assertTrue($job->handle()->exists, "Model has not saved");
 
     }
 
@@ -45,7 +45,7 @@ class TiplocCreateTest extends TestCase
 
         $job = new TiplocCreate($payload);
 
-        $this->assertTrue($job->handle(), "Model has not saved");
+        $this->assertTrue($job->handle()->exists, "Model has not saved");
 
     }
 }

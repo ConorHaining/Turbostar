@@ -17,13 +17,14 @@ class TiplocDeleteTest extends TestCase
     $text = json_decode($text);
     $payload = $text->TiplocV1;
 
-    $testTiploc = TiplocModel::create([
-      'code' => 'WLGFSTN'
-    ]);
+    $testTiploc = new TiplocModel();
+    $testTiploc->code = 'WLGFSTN';
     $testTiploc->save();
+
+    sleep(1);
 
     $job = new TiplocDelete($payload);
 
-    $this->assertGreaterThan(0, $job->handle(), "Model has not deleted");
+    $this->assertFalse($job->handle()->exists, "Model has not deleted");
   }
 }

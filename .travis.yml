@@ -1,6 +1,7 @@
 language: php
 
-services: mongodb
+services: 
+  - elasticsearch
 
 php:
   - 7.1
@@ -8,10 +9,8 @@ php:
   - nightly
 
 before_script:
-  - echo "extension=mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
   - composer install --no-interaction
-  - mongo < tests/build/travis-mongo-setup.js
 
 
 script:

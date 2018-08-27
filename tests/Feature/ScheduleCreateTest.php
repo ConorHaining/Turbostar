@@ -19,6 +19,6 @@ class ScheduleCreateTest extends TestCase
 
         $job = new ScheduleCreate($payload);
 
-        $this->assertTrue($job->handle(), "Model has not saved");
+        $this->assertTrue($job->handle()->exists, "Model has not saved");
     }
 }

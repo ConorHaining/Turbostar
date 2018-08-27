@@ -17,15 +17,17 @@ class ScheduleDeleteTest extends TestCase
       $text = json_decode($text);
       $payload = $text->JsonScheduleV1;
 
-      $testSchedule = ScheduleModel::create([
-        'uid' => 'C58801',
-        'start_date' => '2017-12-18',
-      ]);
+      $testSchedule = new ScheduleModel();
+      $testSchedule->uid = 'C58801';
+      $testSchedule->start_date = '2017-12-18';
       $testSchedule->stp_indicator = 'O';
+
       $testSchedule->save();
+
+      sleep(1);
 
       $job = new ScheduleDelete($payload);
 
-      $this->assertGreaterThan(0, $job->handle(), "Model has not deleted");
+      $this->assertFalse($job->handle()->exists, "Model has not deleted");
     }
 }

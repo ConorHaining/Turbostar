@@ -2,12 +2,16 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Basemkhirat\Elasticsearch\Model;
+// use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class AssociationModel extends Model
 {
-  use SoftDeletes;
+  // use SoftDeletes;
+
+  protected $index = 'association';
+
+  protected $type = 'association';
 
   /**
    * The attributes that are mass assignable.
@@ -20,7 +24,7 @@ class AssociationModel extends Model
     'end_date',
     'running_days',
     'base_location_suffix',
-    'assoc_location_suffix'
+    'assoc_location_suffix',
   ];
 
   /**
@@ -35,23 +39,8 @@ class AssociationModel extends Model
     'category',
     'date_indicator',
     'location',
-    'stp_indicator'
+    'stp_indicator',
   ];
-
-  public function main_train()
-  {
-    return $this->hasMany('App\ScheduleModel');
-  }
-
-  public function assoc_train()
-  {
-    return $this->hasMany('App\ScheduleModel');
-  }
-
-  public function location()
-  {
-    return $this->hasOne('App\TiplocModel');
-  }
 
   /**
    * Mutator to validate the category
@@ -65,11 +54,11 @@ class AssociationModel extends Model
 
      if (in_array($category, $validValues)) {
 
-       $this->attributes['category'] = $category;
+       return $category;
 
      } else if(empty(trim($category))) {
 
-       $this->attributes['category'] = null;
+       return null;
 
      } else {
 
@@ -91,11 +80,11 @@ class AssociationModel extends Model
 
       if (in_array($dateIndicator, $validValues)) {
 
-        $this->attributes['date_indicator'] = $dateIndicator;
+        return $dateIndicator;
 
       } else if(empty(trim($dateIndicator))) {
 
-        $this->attributes['date_indicator'] = null;
+        return null;
 
       } else {
 
@@ -117,7 +106,7 @@ class AssociationModel extends Model
 
        if (in_array($stpIndicator, $validValues)) {
 
-         $this->attributes['stp_indicator'] = $stpIndicator;
+         return $stpIndicator;
 
        } else {
 
