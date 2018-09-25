@@ -193,7 +193,7 @@ return [
                             'type' => 'keyword'
                         ],
                         'applicable_timetable' => [
-                            'type' => 'nested'
+                            'type' => 'keyword'
                         ],
                     ]
                 ]
