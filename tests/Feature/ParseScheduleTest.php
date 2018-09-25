@@ -19,7 +19,7 @@ class ParseScheduleTest extends TestCase
 
     public function testFullFileDownload()
     {
-        $command = $this->artisan('parse:schedule', ['--full' => true]);
+        // $command = $this->artisan('parse:schedule', ['--full' => true]);
 
         // dd($command);
     }

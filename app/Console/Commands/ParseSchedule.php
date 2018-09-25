@@ -20,7 +20,7 @@ class ParseSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'parse:schedule {--full}';
+    protected $signature = 'parse:schedule {--file=}';
 
     /**
      * The console command description.
@@ -46,6 +46,14 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
+      if($this->option('file') == null){
+        $filePath = $this->downloadDailyFile();
+      } else {
+        $filePath = $this->option('file');
+      }
+
+      $this->decompressFile($filePath);
+
 
     }
 
@@ -81,7 +89,7 @@ class ParseSchedule extends Command
         $fileURL = env("NR_DAILY_SCHEDULE_URL");
         $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
 
-        $fileHandler = fopen($fileLocalPath, "w+");
+        $fileHandler = fopen($fileLocalPath, "w");
 
         $curl = curl_init($fileURL);
         curl_setopt($curl, CURLOPT_FILE, $fileHandler);
