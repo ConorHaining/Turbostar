@@ -54,6 +54,8 @@ class ParseSchedule extends Command
 
       $this->decompressFile($filePath);
 
+      // TODO Archive compressed file to glacier
+
 
     }
 
@@ -66,13 +68,15 @@ class ParseSchedule extends Command
      public function downloadFullFile()
      {
        $fileURL = env("NR_FULL_SCHEDULE_URL");
-       $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
+       $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz';
 
        $fileHandler = fopen($fileLocalPath, "w+");
 
        $curl = curl_init($fileURL);
        curl_setopt($curl, CURLOPT_FILE, $fileHandler);
        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+       curl_setopt($curl, CURLOPT_USERPWD, env('NR_USERNAME') .':'. env('NR_PASSWORD'));
+       curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
        curl_exec($curl);
 
        return $fileLocalPath;
@@ -86,15 +90,18 @@ class ParseSchedule extends Command
       */
       public function downloadDailyFile()
       {
-        $fileURL = env("NR_DAILY_SCHEDULE_URL");
-        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz2';
+        $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
+        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz';
 
         $fileHandler = fopen($fileLocalPath, "w");
 
         $curl = curl_init($fileURL);
         curl_setopt($curl, CURLOPT_FILE, $fileHandler);
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_USERPWD, env('NR_USERNAME') .':'. env('NR_PASSWORD'));
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_exec($curl);
+        
 
         return $fileLocalPath;
       }
@@ -223,4 +230,30 @@ class ParseSchedule extends Command
            }
 
          }
+
+        /**
+         * This function looks a the current numeric day, following ISO-8601, and returns
+         * the short code for the previous day.
+         * 
+         * @see https://wiki.openraildata.com/index.php/SCHEDULE#Downloading
+         */
+        private function scheduleDayCode()
+        {
+          switch(date('N')) {
+            case 1:
+              return 'sun';
+            case 2:
+              return 'mon';
+            case 3:
+              return 'tue';
+            case 4:
+              return 'wed';
+            case 5:
+              return 'thu';
+            case 6:
+              return 'fri';
+            case 7:
+              return 'sat';
+          }
+        }
 }

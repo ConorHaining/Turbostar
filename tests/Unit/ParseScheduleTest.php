@@ -37,7 +37,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
+      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz', "SCHEDULE should exist");
 
     }
 
@@ -49,7 +49,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz2', "SCHEDULE should exist");
+      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz', "SCHEDULE should exist");
 
     }
 
