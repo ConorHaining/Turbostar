@@ -12,6 +12,8 @@ use App\Jobs\AssociationCreate;
 use App\Jobs\AssociationDelete;
 use App\Jobs\TiplocCreate;
 use App\Jobs\TiplocDelete;
+use Aws\Glacier\GlacierClient;
+use Illuminate\Support\Facades\Storage;
 
 class ParseSchedule extends Command
 {
@@ -54,7 +56,24 @@ class ParseSchedule extends Command
 
       $this->decompressFile($filePath);
 
-      // TODO Archive compressed file to glacier
+      if (App::environment('production')) {
+        $glacierClient = GlacierClient::factory([
+          'credentials' => [
+              'key'    => env('AWS_ACCESS_KEY_ID'),
+              'secret' => env('AWS_SECRET_ACCESS_KEY'),
+          ],
+          'region' => 'eu-west-1'
+        ]);
+  
+        $archiveResult = $glacierClient->uploadArchive([
+          'vaultName' => 'NR_SCHEDULE',
+          'accountId' => '-',
+          'body' => Storage::get('schedule/' . $this->formatFilename() . '.gz'),
+        ]);
+      }
+
+      
+
 
 
     }
