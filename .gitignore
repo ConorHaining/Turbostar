@@ -13,4 +13,4 @@ npm-debug.log
 yarn-error.log
 .env
 composer.lock
-storage/schedule
+storage/app/schedule
