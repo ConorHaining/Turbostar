@@ -122,7 +122,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setTrainStatusAttribute'),  'Class does not have setTrainStatusAttribute method');
 
-      $validValues = ['OL', 'OU', 'OO', 'OS', 'OW', 'XC', 'XD', 'XI', 'XR', 'XU', 'XX', 'XZ', 'BR', 'BS', 'SS', 'EE', 'EL', 'ES', 'JJ', 'PM', 'PP', 'PV', 'DD', 'DH', 'DI', 'DQ', 'DT', 'DY', 'ZB', 'ZZ', 'J2', 'H2', 'J3', 'J4', 'J5', 'J6', 'J8', 'H8', 'J9', 'H9', 'A0', 'E0', 'B0', 'B1', 'B4', 'B5', 'B6', 'B7', 'H0', 'H1', 'H3', 'H4', 'H5', 'H6'];
+      $validValues = ['OL', 'OU', 'OO', 'OS', 'OW', 'XC', 'XD', 'XI', 'XR', 'XU', 'XX', 'XZ', 'BR', 'BS', 'SS', 'EE', 'EL', 'ES', 'JJ', 'PM', 'PP', 'PV', 'DD', 'DH', 'DI', 'DQ', 'DT', 'DY', 'ZB', 'ZZ', 'J2', 'H2', 'J3', 'J4', 'J5', 'J6', 'J8', 'H8', 'J9', 'H9', 'A0', 'E0', 'B0', 'B1', 'B4', 'B5', 'B6', 'B7', 'H0', 'H1', 'H3', 'H4', 'H5', 'H6', null];
 
       foreach ($validValues as $value) {
         $schedule = new ScheduleModel();
@@ -139,7 +139,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setTrainCategoryAttribute'),  'Class does not have setTrainStatusAttribute method');
 
-      $invalidValues = [null, 3.14, 'ABC', 'b'];
+      $invalidValues = [3.14, 'ABC', 'b'];
 
       foreach ($invalidValues as $value) {
         $schedule = new ScheduleModel();
@@ -156,7 +156,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setPowerTypeAttribute'),  'Class does not have setPowerTypeAttribute method');
 
-      $validValues = ['D', 'DEM', 'DMU', 'E', 'ED', 'EML', 'EMU', 'HST'];
+      $validValues = ['D', 'DEM', 'DMU', 'E', 'ED', 'EML', 'EMU', 'HST', null];
 
       foreach ($validValues as $value) {
         $schedule = new ScheduleModel();
@@ -173,7 +173,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setPowerTypeAttribute'),  'Class does not have setPowerTypeAttribute method');
 
-      $invalidValues = [null, 3.14, 'ABC', 'b'];
+      $invalidValues = [3.14, 'ABC', 'b'];
 
       foreach ($invalidValues as $value) {
         $schedule = new ScheduleModel();
