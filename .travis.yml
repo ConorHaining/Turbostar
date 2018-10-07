@@ -13,6 +13,7 @@ before_script:
   - composer self-update
   - composer install --no-interaction
   - mysql -e 'CREATE DATABASE IF NOT EXISTS turbostar_test;'
+  - mkdir storage/app/schedule
   - php artisan es:indices:create --env=testing
   - php artisan migrate:install --env=testing
 
