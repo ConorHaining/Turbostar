@@ -2,6 +2,7 @@ language: php
 
 services: 
   - elasticsearch
+  - mysql
 
 php:
   - 7.1
@@ -11,6 +12,8 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - php artisan es:indices:create
+  - php artisan migrate:install
 
 
 script:
