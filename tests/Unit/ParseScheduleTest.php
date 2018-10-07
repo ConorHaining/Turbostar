@@ -26,19 +26,6 @@ class ParseScheduleTest extends TestCase
 
       self::$command = new ParseSchedule();
 
-      mkdir(__DIR__.'/../ParseScheduleTestTemp');
-    }
-
-    public function testFullFileDownload()
-    {
-
-      $filename = self::$command->downloadFullFile();
-
-      $date = Carbon::today();
-      $date = $date->format('Y-m-d');
-
-      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz', "SCHEDULE should exist");
-
     }
 
     public function testDailyFileDownload()
@@ -49,7 +36,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.gz', "SCHEDULE should exist");
+      $this->assertFileExists(storage_path('app/schedule/' . $date . '.gz'), "SCHEDULE should exist");
 
     }
 
@@ -61,7 +48,7 @@ class ParseScheduleTest extends TestCase
       $date = Carbon::today();
       $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(__DIR__.'/../ParseScheduleTestTemp/'.$date.'.json', "File not decompressed");
+      $this->assertFileExists(storage_path('app/schedule/' . $date . '.json'), "File not decompressed");
     }
 
     public function testCreateSchedule()
