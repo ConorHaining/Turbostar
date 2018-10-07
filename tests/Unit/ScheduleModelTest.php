@@ -104,7 +104,7 @@ class ScheduleModelTest extends TestCase
       $schedule = new ScheduleModel();
       $this->assertTrue(method_exists($schedule, 'setTrainStatusAttribute'),  'Class does not have setTrainStatusAttribute method');
 
-      $invalidValues = [null, 3.14, 'ABC', 'b'];
+      $invalidValues = [3.14, 'ABC', 'b'];
 
       foreach ($invalidValues as $value) {
         $schedule = new ScheduleModel();
