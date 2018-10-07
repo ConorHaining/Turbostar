@@ -54,6 +54,7 @@ class AssociationCreate implements ShouldQueue
       if($association->fails_validation)
       {
         return false;
+        fail();
       }
 
       return $association->save();
