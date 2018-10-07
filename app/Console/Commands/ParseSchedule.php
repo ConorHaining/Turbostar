@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App;
 use App\Jobs\ScheduleCreate;
 use App\Jobs\ScheduleDelete;
 use App\Jobs\AssociationCreate;
@@ -54,7 +55,7 @@ class ParseSchedule extends Command
         $filePath = $this->option('file');
       }
 
-      $this->decompressFile($filePath);
+      $filePath = $this->decompressFile($filePath);
 
       if (App::environment('production')) {
         $glacierClient = GlacierClient::factory([
@@ -71,35 +72,12 @@ class ParseSchedule extends Command
           'body' => Storage::get('schedule/' . $this->formatFilename() . '.gz'),
         ]);
       }
-
       
+      $headerLine = fgets(fopen($filePath, 'r'));
 
-
-
+      dd($headerLine);
+      
     }
-
-    /**
-     * Download the SCHEDULE file and store it
-     *
-     * @see https://wiki.openraildata.com/index.php/SCHEDULE
-     * @return void
-     */
-     public function downloadFullFile()
-     {
-       $fileURL = env("NR_FULL_SCHEDULE_URL");
-       $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz';
-
-       $fileHandler = fopen($fileLocalPath, "w+");
-
-       $curl = curl_init($fileURL);
-       curl_setopt($curl, CURLOPT_FILE, $fileHandler);
-       curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-       curl_setopt($curl, CURLOPT_USERPWD, env('NR_USERNAME') .':'. env('NR_PASSWORD'));
-       curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-       curl_exec($curl);
-
-       return $fileLocalPath;
-     }
 
      /**
       * Download the daily SCHEDULE file and store it
@@ -110,7 +88,7 @@ class ParseSchedule extends Command
       public function downloadDailyFile()
       {
         $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
-        $fileLocalPath = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.gz';
+        $fileLocalPath = storage_path('app/schedule/' . $this->formatFilename() . '.gz');
 
         $fileHandler = fopen($fileLocalPath, "w");
 
@@ -127,7 +105,7 @@ class ParseSchedule extends Command
 
       public function decompressFile($fileLocalPath)
       {
-        $fileLocalPathDecompressed = __DIR__ . env('NR_SCHEDULE_FILE_PATH') . $this->formatFilename() . '.json';
+        $fileLocalPathDecompressed = storage_path('app/schedule/' . $this->formatFilename() . '.json');
 
         $sfp = gzopen($fileLocalPath, "rb");
         $fp = fopen($fileLocalPathDecompressed, "w");
@@ -137,6 +115,8 @@ class ParseSchedule extends Command
         }
         gzclose($sfp);
         fclose($fp);
+
+        return $fileLocalPathDecompressed;
       }
 
      /**
