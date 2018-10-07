@@ -12,8 +12,8 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - php artisan es:indices:create
-  - php artisan migrate:install
+  - php artisan es:indices:create --env=testing
+  - php artisan migrate:install --env=testing
 
 
 script:
