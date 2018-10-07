@@ -15,6 +15,7 @@ use App\Jobs\TiplocCreate;
 use App\Jobs\TiplocDelete;
 use Aws\Glacier\GlacierClient;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ParseSchedule extends Command
 {
@@ -78,7 +79,7 @@ class ParseSchedule extends Command
       $headerLine = fgets($scheduleJSON);
 
       if(!$this->isHeaderValid($headerLine)){
-        throw new Exception('Already used header');
+        throw new \Exception('Already used header');
       }
 
       while(!feof($scheduleJSON)){
@@ -94,6 +95,8 @@ class ParseSchedule extends Command
       }
 
       fclose($scheduleJSON);
+
+      Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has been sucessfully queued.');
       
     }
 
@@ -164,6 +167,9 @@ class ParseSchedule extends Command
          $sequenceQuery = DB::table('schedule_sequence')->where('sequence', $sequenceNumber)->first();
 
          if (is_null($sequenceQuery)) {
+           DB::table('schedule_sequence')->insert(
+             ['sequence' => $sequenceNumber]
+           );
            return true;
          } else {
            return false;
