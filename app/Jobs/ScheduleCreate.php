@@ -35,6 +35,9 @@ class ScheduleCreate implements ShouldQueue
      */
     public function handle()
     {
+      $schedule = new ScheduleModel();
+
+      if(!$this->schedule->CIF_stp_indicator == 'C'){
         $locationRecordsRaw = $this->schedule->schedule_segment->schedule_location;
 
         $locationRecords = [];
@@ -77,19 +80,30 @@ class ScheduleCreate implements ShouldQueue
               $record->public_arrival = $recordRaw->public_arrival;
               $record->platform = $recordRaw->platform;
               $record->path = $recordRaw->path;
-
+              
               break;
+              
+            }
+            
+            
+            $record->type = $recordRaw->location_type;
+            
+            array_push($locationRecords, $record->toArray());
+            $schedule->location_records = $locationRecords;
 
-          }
+            $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
+            $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
+            $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
 
-
-          $record->type = $recordRaw->location_type;
-
-          array_push($locationRecords, $record->toArray());
+            $schedule->atoc_code = $this->schedule->atoc_code;
+            if($schedule->fails_validation) { echo 'fails atoc_code'; var_dump($this->schedule); fail();}
+            $schedule->applicable_timetable = $this->schedule->applicable_timetable;
+            if($schedule->fails_validation) { echo 'fails applicable_timetable'; var_dump($this->schedule); fail();}
 
         }
 
-        $schedule = new ScheduleModel();
+      }
+
         $schedule->uid = $this->schedule->CIF_train_uid;
         $schedule->start_date = $this->schedule->schedule_start_date;
         $schedule->end_start = $this->schedule->schedule_end_date;
@@ -97,12 +111,8 @@ class ScheduleCreate implements ShouldQueue
         $schedule->headcode = $this->schedule->schedule_segment->CIF_headcode;
         $schedule->course_indicator = $this->schedule->schedule_segment->CIF_course_indicator;
         $schedule->train_service_code = $this->schedule->schedule_segment->CIF_train_service_code;
-        $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
         $schedule->speed = $this->schedule->schedule_segment->CIF_speed;
         $schedule->connection_indicator = $this->schedule->schedule_segment->CIF_connection_indicator;
-        $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
-        $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
-        $schedule->location_records = $locationRecords;
 
         $schedule->running_days = $this->schedule->schedule_days_runs;
         if($schedule->fails_validation) { echo 'fails running_days'; var_dump($this->schedule); fail();}
@@ -130,10 +140,6 @@ class ScheduleCreate implements ShouldQueue
         if($schedule->fails_validation) { echo 'fails service_branding'; var_dump($this->schedule); fail();}
         $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
         if($schedule->fails_validation) { echo 'fails stp_indicator'; var_dump($this->schedule); fail();}
-        $schedule->atoc_code = $this->schedule->atoc_code;
-        if($schedule->fails_validation) { echo 'fails atoc_code'; var_dump($this->schedule); fail();}
-        $schedule->applicable_timetable = $this->schedule->applicable_timetable;
-        if($schedule->fails_validation) { echo 'fails applicable_timetable'; var_dump($this->schedule); fail();}
 
         return $schedule->save();
     }
