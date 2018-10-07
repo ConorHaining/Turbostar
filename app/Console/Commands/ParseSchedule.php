@@ -73,9 +73,27 @@ class ParseSchedule extends Command
         ]);
       }
       
-      $headerLine = fgets(fopen($filePath, 'r'));
+      $scheduleJSON = fopen($filePath, 'r');
 
-      dd($headerLine);
+      $headerLine = fgets($scheduleJSON);
+
+      if(!$this->isHeaderValid($headerLine)){
+        throw new Exception('Already used header');
+      }
+
+      while(!feof($scheduleJSON)){
+        $line = fgets($scheduleJSON);
+
+        if (strpos($line, 'JsonAssociationV1') !== false) {
+          $this->queueAssociation($line);
+        } else if (strpos($line, 'TiplocV1') !== false) {
+          $this->queueTiploc($line);
+        } else if (strpos($line, 'JsonScheduleV1') !== false) {
+          $this->queueSchedule($line);
+        }
+      }
+
+      fclose($scheduleJSON);
       
     }
 
@@ -143,7 +161,7 @@ class ParseSchedule extends Command
 
          $sequenceNumber = $json->JsonTimetableV1->Metadata->sequence;
 
-         $sequenceQuery = DB::collection('header')->where('sequence', $sequenceNumber)->first();
+         $sequenceQuery = DB::table('schedule_sequence')->where('sequence', $sequenceNumber)->first();
 
          if (is_null($sequenceQuery)) {
            return true;
