@@ -117,9 +117,12 @@ class ScheduleModel extends Model
      */
      public function setTrainStatusAttribute($trainStatus)
      {
+       $trainStatus = trim($trainStatus);
        $validValues = ['B', 'F', 'P', 'S', 'T', '1', '2', '3', '4', '5'];
 
-       if (in_array($trainStatus, $validValues)) {
+       if (empty($trainStatus)){
+        return null;
+       } else if (in_array($trainStatus, $validValues)) {
 
          return $trainStatus;
 
