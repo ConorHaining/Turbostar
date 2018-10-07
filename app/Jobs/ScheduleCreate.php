@@ -105,35 +105,35 @@ class ScheduleCreate implements ShouldQueue
         $schedule->location_records = $locationRecords;
 
         $schedule->running_days = $this->schedule->schedule_days_runs;
-        if($schedule->fails_validation) { echo "running_days"; return false;}
+        if($schedule->fails_validation) { echo 'fails running_days'; var_dump($this->schedule); fail();}
         $schedule->bank_holiday_running = $this->schedule->CIF_bank_holiday_running;
-        if($schedule->fails_validation) { echo "bank_holiday_running"; return false;}
+        if($schedule->fails_validation) { echo 'fails bank_holiday_running'; var_dump($this->schedule); fail();}
         $schedule->train_status = $this->schedule->train_status;
-        if($schedule->fails_validation) { echo "train_status"; return false;}
+        if($schedule->fails_validation) { echo 'fails train_status'; var_dump($this->schedule); fail();}
         $schedule->train_category = $this->schedule->schedule_segment->CIF_train_category;
-        if($schedule->fails_validation) { echo "train_category"; return false;}
+        if($schedule->fails_validation) { echo 'fails train_category'; var_dump($this->schedule); fail();}
         $schedule->power_type = $this->schedule->schedule_segment->CIF_power_type;
-        if($schedule->fails_validation) { echo "power_type"; return false;}
+        if($schedule->fails_validation) { echo 'fails power_type'; var_dump($this->schedule); fail();}
         $schedule->timing_load = $this->schedule->schedule_segment->CIF_timing_load;
-        if($schedule->fails_validation) { echo "timing_load"; return false;}
+        if($schedule->fails_validation) { echo 'fails timing_load'; var_dump($this->schedule); fail();}
         $schedule->operating_characteristics = $this->schedule->schedule_segment->CIF_operating_characteristics;
-        if($schedule->fails_validation) { echo "operating_characteristics"; return false;}
+        if($schedule->fails_validation) { echo 'fails operating_characteristics'; var_dump($this->schedule); fail();}
         $schedule->train_class = $this->schedule->schedule_segment->CIF_train_class;
-        if($schedule->fails_validation) { echo "train_class"; return false;}
+        if($schedule->fails_validation) { echo 'fails train_class'; var_dump($this->schedule); fail();}
         $schedule->sleepers = $this->schedule->schedule_segment->CIF_sleepers;
-        if($schedule->fails_validation) { echo "sleepers"; return false;}
+        if($schedule->fails_validation) { echo 'fails sleepers'; var_dump($this->schedule); fail();}
         $schedule->reservations = $this->schedule->schedule_segment->CIF_reservations;
-        if($schedule->fails_validation) { echo "reservations"; return false;}
+        if($schedule->fails_validation) { echo 'fails reservations'; var_dump($this->schedule); fail();}
         $schedule->catering_code = $this->schedule->schedule_segment->CIF_catering_code;
-        if($schedule->fails_validation) { echo "catering_code"; return false;}
+        if($schedule->fails_validation) { echo 'fails catering_code'; var_dump($this->schedule); fail();}
         $schedule->service_branding = $this->schedule->schedule_segment->CIF_service_branding;
-        if($schedule->fails_validation) { echo "service_branding"; return false;}
+        if($schedule->fails_validation) { echo 'fails service_branding'; var_dump($this->schedule); fail();}
         $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
-        if($schedule->fails_validation) { echo "stp_indicator"; return false;}
+        if($schedule->fails_validation) { echo 'fails stp_indicator'; var_dump($this->schedule); fail();}
         $schedule->atoc_code = $this->schedule->atoc_code;
-        if($schedule->fails_validation) { echo "atoc_code"; return false;}
+        if($schedule->fails_validation) { echo 'fails atoc_code'; var_dump($this->schedule); fail();}
         $schedule->applicable_timetable = $this->schedule->applicable_timetable;
-        if($schedule->fails_validation) { echo "applicable_timetable"; return false;}
+        if($schedule->fails_validation) { echo 'fails applicable_timetable'; var_dump($this->schedule); fail();}
 
         return $schedule->save();
     }

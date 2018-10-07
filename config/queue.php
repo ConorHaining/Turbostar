@@ -35,7 +35,7 @@ return [
         ],
 
         'database' => [
-            'driver' => 'mongodb',
+            'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
             'retry_after' => 90,
@@ -79,7 +79,7 @@ return [
     */
 
     'failed' => [
-        'database' => 'mongodb',
+        'database' => 'mysql',
         'table' => 'failed_jobs',
     ],
 
