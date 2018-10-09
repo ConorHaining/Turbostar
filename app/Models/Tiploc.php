@@ -1,13 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Basemkhirat\Elasticsearch\Model;
-// use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class TiplocModel extends Model
+class Tiploc extends Model
 {
-  // use SoftDeletes;
 
   protected $index = 'tiploc';
 

@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\TiplocModel;
+use App\Models\Tiploc;
 
 class TiplocDelete implements ShouldQueue
 {
@@ -33,7 +33,7 @@ class TiplocDelete implements ShouldQueue
      */
     public function handle()
     {
-        $expiredTiploc = TiplocModel::where('code', 'like', 'WLGFSTN')->first();
+        $expiredTiploc = Tiploc::where('code', 'like', 'WLGFSTN')->first();
         $expiredTiploc->active = false;
         
         return $expiredTiploc->save();

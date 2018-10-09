@@ -8,9 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\AssociationModel;
-use App\ScheduleModel;
-use App\TiplocModel;
+use App\Models\Association;
+use App\Models\Schedule;
+use App\Models\Tiploc;
 
 class AssociationDelete implements ShouldQueue
 {
@@ -36,7 +36,7 @@ class AssociationDelete implements ShouldQueue
     public function handle()
     {
 
-        $expiredAssociation = AssociationModel::where('start_date', '=', $this->association->assoc_start_date)
+        $expiredAssociation = Association::where('start_date', '=', $this->association->assoc_start_date)
                                         ->where('stp_indicator', 'like', $this->association->CIF_stp_indicator)
                                         ->where('main_train', 'like', $this->association->main_train_uid)
                                         ->where('assoc_train', 'like', $this->association->assoc_train_uid)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Basemkhirat\Elasticsearch\Model;
 
@@ -44,7 +44,7 @@ class LocationRecord extends Model
     */
     public function tiploc()
     {
-      return $this->hasOne('App\TiplocModel');
+      return $this->hasOne('App\Tiploc');
     }
 
     /**

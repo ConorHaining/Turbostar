@@ -8,9 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\ScheduleModel;
+use App\Models\Schedule;
 use App\LocationRecord;
-use App\TiplocModel;
+use App\Models\Tiploc;
 
 class ScheduleCreate implements ShouldQueue
 {
@@ -35,7 +35,7 @@ class ScheduleCreate implements ShouldQueue
      */
     public function handle()
     {
-      $schedule = new ScheduleModel();
+      $schedule = new Schedule();
 
       if(!$this->schedule->CIF_stp_indicator == 'C'){
         $locationRecordsRaw = $this->schedule->schedule_segment->schedule_location;
