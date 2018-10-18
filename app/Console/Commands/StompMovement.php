@@ -9,6 +9,7 @@ use Stomp\StatefulStomp;
 use Stomp\Transport\Message;
 use Stomp\Broker\ActiveMq\Mode\DurableSubscription;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 use App\Jobs\MovementCreate;
 
@@ -28,8 +29,6 @@ class StompMovement extends Command
      */
     protected $description = 'Command description';
 
-    private $halt;
-
     /**
      * Create a new command instance.
      *
@@ -47,11 +46,7 @@ class StompMovement extends Command
      */
     public function handle()
     {
-        declare(ticks=100); // Handle ticks within this code block
-        pcntl_signal(SIGINT, [$this, 'shutdown']); // Call $this->shutdown() on SIGINT
-        pcntl_signal(SIGTERM, [$this, 'shutdown']); // Call $this->shutdown() on SIGTERM
-        $this->halt = false;
-
+        
         // create a consumer
         $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61618');
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
@@ -64,8 +59,8 @@ class StompMovement extends Command
         $durableConsumer = new DurableSubscription($consumer, '/topic/TRAIN_MVT_ALL_TOC', null, 'client');
         $durableConsumer->activate();
         $msg = false;
-        // var_dump($durableConsumer);
-        while(!$this->halt) {
+        
+        while(!Cache::has('stomp.stop')) {
             
             try{
                 $msg = $durableConsumer->read();
@@ -97,15 +92,12 @@ class StompMovement extends Command
             }
         }
 
-
+        Cache::pull('stomp.stop');
         // disconnect durable consumer
         $durableConsumer->inactive();
         $consumer->disconnect();
-        echo "Disconnecting consumer\n";
-        Log::emergency('Movement feed has stopped');
+        $this->alert('Disconnecting consumer');
+        Log::warn('Movement feed has stopped');
     }
 
-    public function shutdown() {
-        $this->halt = true;
-    }
 }
