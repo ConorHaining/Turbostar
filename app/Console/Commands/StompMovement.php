@@ -97,7 +97,7 @@ class StompMovement extends Command
         $durableConsumer->inactive();
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
-        Log::warn('Movement feed has stopped');
+        Log::warn('Movement feed has gracefully stopped');
     }
 
 }
