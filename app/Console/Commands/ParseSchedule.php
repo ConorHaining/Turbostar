@@ -53,7 +53,7 @@ class ParseSchedule extends Command
       if($this->option('file') == null){
         $filePath = $this->downloadDailyFile();
       } else {
-        $filePath = $this->option('file');
+        $filePath = storage_path('app/schedule/' . $this->option('file'));
       }
 
       $filePath = $this->decompressFile($filePath);
