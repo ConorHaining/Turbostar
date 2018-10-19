@@ -117,6 +117,81 @@ return [
             'mappings' => [
                 'schedule' => [
                     'properties' => [
+                        'location_records' => [
+                            'type' => 'nested',
+                            'properties' => [
+                                'arrival' => [
+                                    'type' => 'date',
+                                    'format' => 'HH:mm:ss',
+                                ],
+                                'departure' => [
+                                    'type' => 'date',
+                                    'format' => 'HH:mm:ss',
+                                ],
+                                'engineering_allowance' => [
+                                    'type' => 'keyword'
+                                ],
+                                'line' => [
+                                    'type' => 'keyword'
+                                ],
+                                'location' => [
+                                    'type' => 'nested',
+                                    'properties' => [
+                                        'code' => [
+                                            'type' => 'keyword'
+                                        ],
+                                        'nalco' => [
+                                            'type' => 'keyword'
+                                        ],
+                                        'stanox' => [
+                                            'type' => 'keyword'
+                                        ],
+                                        'crs' => [
+                                            'type' => 'keyword'
+                                        ],
+                                        'description' => [
+                                            'type' => 'text'
+                                        ],
+                                        'name' => [
+                                            'type' => 'text'
+                                        ],
+                                        'location' => [
+                                            'type' => 'geo_point'
+                                        ]
+                                    ]
+                                ],
+                                'pass' => [
+                                    'type' => 'date',
+                                    'format' => 'HH:mm:ss',
+                                ],
+                                'path' => [
+                                    'type' => 'keyword'
+                                ],
+                                'path' => [
+                                    'type' => 'keyword'
+                                ],
+                                'pathing_allowance' => [
+                                    'type' => 'keyword'
+                                ],
+                                'platform' => [
+                                    'type' => 'keyword'
+                                ],
+                                'public_arrival' => [
+                                    'type' => 'date',
+                                    'format' => 'HH:mm:ss',
+                                ],
+                                'public_departure' => [
+                                    'type' => 'date',
+                                    'format' => 'HH:mm:ss',
+                                ],
+                                'tiploc' => [
+                                    'type' => 'keyword'
+                                ],
+                                'type' => [
+                                    'type' => 'keyword'
+                                ],
+                            ]
+                        ],
                         'uid' => [
                             'type' => 'keyword'
                         ],

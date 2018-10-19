@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 use App\Models\Schedule;
-use App\LocationRecord;
+use App\Models\LocationRecord;
 use App\Models\Tiploc;
 
 class ScheduleCreate implements ShouldQueue
@@ -37,7 +37,7 @@ class ScheduleCreate implements ShouldQueue
     {
       $schedule = new Schedule();
 
-      if(!$this->schedule->CIF_stp_indicator == 'C'){
+      if($this->schedule->CIF_stp_indicator != 'C'){
         $locationRecordsRaw = $this->schedule->schedule_segment->schedule_location;
 
         $locationRecords = [];
@@ -46,40 +46,50 @@ class ScheduleCreate implements ShouldQueue
 
           $record = new LocationRecord();
           
+          $tiplocDocument = Tiploc::where('code', $recordRaw->tiploc_code)
+                                        ->get()[0]->toArray();
+          unset($tiplocDocument['_index']);
+          unset($tiplocDocument['_type']);
+          unset($tiplocDocument['_id']);
+          unset($tiplocDocument['_score']);
+
           switch ($recordRaw->location_type) {
             case 'LO': 
 
-              $record->tiploc_instance = $recordRaw->tiploc_instance;
-              $record->departure = $recordRaw->departure;
-              $record->public_departure = $recordRaw->public_departure;
+              $record->tiploc = $recordRaw->tiploc_code;
+              $record->departure = $this->formatTime($recordRaw->departure);
+              $record->public_departure = $this->formatTime($recordRaw->public_departure);
               $record->platform = $recordRaw->platform;
               $record->line = $recordRaw->line;
               $record->engineering_allowance = $recordRaw->engineering_allowance;
               $record->pathing_allowance = $recordRaw->pathing_allowance;
+              $record->location = $tiplocDocument;
 
               break;
             case 'LI':
 
-              $record->tiploc_instance = $recordRaw->tiploc_instance;
-              $record->arrival = $recordRaw->arrival;
-              $record->departure = $recordRaw->departure;
-              $record->pass = $recordRaw->pass;
-              $record->public_arrival = $recordRaw->public_arrival;
-              $record->public_departure = $recordRaw->public_departure;
+              $record->tiploc = $recordRaw->tiploc_code;
+              $record->arrival = $this->formatTime($recordRaw->arrival);
+              $record->departure = $this->formatTime($recordRaw->departure);
+              $record->pass = $this->formatTime($recordRaw->pass);
+              $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
+              $record->public_departure = $this->formatTime($recordRaw->public_departure);
               $record->platform = $recordRaw->platform;
               $record->line = $recordRaw->line;
               $record->path = $recordRaw->path;
               $record->engineering_allowance = $recordRaw->engineering_allowance;
               $record->pathing_allowance = $recordRaw->pathing_allowance;
+              $record->location = $tiplocDocument;
 
               break;
             case 'LT':
 
-              $record->tiploc_instance = $recordRaw->tiploc_instance;
-              $record->arrival = $recordRaw->arrival;
-              $record->public_arrival = $recordRaw->public_arrival;
+              $record->tiploc = $recordRaw->tiploc_code;
+              $record->arrival = $this->formatTime($recordRaw->arrival);
+              $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
               $record->platform = $recordRaw->platform;
               $record->path = $recordRaw->path;
+              $record->location = $tiplocDocument;
               
               break;
               
@@ -140,7 +150,31 @@ class ScheduleCreate implements ShouldQueue
         if($schedule->fails_validation) { echo 'fails service_branding'; var_dump($this->schedule); fail();}
         $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
         if($schedule->fails_validation) { echo 'fails stp_indicator'; var_dump($this->schedule); fail();}
-
+        
         return $schedule->save();
+    }
+
+    /**
+     * Format location record times into an ES suitable format
+     * 
+     * @param string
+     * @return string, null | In the HH:mm:ss format
+     */
+    public function formatTime($time) {
+      if(empty($time)) {
+        return null;
+      }
+
+      $hours =  substr($time, 0, 2);
+      $minutes = substr($time, 2, 2);
+      
+      if (substr($time, -1) == 'H') {
+        $seconds = '30';          
+      } else {
+        $seconds = '00';        
+      }
+
+      $timestamp = $hours . ":" . $minutes . ":" . $seconds;
+      return $timestamp;
     }
 }
