@@ -94,6 +94,9 @@ return [
                         'name' => [
                             'type' => 'text'
                         ],
+                        'location' => [
+                            'type' => 'geo_point'
+                        ]
                     ]
                 ]
             ]
