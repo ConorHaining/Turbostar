@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\TiplocModel;
+use App\Models\Tiploc;
 use App\Jobs\TiplocDelete;
 
 class TiplocDeleteTest extends TestCase
@@ -17,7 +17,7 @@ class TiplocDeleteTest extends TestCase
     $text = json_decode($text);
     $payload = $text->TiplocV1;
 
-    $testTiploc = new TiplocModel();
+    $testTiploc = new Tiploc();
     $testTiploc->code = 'WLGFSTN';
     $testTiploc->save();
 

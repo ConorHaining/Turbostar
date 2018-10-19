@@ -1,13 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Basemkhirat\Elasticsearch\Model;
-// use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class AssociationModel extends Model
+class Association extends Model
 {
-  // use SoftDeletes;
 
   protected $index = 'association';
 

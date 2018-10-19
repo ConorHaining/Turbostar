@@ -6,20 +6,20 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\AssociationModel;
+use App\Models\Association;
 
-class AssociationModelTest extends TestCase
+class AssociationTest extends TestCase
 {
   public function testSetCategoryValid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
     $validValues = ['JJ', 'VV', 'NP'];
 
     foreach ($validValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->category = $value;
 
@@ -31,14 +31,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetCategoryNull()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
     $validValues = ['   ', '  ', ''];
 
     foreach ($validValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->category = $value;
 
@@ -50,14 +50,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetCategoryInvalid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
     $invalidValues = ['BS', '1', 'CAT'];
 
     foreach ($invalidValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->category = $value;
 
@@ -69,14 +69,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetDateIndicatorValid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
 
     $validValues = ['S', 'N', 'P'];
 
     foreach ($validValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->date_indicator = $value;
 
@@ -88,14 +88,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetDateIndicatorNull()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
 
     $validValues = ['', ' ', '  '];
 
     foreach ($validValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->date_indicator = $value;
 
@@ -107,14 +107,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetDateIndicatorInvalid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
 
     $invalidValues = ['BS', '1', 'CAT'];
 
     foreach ($invalidValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->date_indicator = $value;
 
@@ -126,14 +126,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetStpIndicatorValid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
 
     $validValues = ['C', 'N', 'O', 'P'];
 
     foreach ($validValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->stp_indicator = $value;
 
@@ -145,14 +145,14 @@ class AssociationModelTest extends TestCase
 
   public function testSetStpIndicatorInvalid()
   {
-    $association = new AssociationModel();
+    $association = new Association();
     $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
 
     $invalidValues = ['BS', '1', 'CAT'];
 
     foreach ($invalidValues as $value) {
 
-      $association = new AssociationModel();
+      $association = new Association();
 
       $association->stp_indicator = $value;
 

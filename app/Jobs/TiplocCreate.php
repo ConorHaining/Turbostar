@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\TiplocModel;
+use App\Models\Tiploc;
 
 class TiplocCreate implements ShouldQueue
 {
@@ -34,7 +34,7 @@ class TiplocCreate implements ShouldQueue
      */
     public function handle()
     {
-        $tiploc = new TiplocModel();
+        $tiploc = new Tiploc();
         $tiploc->code = $this->tiploc->tiploc_code;
         $tiploc->nalco = $this->tiploc->nalco;
         $tiploc->stanox = $this->tiploc->stanox;

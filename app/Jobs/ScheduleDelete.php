@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 
-use App\ScheduleModel;
+use App\Models\Schedule;
 class ScheduleDelete implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -33,7 +33,7 @@ class ScheduleDelete implements ShouldQueue
      */
     public function handle()
     {
-        $expiredSchedule = ScheduleModel::where('uid', 'like', $this->schedule->CIF_train_uid)
+        $expiredSchedule = Schedule::where('uid', 'like', $this->schedule->CIF_train_uid)
                                           ->where('start_date', 'like', $this->schedule->schedule_start_date)
                                           ->where('stp_indicator', 'like', $this->schedule->CIF_stp_indicator)
                                           ->first();

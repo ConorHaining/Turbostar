@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\LocationRecord;
+use App\Models\LocationRecord;
 
 class LocationRecordTest extends TestCase
 {

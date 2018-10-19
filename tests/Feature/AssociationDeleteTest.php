@@ -6,9 +6,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\AssociationModel;
-use App\ScheduleModel;
-use App\TiplocModel;
+use App\Models\Association;
+use App\Models\Schedule;
+use App\Models\Tiploc;
 use App\Jobs\AssociationDelete;
 
 class AssociationDeleteTest extends TestCase
@@ -19,7 +19,7 @@ class AssociationDeleteTest extends TestCase
       $text = json_decode($text);
       $payload = $text->JsonAssociationV1;
 
-      $testAssociation = new AssociationModel();
+      $testAssociation = new Association();
       $testAssociation->start_date = '2017-12-22T00:00:00Z';
       $testAssociation->base_location_suffix = null;
       $testAssociation->main_train = 'P13474';

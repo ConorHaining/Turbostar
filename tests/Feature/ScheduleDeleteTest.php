@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\ScheduleModel;
+use App\Models\Schedule;
 use App\Jobs\ScheduleDelete;
 
 class ScheduleDeleteTest extends TestCase
@@ -17,7 +17,7 @@ class ScheduleDeleteTest extends TestCase
       $text = json_decode($text);
       $payload = $text->JsonScheduleV1;
 
-      $testSchedule = new ScheduleModel();
+      $testSchedule = new Schedule();
       $testSchedule->uid = 'C58801';
       $testSchedule->start_date = '2017-12-18';
       $testSchedule->stp_indicator = 'O';

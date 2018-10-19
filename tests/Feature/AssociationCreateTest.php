@@ -6,8 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use App\ScheduleModel;
-use App\TiplocModel;
+use App\Models\Schedule;
+use App\Models\Tiploc;
 use App\Jobs\AssociationCreate;
 
 class AssociationCreateTest extends TestCase

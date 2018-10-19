@@ -8,9 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\ScheduleModel;
-use App\AssociationModel;
-use App\TiplocModel;
+use App\Models\Schedule;
+use App\Models\Association;
+use App\Models\Tiploc;
 
 class AssociationCreate implements ShouldQueue
 {
@@ -36,7 +36,7 @@ class AssociationCreate implements ShouldQueue
     public function handle()
     {
 
-      $association = new AssociationModel();
+      $association = new Association();
       $association->start_date = $this->association->assoc_start_date;
       $association->end_date = $this->association->assoc_end_date;
       $association->running_days = $this->association->assoc_days;
