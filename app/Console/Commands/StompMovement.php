@@ -77,6 +77,9 @@ class StompMovement extends Command
 
                 foreach($json as $item){
                     $this->info('Message '. $item->header->msg_type .' Received: ' . date('H:i:s.u'));
+
+                    $item->header->received_at = now()->format('U') * 1000;
+
                     MovementCreate::dispatch($item)->onQueue('movement-' . $item->header->msg_type);
                 }
                 

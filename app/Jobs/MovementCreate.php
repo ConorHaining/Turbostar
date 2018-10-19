@@ -67,6 +67,8 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
 
         $movement->train_uid = $payload->body->train_uid;
         $movement->train_id = $payload->body->train_id;
@@ -74,13 +76,12 @@ class MovementCreate implements ShouldQueue
         $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
         $movement->toc_id = $payload->body->toc_id;
 
-        $movement->message_type = $payload->header->msg_type;
         $movement->start_date = $payload->body->schedule_start_date;
         $movement->end_date = $payload->body->schedule_end_date;
         $movement->schedule_source = $payload->body->schedule_source;
-        $movement->creation_timestamp = $payload->body->creation_timestamp;
+        $movement->creation_timestamp = intval($payload->body->creation_timestamp);
         $movement->actual_origin_stanox = $payload->body->tp_origin_stanox;
-        $movement->departure_timestamp = $payload->body->origin_dep_timestamp;
+        $movement->departure_timestamp = intval($payload->body->origin_dep_timestamp);
         $movement->d1266_record_number = $payload->body->d1266_record_number;
         $movement->call_type = $payload->body->train_call_type;
         $movement->call_mode = $payload->body->train_call_mode;
@@ -109,6 +110,9 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
+        $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
 
         
         $movement->origin_location_stanox = $payload->body->orig_loc_stanox;
@@ -130,37 +134,35 @@ class MovementCreate implements ShouldQueue
         
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
 
-        try {
-            $movement->train_id = $payload->body->train_id;
-            $movement->data_source = $payload->header->original_data_source;
-            $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
-            $movement->toc_id = $payload->body->toc_id;
-    
-            $movement->original_location_stanox = $payload->body->original_loc_stanox;
-            $movement->planned_timestamp = intval($payload->body->planned_timestamp);
-            $movement->timetable_variation = $payload->body->timetable_variation;
-            $movement->original_location_timestamp = intval($payload->body->original_loc_timestamp);
-            $movement->current_train_id = $payload->body->current_train_id;
-            $movement->delay_monitoring_point = $payload->body->delay_monitoring_point;
-            $movement->next_report_run_time = $payload->body->next_report_run_time;
-            $movement->stanox = $payload->body->loc_stanox;
-            $movement->actual_timestamp = $payload->body->actual_timestamp;
-            $movement->correction_indicator = $payload->body->correction_ind;
-            $movement->event_source = $payload->body->event_source;
-            $movement->terminated = $payload->body->train_terminated;
-            $movement->offroute = $payload->body->offroute_ind;
-            $movement->variation_status = $payload->body->variation_status;
-            $movement->report_expected = $payload->body->auto_expected;
-            $movement->direction_indication = $payload->body->direction_ind;
-            $movement->route = $payload->body->route;
-            $movement->next_report_stanox = $payload->body->next_report_stanox;
-            $movement->line_indicator = $payload->body->line_ind;
-            $movement->event_type = $payload->body->event_type;
-            $movement->platform = $payload->body->platform;
-        } catch (\Exception $e) {
-            Log::error($e->getMessage(), ['line' => $e->getLine(), 'payload' => $payload->body, 'timestamp' => $payload->body->planned_timestamp]);
-        }
+        $movement->train_id = $payload->body->train_id;
+        $movement->data_source = $payload->header->original_data_source;
+        $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
+        $movement->toc_id = $payload->body->toc_id;
+
+        $movement->original_location_stanox = $payload->body->original_loc_stanox;
+        $movement->planned_timestamp = intval($payload->body->planned_timestamp);
+        $movement->timetable_variation = $payload->body->timetable_variation;
+        $movement->original_location_timestamp = intval($payload->body->original_loc_timestamp);
+        $movement->current_train_id = $payload->body->current_train_id;
+        $movement->delay_monitoring_point = boolval($payload->body->delay_monitoring_point);
+        $movement->next_report_run_time = $payload->body->next_report_run_time;
+        $movement->stanox = $payload->body->loc_stanox;
+        $movement->actual_timestamp = intval($payload->body->actual_timestamp);
+        $movement->correction_indicator = boolval($payload->body->correction_ind);
+        $movement->event_source = $payload->body->event_source;
+        $movement->terminated = boolval($payload->body->train_terminated);
+        $movement->offroute = boolval($payload->body->offroute_ind);
+        $movement->variation_status = $payload->body->variation_status;
+        $movement->report_expected = boolval($payload->body->auto_expected);
+        $movement->direction_indication = $payload->body->direction_ind;
+        $movement->route = $payload->body->route;
+        $movement->next_report_stanox = $payload->body->next_report_stanox;
+        $movement->line_indicator = $payload->body->line_ind;
+        $movement->event_type = $payload->body->event_type;
+        $movement->platform = $payload->body->platform;
 
         return $movement;
 
@@ -180,6 +182,8 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
 
         $movement->train_id = $payload->body->train_id;
         $movement->data_source = $payload->header->original_data_source;
@@ -187,11 +191,11 @@ class MovementCreate implements ShouldQueue
         $movement->toc_id = $payload->body->toc_id;
         
         $movement->current_train_id = $payload->body->current_train_id;
-        $movement->original_loc_timestamp = $payload->body->original_loc_stanox;
-        $movement->departure_timestamp = $payload->body->dep_timestamp;
+        $movement->original_loc_timestamp = intval($payload->body->original_loc_stanox);
+        $movement->departure_timestamp = intval($payload->body->dep_timestamp);
         $movement->location_stanox = $payload->body->loc_stanox;
         $movement->original_location_stanox = $payload->body->original_loc_stanox;
-        $movement->reinstatement_timestamp = $payload->body->reinstatement_timestamp;
+        $movement->reinstatement_timestamp = intval($payload->body->reinstatement_timestamp);
         
         return $movement;
 
@@ -204,6 +208,8 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
         
         $movement->train_id = $payload->body->train_id;
         $movement->data_source = $payload->header->original_data_source;
@@ -229,6 +235,8 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
         
         $movement->train_id = $payload->body->train_id;
         $movement->data_source = $payload->header->original_data_source;
@@ -237,7 +245,7 @@ class MovementCreate implements ShouldQueue
         $movement->current_train_id = $payload->body->current_train_id;
         $movement->revised_train_id = $payload->body->revised_train_id;
         $movement->train_id = $payload->body->train_id;
-        $movement->event_timestamp = $payload->body->event_timestamp;
+        $movement->event_timestamp = intval($payload->body->event_timestamp);
 
         return $movement;
     }
@@ -249,17 +257,19 @@ class MovementCreate implements ShouldQueue
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
+        $movement->received_at = $payload->header->received_at;
+        $movement->processed_at = now()->format('U') * 1000;
 
         $movement->train_id = $payload->body->train_id;
         $movement->data_source = $payload->header->original_data_source;
         $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
 
-        $movement->original_location_timestamp = $payload->body->original_loc_timestamp;
+        $movement->original_location_timestamp = intval($payload->body->original_loc_timestamp);
         $movement->current_train_id = $payload->body->current_train_id;
-        $movement->departure_timestamp = $payload->body->dep_timestamp;
+        $movement->departure_timestamp = intval($payload->body->dep_timestamp);
         $movement->location_stanox = $payload->body->loc_stanox;
         $movement->original_location_stanox = $payload->body->original_loc_stanox;
-        $movement->event_timestamp = $payload->body->event_timestamp;
+        $movement->event_timestamp = intval($payload->body->event_timestamp);
 
         return $movement;
 

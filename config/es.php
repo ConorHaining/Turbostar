@@ -460,11 +460,18 @@ return [
                             'type' => 'date',
                             'format' => 'epoch_millis',
                         ],
+                        'received_at' => [
+                            'type' => 'date',
+                            'format' => 'epoch_millis',
+                        ],
+                        'processed_at' => [
+                            'type' => 'date',
+                            'format' => 'epoch_millis',
+                        ],
                     ],
                 ],
             ],
         ],
-
     ]
 
 ];
