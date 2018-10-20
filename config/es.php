@@ -62,46 +62,7 @@ return [
 
     'indices' => [
 
-        'tiploc' => [
-
-            "aliases" => [
-                "timetableIndex"
-            ],
-
-            'settings' => [
-                "number_of_shards" => 1,
-                "number_of_replicas" => 0,
-            ],
-
-            'mappings' => [
-                'tiploc' => [
-                    "properties" => [
-                        'code' => [
-                            'type' => 'keyword'
-                        ],
-                        'nalco' => [
-                            'type' => 'keyword'
-                        ],
-                        'stanox' => [
-                            'type' => 'keyword'
-                        ],
-                        'crs' => [
-                            'type' => 'keyword'
-                        ],
-                        'description' => [
-                            'type' => 'text'
-                        ],
-                        'name' => [
-                            'type' => 'text'
-                        ],
-                        'location' => [
-                            'type' => 'geo_point'
-                        ]
-                    ]
-                ]
-            ]
-
-        ],
+        'tiploc' => require(database_path('mappings/tiploc.php')),
 
         'schedule' => require(database_path('mappings/schedule.php')),
         
