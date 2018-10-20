@@ -38,87 +38,7 @@ class ScheduleCreate implements ShouldQueue
         $schedule = new Schedule();
 
         if($this->schedule->CIF_stp_indicator != 'C') {
-            $locationRecordsRaw = $this->schedule->schedule_segment->schedule_location;
-
-            $locationRecords = [];
-
-            foreach ($locationRecordsRaw as $recordRaw) {
-
-                $record = new LocationRecord();
-          
-                $tiplocDocument = Tiploc::where('code', $recordRaw->tiploc_code)
-                                        ->get()->toArray();
-                unset($tiplocDocument['_index']);
-                unset($tiplocDocument['_type']);
-                unset($tiplocDocument['_id']);
-                unset($tiplocDocument['_score']);
-
-                switch ($recordRaw->location_type) {
-                case 'LO': 
-
-                    $record->tiploc = $recordRaw->tiploc_code;
-                    $record->departure = $this->formatTime($recordRaw->departure);
-                    $record->public_departure = $this->formatTime($recordRaw->public_departure);
-                    $record->platform = $recordRaw->platform;
-                    $record->line = $recordRaw->line;
-                    $record->engineering_allowance = $recordRaw->engineering_allowance;
-                    $record->pathing_allowance = $recordRaw->pathing_allowance;
-                    $record->location = $tiplocDocument;
-
-                    break;
-                case 'LI':
-
-                    $record->tiploc = $recordRaw->tiploc_code;
-                    $record->arrival = $this->formatTime($recordRaw->arrival);
-                    $record->departure = $this->formatTime($recordRaw->departure);
-                    $record->pass = $this->formatTime($recordRaw->pass);
-                    $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
-                    $record->public_departure = $this->formatTime($recordRaw->public_departure);
-                    $record->platform = $recordRaw->platform;
-                    $record->line = $recordRaw->line;
-                    $record->path = $recordRaw->path;
-                    $record->engineering_allowance = $recordRaw->engineering_allowance;
-                    $record->pathing_allowance = $recordRaw->pathing_allowance;
-                    $record->location = $tiplocDocument;
-
-                    break;
-                case 'LT':
-
-                    $record->tiploc = $recordRaw->tiploc_code;
-                    $record->arrival = $this->formatTime($recordRaw->arrival);
-                    $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
-                    $record->platform = $recordRaw->platform;
-                    $record->path = $recordRaw->path;
-                    $record->location = $tiplocDocument;
-              
-                    break;
-              
-                }
-            
-            
-                $record->type = $recordRaw->location_type;
-            
-                array_push($locationRecords, $record->toArray());
-                $schedule->location_records = $locationRecords;
-
-                $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
-                $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
-                $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
-
-                $schedule->atoc_code = $this->schedule->atoc_code;
-                if($schedule->fails_validation) {
-                    Log::warn('A Schedule has fail validation', ['field' => 'atoc_code', 'payload' => json_encode($this->schedule)]);
-                    $this->fail();
-                }
-
-                $schedule->applicable_timetable = $this->schedule->applicable_timetable;
-                if($schedule->fails_validation) { 
-                    Log::warn('A Schedule has fail validation', ['field' => 'applicable_timetable', 'payload' => json_encode($this->schedule)]);
-                    $this->fail();
-                }
-
-            }
-
+            $schedule = $this->createLocationRecords($schedule);
         }
 
         $schedule->uid = $this->schedule->CIF_train_uid;
@@ -236,5 +156,94 @@ class ScheduleCreate implements ShouldQueue
 
         $timestamp = $hours . ":" . $minutes . ":" . $seconds;
         return $timestamp;
+    }
+
+    /**
+     * 
+     */
+    public function createLocationRecords(Schedule $schedule)
+    {
+        $locationRecordsRaw = $this->schedule->schedule_segment->schedule_location;
+
+        $locationRecords = [];
+
+        foreach ($locationRecordsRaw as $recordRaw) {
+
+            $record = new LocationRecord();
+        
+            $tiplocDocument = Tiploc::where('code', $recordRaw->tiploc_code)
+                                    ->get()->toArray();
+            unset($tiplocDocument['_index']);
+            unset($tiplocDocument['_type']);
+            unset($tiplocDocument['_id']);
+            unset($tiplocDocument['_score']);
+
+            switch ($recordRaw->location_type) {
+            case 'LO': 
+
+                $record->tiploc = $recordRaw->tiploc_code;
+                $record->departure = $this->formatTime($recordRaw->departure);
+                $record->public_departure = $this->formatTime($recordRaw->public_departure);
+                $record->platform = $recordRaw->platform;
+                $record->line = $recordRaw->line;
+                $record->engineering_allowance = $recordRaw->engineering_allowance;
+                $record->pathing_allowance = $recordRaw->pathing_allowance;
+                $record->location = $tiplocDocument;
+
+                break;
+            case 'LI':
+
+                $record->tiploc = $recordRaw->tiploc_code;
+                $record->arrival = $this->formatTime($recordRaw->arrival);
+                $record->departure = $this->formatTime($recordRaw->departure);
+                $record->pass = $this->formatTime($recordRaw->pass);
+                $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
+                $record->public_departure = $this->formatTime($recordRaw->public_departure);
+                $record->platform = $recordRaw->platform;
+                $record->line = $recordRaw->line;
+                $record->path = $recordRaw->path;
+                $record->engineering_allowance = $recordRaw->engineering_allowance;
+                $record->pathing_allowance = $recordRaw->pathing_allowance;
+                $record->location = $tiplocDocument;
+
+                break;
+            case 'LT':
+
+                $record->tiploc = $recordRaw->tiploc_code;
+                $record->arrival = $this->formatTime($recordRaw->arrival);
+                $record->public_arrival = $this->formatTime($recordRaw->public_arrival);
+                $record->platform = $recordRaw->platform;
+                $record->path = $recordRaw->path;
+                $record->location = $tiplocDocument;
+            
+                break;
+            
+            }
+        
+        
+            $record->type = $recordRaw->location_type;
+        
+            array_push($locationRecords, $record->toArray());
+            $schedule->location_records = $locationRecords;
+
+            $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
+            $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
+            $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
+
+            $schedule->atoc_code = $this->schedule->atoc_code;
+            if($schedule->fails_validation) {
+                Log::warn('A Schedule has fail validation', ['field' => 'atoc_code', 'payload' => json_encode($this->schedule)]);
+                $this->fail();
+            }
+
+            $schedule->applicable_timetable = $this->schedule->applicable_timetable;
+            if($schedule->fails_validation) { 
+                Log::warn('A Schedule has fail validation', ['field' => 'applicable_timetable', 'payload' => json_encode($this->schedule)]);
+                $this->fail();
+            }
+
+            return $schedule;
+
+        }
     }
 }
