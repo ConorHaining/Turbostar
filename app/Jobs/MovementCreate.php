@@ -57,7 +57,7 @@ class MovementCreate implements ShouldQueue
             Log::error('Unknown Message Type', ['message_id' => $this->payload->header->msg_type]);
         }
 
-        $movement->save();
+        return $movement->save();
     }
 
     /**
