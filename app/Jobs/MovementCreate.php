@@ -63,7 +63,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an activation message
      */
-    public function activation($payload) {
+    public function activation($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -87,11 +88,11 @@ class MovementCreate implements ShouldQueue
         $movement->call_mode = $payload->body->train_call_mode;
 
         switch($payload->body->schedule_type) {
-            case 'P':
+        case 'P':
             $movement->schedule_type = 'O';
-            case 'O':
+        case 'O':
             $movement->schedule_type = 'P';
-            default:
+        default:
             $movement->schedule_type = $payload->body->schedule_type;
         }
 
@@ -106,7 +107,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an cancellation message
      */
-    public function cancellation($payload) {
+    public function cancellation($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -130,7 +132,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an movement message
      */
-    public function movement($payload) {
+    public function movement($payload)
+    {
         
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -171,14 +174,16 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an unidentified message
      */
-    public function unidentified($payload) {
+    public function unidentified($payload)
+    {
         Log::error('Unidentified message received', ['payload' => json_encode($payload)]);
     }
 
     /**
      * Process an reinstatement message
      */
-    public function reinstatement($payload) {
+    public function reinstatement($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -204,7 +209,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an origin change message
      */
-    public function originChange($payload) {
+    public function originChange($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -231,7 +237,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an identity change message
      */
-    public function identityChange($payload) {
+    public function identityChange($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;
@@ -253,7 +260,8 @@ class MovementCreate implements ShouldQueue
     /**
      * Process an Location Change message
      */
-    public function locationChange($payload) {
+    public function locationChange($payload)
+    {
 
         $movement = new Movement();
         $movement->message_type = $payload->header->msg_type;

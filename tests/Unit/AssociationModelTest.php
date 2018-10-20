@@ -10,156 +10,156 @@ use App\Models\Association;
 
 class AssociationTest extends TestCase
 {
-  public function testSetCategoryValid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
+    public function testSetCategoryValid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
-    $validValues = ['JJ', 'VV', 'NP'];
+        $validValues = ['JJ', 'VV', 'NP'];
 
-    foreach ($validValues as $value) {
+        foreach ($validValues as $value) {
 
-      $association = new Association();
+            $association = new Association();
 
-      $association->category = $value;
+            $association->category = $value;
 
-      $this->assertEquals($value, $association->category, "Fails for invalid string: ".$value);
+            $this->assertEquals($value, $association->category, "Fails for invalid string: ".$value);
 
-    }
-
-  }
-
-  public function testSetCategoryNull()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
-
-    $validValues = ['   ', '  ', ''];
-
-    foreach ($validValues as $value) {
-
-      $association = new Association();
-
-      $association->category = $value;
-
-      $this->assertEquals(null, $association->category, "Fails for invalid string: ".$value);
+        }
 
     }
 
-  }
+    public function testSetCategoryNull()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
-  public function testSetCategoryInvalid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
+        $validValues = ['   ', '  ', ''];
 
-    $invalidValues = ['BS', '1', 'CAT'];
+        foreach ($validValues as $value) {
 
-    foreach ($invalidValues as $value) {
+            $association = new Association();
 
-      $association = new Association();
+            $association->category = $value;
 
-      $association->category = $value;
+            $this->assertEquals(null, $association->category, "Fails for invalid string: ".$value);
 
-      $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
-
-    }
-
-  }
-
-  public function testSetDateIndicatorValid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
-
-    $validValues = ['S', 'N', 'P'];
-
-    foreach ($validValues as $value) {
-
-      $association = new Association();
-
-      $association->date_indicator = $value;
-
-      $this->assertEquals($value, $association->date_indicator, "Fails for invalid string: ".$value);
+        }
 
     }
 
-  }
+    public function testSetCategoryInvalid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setCategoryAttribute'),  'Class does not have setCategoryAttribute method');
 
-  public function testSetDateIndicatorNull()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
+        $invalidValues = ['BS', '1', 'CAT'];
 
-    $validValues = ['', ' ', '  '];
+        foreach ($invalidValues as $value) {
 
-    foreach ($validValues as $value) {
+            $association = new Association();
 
-      $association = new Association();
+            $association->category = $value;
 
-      $association->date_indicator = $value;
+            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
 
-      $this->assertEquals(null, $association->date_indicator, "Fails for invalid string: ".$value);
-
-    }
-
-  }
-
-  public function testSetDateIndicatorInvalid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
-
-    $invalidValues = ['BS', '1', 'CAT'];
-
-    foreach ($invalidValues as $value) {
-
-      $association = new Association();
-
-      $association->date_indicator = $value;
-
-      $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+        }
 
     }
 
-  }
+    public function testSetDateIndicatorValid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
 
-  public function testSetStpIndicatorValid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
+        $validValues = ['S', 'N', 'P'];
 
-    $validValues = ['C', 'N', 'O', 'P'];
+        foreach ($validValues as $value) {
 
-    foreach ($validValues as $value) {
+            $association = new Association();
 
-      $association = new Association();
+            $association->date_indicator = $value;
 
-      $association->stp_indicator = $value;
+            $this->assertEquals($value, $association->date_indicator, "Fails for invalid string: ".$value);
 
-      $this->assertEquals($value, $association->stp_indicator, "Fails for invalid string: ".$value);
-
-    }
-
-  }
-
-  public function testSetStpIndicatorInvalid()
-  {
-    $association = new Association();
-    $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
-
-    $invalidValues = ['BS', '1', 'CAT'];
-
-    foreach ($invalidValues as $value) {
-
-      $association = new Association();
-
-      $association->stp_indicator = $value;
-
-      $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+        }
 
     }
 
-  }
+    public function testSetDateIndicatorNull()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
+
+        $validValues = ['', ' ', '  '];
+
+        foreach ($validValues as $value) {
+
+            $association = new Association();
+
+            $association->date_indicator = $value;
+
+            $this->assertEquals(null, $association->date_indicator, "Fails for invalid string: ".$value);
+
+        }
+
+    }
+
+    public function testSetDateIndicatorInvalid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setDateIndicatorAttribute'),  'Class does not have setDateIndicatorAttribute method');
+
+        $invalidValues = ['BS', '1', 'CAT'];
+
+        foreach ($invalidValues as $value) {
+
+            $association = new Association();
+
+            $association->date_indicator = $value;
+
+            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+
+        }
+
+    }
+
+    public function testSetStpIndicatorValid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
+
+        $validValues = ['C', 'N', 'O', 'P'];
+
+        foreach ($validValues as $value) {
+
+            $association = new Association();
+
+            $association->stp_indicator = $value;
+
+            $this->assertEquals($value, $association->stp_indicator, "Fails for invalid string: ".$value);
+
+        }
+
+    }
+
+    public function testSetStpIndicatorInvalid()
+    {
+        $association = new Association();
+        $this->assertTrue(method_exists($association, 'setStpIndicatorAttribute'),  'Class does not have setStpIndicatorAttribute method');
+
+        $invalidValues = ['BS', '1', 'CAT'];
+
+        foreach ($invalidValues as $value) {
+
+            $association = new Association();
+
+            $association->stp_indicator = $value;
+
+            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+
+        }
+
+    }
 
 }

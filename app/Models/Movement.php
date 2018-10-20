@@ -5,7 +5,7 @@ namespace App\Models;
 use Basemkhirat\Elasticsearch\Model;
 
 /**
- * @see https://wiki.openraildata.com/index.php/Train_Activation
+ * @see    https://wiki.openraildata.com/index.php/Train_Activation
  * @author Conor Haining <conor.haining@gmail.com>
  */
 class Movement extends Model
@@ -108,7 +108,8 @@ class Movement extends Model
     ];
     
 
-    public function setMessageTypeAttribute($message_type) {
+    public function setMessageTypeAttribute($message_type)
+    {
 
         $validValues = [self::ACTIVATION , self::CANCELLATION , self::MOVEMENT , self::UNIDENTIFIED , self::REINSTATEMENT , self::ORIGINCHANGE , self::IDENTITYCHANGE , self::LOCATIONCHANGE];
 
@@ -124,7 +125,8 @@ class Movement extends Model
 
     }
 
-    public function setEventTypeAttribute($event_type) {
+    public function setEventTypeAttribute($event_type)
+    {
 
         $validValues = ['ARRIVAL', 'DEPARTURE'];
 
@@ -140,7 +142,8 @@ class Movement extends Model
 
     }
 
-    public function setPlannedEventTypeAttribute($planned_event_type) {
+    public function setPlannedEventTypeAttribute($planned_event_type)
+    {
 
         $validValues = ['ARRIVAL', 'DEPARTURE', 'DESTINATION'];
 

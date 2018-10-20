@@ -13,10 +13,12 @@ class ScheduleSequenceNumber extends Migration
      */
     public function up()
     {
-        Schema::create('schedule_sequence', function (Blueprint $table) {
-            $table->integer('sequence');
-            $table->timestamp('added_at')->useCurrent();
-        });
+        Schema::create(
+            'schedule_sequence', function (Blueprint $table) {
+                $table->integer('sequence');
+                $table->timestamp('added_at')->useCurrent();
+            }
+        );
     }
 
     /**

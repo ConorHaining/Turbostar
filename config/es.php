@@ -62,13 +62,13 @@ return [
 
     'indices' => [
 
-        'tiploc' => require(database_path('mappings/tiploc.php')),
+        'tiploc' => include database_path('mappings/tiploc.php'),
 
-        'schedule' => require(database_path('mappings/schedule.php')),
+        'schedule' => include database_path('mappings/schedule.php'),
         
-        'association' => require_once(database_path('mappings/association.php')),
+        'association' => include_once database_path('mappings/association.php'),
 
-        'movement' => require_once(database_path('mappings/movement.php')),
+        'movement' => include_once database_path('mappings/movement.php'),
     ]
 
 ];

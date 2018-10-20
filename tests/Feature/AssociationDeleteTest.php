@@ -15,23 +15,23 @@ class AssociationDeleteTest extends TestCase
 {
     public function testGoldenExample()
     {
-      $text = '{"JsonAssociationV1":{"transaction_type":"Delete","main_train_uid":"P13474","assoc_train_uid":"V00975","assoc_start_date":"2017-12-22T00:00:00Z","location":"CRDFCEN","base_location_suffix":null,"diagram_type":"T","CIF_stp_indicator":"N"}}';
-      $text = json_decode($text);
-      $payload = $text->JsonAssociationV1;
+        $text = '{"JsonAssociationV1":{"transaction_type":"Delete","main_train_uid":"P13474","assoc_train_uid":"V00975","assoc_start_date":"2017-12-22T00:00:00Z","location":"CRDFCEN","base_location_suffix":null,"diagram_type":"T","CIF_stp_indicator":"N"}}';
+        $text = json_decode($text);
+        $payload = $text->JsonAssociationV1;
 
-      $testAssociation = new Association();
-      $testAssociation->start_date = '2017-12-22T00:00:00Z';
-      $testAssociation->base_location_suffix = null;
-      $testAssociation->main_train = 'P13474';
-      $testAssociation->assoc_train = 'V00975';
-      $testAssociation->stp_indicator = 'N';
-      $testAssociation->save();
+        $testAssociation = new Association();
+        $testAssociation->start_date = '2017-12-22T00:00:00Z';
+        $testAssociation->base_location_suffix = null;
+        $testAssociation->main_train = 'P13474';
+        $testAssociation->assoc_train = 'V00975';
+        $testAssociation->stp_indicator = 'N';
+        $testAssociation->save();
 
-      sleep(1);
+        sleep(1);
 
-      $job = new AssociationDelete($payload);
+        $job = new AssociationDelete($payload);
 
-      $this->assertTrue($job->handle()->exists, "Model still exists");
-      $this->assertFalse($job->handle()->attributes['active'], "Model has been set to inactive");
+        $this->assertTrue($job->handle()->exists, "Model still exists");
+        $this->assertFalse($job->handle()->attributes['active'], "Model has been set to inactive");
     }
 }

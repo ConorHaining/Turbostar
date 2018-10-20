@@ -22,125 +22,125 @@ class ParseScheduleTest extends TestCase
 
     protected function setUp()
     {
-      parent::setUp();
+        parent::setUp();
 
-      self::$command = new ParseSchedule();
+        self::$command = new ParseSchedule();
 
     }
 
     public function testDailyFileDownload()
     {
 
-      self::$command->downloadDailyFile();
+        self::$command->downloadDailyFile();
 
-      $date = Carbon::today();
-      $date = $date->format('Y-m-d');
+        $date = Carbon::today();
+        $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(storage_path('app/schedule/' . $date . '.gz'), "SCHEDULE should exist");
+        $this->assertFileExists(storage_path('app/schedule/' . $date . '.gz'), "SCHEDULE should exist");
 
     }
 
     public function testDecompressFile()
     {
-      $filepath = self::$command->downloadDailyFile();
-      self::$command->decompressFile($filepath);
+        $filepath = self::$command->downloadDailyFile();
+        self::$command->decompressFile($filepath);
 
-      $date = Carbon::today();
-      $date = $date->format('Y-m-d');
+        $date = Carbon::today();
+        $date = $date->format('Y-m-d');
 
-      $this->assertFileExists(storage_path('app/schedule/' . $date . '.json'), "File not decompressed");
+        $this->assertFileExists(storage_path('app/schedule/' . $date . '.json'), "File not decompressed");
     }
 
     public function testCreateSchedule()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $schedule = '{"JsonScheduleV1":{"transaction_type":"Create"}}';
+        $schedule = '{"JsonScheduleV1":{"transaction_type":"Create"}}';
 
-      self::$command->queueSchedule($schedule);
+        self::$command->queueSchedule($schedule);
 
-      Queue::assertPushedOn('schedule-create', ScheduleCreate::class);
+        Queue::assertPushedOn('schedule-create', ScheduleCreate::class);
     }
 
     public function testDeleteSchedule()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $schedule = '{"JsonScheduleV1":{"transaction_type":"Delete"}}';
+        $schedule = '{"JsonScheduleV1":{"transaction_type":"Delete"}}';
 
-      self::$command->queueSchedule($schedule);
+        self::$command->queueSchedule($schedule);
 
-      Queue::assertPushedOn('schedule-delete', ScheduleDelete::class);
+        Queue::assertPushedOn('schedule-delete', ScheduleDelete::class);
     }
 
     public function testInvalidSchedule()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $schedule = '{"JsonScheduleV1":{"transaction_type":"Invalid"}}';
+        $schedule = '{"JsonScheduleV1":{"transaction_type":"Invalid"}}';
 
-      $this->expectException(\Exception::class);
-      self::$command->queueSchedule($schedule);
+        $this->expectException(\Exception::class);
+        self::$command->queueSchedule($schedule);
 
-      Queue::assertNotPushed('schedule-create');
-      Queue::assertNotPushed('schedule-delete');
+        Queue::assertNotPushed('schedule-create');
+        Queue::assertNotPushed('schedule-delete');
     }
 
     public function testCreateAssociation()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $association = '{"JsonAssociationV1":{"transaction_type":"Create"}}';
+        $association = '{"JsonAssociationV1":{"transaction_type":"Create"}}';
 
-      self::$command->queueAssociation($association);
+        self::$command->queueAssociation($association);
 
-      Queue::assertPushedOn('association-create', AssociationCreate::class);
+        Queue::assertPushedOn('association-create', AssociationCreate::class);
     }
 
     public function testDeleteAssociation()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $association = '{"JsonAssociationV1":{"transaction_type":"Delete"}}';
+        $association = '{"JsonAssociationV1":{"transaction_type":"Delete"}}';
 
-      self::$command->queueAssociation($association);
+        self::$command->queueAssociation($association);
 
-      Queue::assertPushedOn('association-delete', AssociationDelete::class);
+        Queue::assertPushedOn('association-delete', AssociationDelete::class);
     }
 
     public function testInvalidAssociation()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $association = '{"JsonAssociationV1":{"transaction_type":"Invalid"}}';
+        $association = '{"JsonAssociationV1":{"transaction_type":"Invalid"}}';
 
-      $this->expectException(\Exception::class);
-      self::$command->queueAssociation($association);
+        $this->expectException(\Exception::class);
+        self::$command->queueAssociation($association);
 
-      Queue::assertNotPushed('association-create');
-      Queue::assertNotPushed('association-delete');
+        Queue::assertNotPushed('association-create');
+        Queue::assertNotPushed('association-delete');
     }
 
     public function testCreateTiploc()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $tiploc = '{"TiplocV1":{"transaction_type":"Create"}}';
+        $tiploc = '{"TiplocV1":{"transaction_type":"Create"}}';
 
-      self::$command->queueTiploc($tiploc);
+        self::$command->queueTiploc($tiploc);
 
-      Queue::assertPushedOn('tiploc-create', TiplocCreate::class);
+        Queue::assertPushedOn('tiploc-create', TiplocCreate::class);
     }
 
     public function testDeleteTipcloc()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $tiploc = '{"TiplocV1":{"transaction_type":"Delete"}}';
+        $tiploc = '{"TiplocV1":{"transaction_type":"Delete"}}';
 
-      self::$command->queueTiploc($tiploc);
+        self::$command->queueTiploc($tiploc);
 
-      Queue::assertPushedOn('tiploc-delete', TiplocDelete::class);
+        Queue::assertPushedOn('tiploc-delete', TiplocDelete::class);
     }
 
     // public function testUpdateTipcloc()
@@ -156,16 +156,16 @@ class ParseScheduleTest extends TestCase
 
     public function testInvalidTiploc()
     {
-      Queue::fake();
+        Queue::fake();
 
-      $tiploc = '{"TiplocV1":{"transaction_type":"Invalid"}}';
+        $tiploc = '{"TiplocV1":{"transaction_type":"Invalid"}}';
 
-      $this->expectException(\Exception::class);
-      self::$command->queueTiploc($tiploc);
+        $this->expectException(\Exception::class);
+        self::$command->queueTiploc($tiploc);
 
-      Queue::assertNotPushed('tiploc-create');
-      Queue::assertNotPushed('tiploc-delete');
-      Queue::assertNotPushed('tiploc-update');
+        Queue::assertNotPushed('tiploc-create');
+        Queue::assertNotPushed('tiploc-delete');
+        Queue::assertNotPushed('tiploc-update');
     }
 
     public function tearDown()

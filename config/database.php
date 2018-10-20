@@ -49,7 +49,7 @@ return [
         'options'  => [
             'database' => 'admin' // sets the authentication database required by mongo 3
         ]
-    ],
+        ],
 
         'mysql' => [
             'driver' => 'mysql',

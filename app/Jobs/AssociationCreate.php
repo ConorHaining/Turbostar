@@ -36,34 +36,33 @@ class AssociationCreate implements ShouldQueue
     public function handle()
     {
 
-      $association = new Association();
-      $association->start_date = $this->association->assoc_start_date;
-      $association->end_date = $this->association->assoc_end_date;
-      $association->running_days = $this->association->assoc_days;
-      $association->base_location_suffix = $this->association->base_location_suffix;
-      $association->assoc_location_suffix = $this->association->assoc_location_suffix;
+        $association = new Association();
+        $association->start_date = $this->association->assoc_start_date;
+        $association->end_date = $this->association->assoc_end_date;
+        $association->running_days = $this->association->assoc_days;
+        $association->base_location_suffix = $this->association->base_location_suffix;
+        $association->assoc_location_suffix = $this->association->assoc_location_suffix;
 
 
-      $association->main_train = $this->association->main_train_uid;
-      $association->assoc_train = $this->association->assoc_train_uid;
-      $association->category = $this->association->category;
-      $association->date_indicator = $this->association->date_indicator;
-      $association->stp_indicator = $this->association->CIF_stp_indicator;
+        $association->main_train = $this->association->main_train_uid;
+        $association->assoc_train = $this->association->assoc_train_uid;
+        $association->category = $this->association->category;
+        $association->date_indicator = $this->association->date_indicator;
+        $association->stp_indicator = $this->association->CIF_stp_indicator;
       
-      $tiplocDocument = Tiploc::where('code', $this->association->location)
+        $tiplocDocument = Tiploc::where('code', $this->association->location)
                                         ->get()->toArray();
           unset($tiplocDocument['_index']);
           unset($tiplocDocument['_type']);
           unset($tiplocDocument['_id']);
           unset($tiplocDocument['_score']);
-      $association->location = $tiplocDocument;
+        $association->location = $tiplocDocument;
 
-      if($association->fails_validation)
-      {
-        $this->fail();
-      }
+        if($association->fails_validation) {
+            $this->fail();
+        }
 
-      return $association->save();
+        return $association->save();
 
     }
 }

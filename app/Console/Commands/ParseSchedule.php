@@ -50,64 +50,68 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
-      if($this->option('file') == null){
-        $filePath = $this->downloadDailyFile();
-      } else {
-        $filePath = storage_path('app/schedule/' . $this->option('file'));
-      }
-
-      $filePath = $this->decompressFile($filePath);
-
-      if (App::environment('production')) {
-        $glacierClient = GlacierClient::factory([
-          'credentials' => [
-              'key'    => env('AWS_ACCESS_KEY_ID'),
-              'secret' => env('AWS_SECRET_ACCESS_KEY'),
-          ],
-          'region' => 'eu-west-1'
-        ]);
-  
-        $archiveResult = $glacierClient->uploadArchive([
-          'vaultName' => 'NR_SCHEDULE',
-          'accountId' => '-',
-          'body' => Storage::get('schedule/' . $this->formatFilename() . '.gz'),
-        ]);
-      }
-      
-      $scheduleJSON = fopen($filePath, 'r');
-
-      $headerLine = fgets($scheduleJSON);
-
-      if(!$this->isHeaderValid($headerLine)){
-        throw new \Exception('Already used header');
-      }
-
-      while(!feof($scheduleJSON)){
-        $line = fgets($scheduleJSON);
-
-        if (strpos($line, 'JsonAssociationV1') !== false) {
-          $this->queueAssociation($line);
-        } else if (strpos($line, 'TiplocV1') !== false) {
-          $this->queueTiploc($line);
-        } else if (strpos($line, 'JsonScheduleV1') !== false) {
-          $this->queueSchedule($line);
+        if($this->option('file') == null) {
+            $filePath = $this->downloadDailyFile();
+        } else {
+            $filePath = storage_path('app/schedule/' . $this->option('file'));
         }
-      }
 
-      fclose($scheduleJSON);
+        $filePath = $this->decompressFile($filePath);
 
-      Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has been sucessfully queued.');
+        if (App::environment('production')) {
+            $glacierClient = GlacierClient::factory(
+                [
+                'credentials' => [
+                'key'    => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                ],
+                'region' => 'eu-west-1'
+                ]
+            );
+  
+            $archiveResult = $glacierClient->uploadArchive(
+                [
+                'vaultName' => 'NR_SCHEDULE',
+                'accountId' => '-',
+                'body' => Storage::get('schedule/' . $this->formatFilename() . '.gz'),
+                ]
+            );
+        }
+      
+        $scheduleJSON = fopen($filePath, 'r');
+
+        $headerLine = fgets($scheduleJSON);
+
+        if(!$this->isHeaderValid($headerLine)) {
+            throw new \Exception('Already used header');
+        }
+
+        while(!feof($scheduleJSON)){
+            $line = fgets($scheduleJSON);
+
+            if (strpos($line, 'JsonAssociationV1') !== false) {
+                $this->queueAssociation($line);
+            } else if (strpos($line, 'TiplocV1') !== false) {
+                $this->queueTiploc($line);
+            } else if (strpos($line, 'JsonScheduleV1') !== false) {
+                $this->queueSchedule($line);
+            }
+        }
+
+        fclose($scheduleJSON);
+
+        Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has been sucessfully queued.');
       
     }
 
      /**
       * Download the daily SCHEDULE file and store it
       *
-      * @see https://wiki.openraildata.com/index.php/SCHEDULE
+      * @see    https://wiki.openraildata.com/index.php/SCHEDULE
       * @return void
       */
-      public function downloadDailyFile()
-      {
+    public function downloadDailyFile()
+    {
         $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
         $fileLocalPath = storage_path('app/schedule/' . $this->formatFilename() . '.gz');
 
@@ -122,60 +126,60 @@ class ParseSchedule extends Command
         
 
         return $fileLocalPath;
-      }
+    }
 
-      public function decompressFile($fileLocalPath)
-      {
+    public function decompressFile($fileLocalPath)
+    {
         $fileLocalPathDecompressed = storage_path('app/schedule/' . $this->formatFilename() . '.json');
 
         $sfp = gzopen($fileLocalPath, "rb");
         $fp = fopen($fileLocalPathDecompressed, "w");
 
         while ($string = gzread($sfp, 4096)) {
-          fwrite($fp, $string, strlen($string));
+            fwrite($fp, $string, strlen($string));
         }
         gzclose($sfp);
         fclose($fp);
 
         return $fileLocalPathDecompressed;
-      }
+    }
 
      /**
       * Create SCHEDULE filename of the format YYYY-MM-DD
       *
       * @return string
       */
-      private function formatFilename()
-      {
+    private function formatFilename()
+    {
         $date = Carbon::today();
 
         return $date->format('Y-m-d');
-      }
+    }
 
       /**
        * Check if the header for the SCHEDULE has already been downloaded
        *
        * @return boolean
        */
-       public function isHeaderValid(string $header)
-       {
+    public function isHeaderValid(string $header)
+    {
 
-         $json = json_decode($header);
+        $json = json_decode($header);
 
-         $sequenceNumber = $json->JsonTimetableV1->Metadata->sequence;
+        $sequenceNumber = $json->JsonTimetableV1->Metadata->sequence;
 
-         $sequenceQuery = DB::table('schedule_sequence')->where('sequence', $sequenceNumber)->first();
+        $sequenceQuery = DB::table('schedule_sequence')->where('sequence', $sequenceNumber)->first();
 
-         if (is_null($sequenceQuery)) {
-           DB::table('schedule_sequence')->insert(
-             ['sequence' => $sequenceNumber]
-           );
-           return true;
-         } else {
-           return false;
-         }
+        if (is_null($sequenceQuery)) {
+            DB::table('schedule_sequence')->insert(
+                ['sequence' => $sequenceNumber]
+            );
+               return true;
+        } else {
+            return false;
+        }
 
-       }
+    }
 
        /**
         *
@@ -183,25 +187,25 @@ class ParseSchedule extends Command
         *
         *
         */
-        public function queueSchedule($payload)
-        {
-          $scheduleJSON = json_decode($payload);
-          $scheduleJSON =  $scheduleJSON->JsonScheduleV1;
-          if ($scheduleJSON->transaction_type == "Create") {
+    public function queueSchedule($payload)
+    {
+        $scheduleJSON = json_decode($payload);
+        $scheduleJSON =  $scheduleJSON->JsonScheduleV1;
+        if ($scheduleJSON->transaction_type == "Create") {
 
             ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-create');
 
-          } else if ($scheduleJSON->transaction_type == "Delete") {
+        } else if ($scheduleJSON->transaction_type == "Delete") {
 
             ScheduleDelete::dispatch($scheduleJSON)->onQueue('schedule-delete');
 
-          } else {
+        } else {
 
             throw new \Exception("Unknown Schedule Transaction Type", 1);
             // TODO Log this if it ever happens
-          }
-
         }
+
+    }
 
         /**
          *
@@ -209,50 +213,50 @@ class ParseSchedule extends Command
          *
          *
          */
-         public function queueAssociation($payload)
-         {
-           $associationJSON = json_decode($payload);
-           $associationJSON =  $associationJSON->JsonAssociationV1;
-           if ($associationJSON->transaction_type == "Create") {
+    public function queueAssociation($payload)
+    {
+        $associationJSON = json_decode($payload);
+        $associationJSON =  $associationJSON->JsonAssociationV1;
+        if ($associationJSON->transaction_type == "Create") {
 
              AssociationCreate::dispatch($associationJSON)->onQueue('association-create');
 
-           } else if ($associationJSON->transaction_type == "Delete") {
+        } else if ($associationJSON->transaction_type == "Delete") {
 
-             AssociationDelete::dispatch($associationJSON)->onQueue('association-delete');
+            AssociationDelete::dispatch($associationJSON)->onQueue('association-delete');
 
-           } else {
+        } else {
 
-             throw new \Exception("Unknown Association Transaction Type", 1);
-             // TODO Log this if it ever happens
-           }
+            throw new \Exception("Unknown Association Transaction Type", 1);
+            // TODO Log this if it ever happens
+        }
 
-         }
+    }
 
-         public function queueTiploc($payload)
-         {
-           $tiplocJSON = json_decode($payload);
-           $tiplocJSON =  $tiplocJSON->TiplocV1;
-           if ($tiplocJSON->transaction_type == "Create") {
+    public function queueTiploc($payload)
+    {
+        $tiplocJSON = json_decode($payload);
+        $tiplocJSON =  $tiplocJSON->TiplocV1;
+        if ($tiplocJSON->transaction_type == "Create") {
 
              TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-create');
 
-           } else if ($tiplocJSON->transaction_type == "Delete") {
+        } else if ($tiplocJSON->transaction_type == "Delete") {
 
-             TiplocDelete::dispatch($tiplocJSON)->onQueue('tiploc-delete');
+            TiplocDelete::dispatch($tiplocJSON)->onQueue('tiploc-delete');
 
-           } else if ($tiplocJSON->transaction_type == "Update") {
+        } else if ($tiplocJSON->transaction_type == "Update") {
 
-             throw new \Exception("Unknown Tiploc Transaction Type", 1);
-             // TODO Log this if it ever happens
+            throw new \Exception("Unknown Tiploc Transaction Type", 1);
+            // TODO Log this if it ever happens
 
-           } else {
+        } else {
 
-             throw new \Exception("Unknown Tiploc Transaction Type", 1);
-             // TODO Log this if it ever happens
-           }
+            throw new \Exception("Unknown Tiploc Transaction Type", 1);
+            // TODO Log this if it ever happens
+        }
 
-         }
+    }
 
         /**
          * This function looks a the current numeric day, following ISO-8601, and returns
@@ -260,23 +264,23 @@ class ParseSchedule extends Command
          * 
          * @see https://wiki.openraildata.com/index.php/SCHEDULE#Downloading
          */
-        private function scheduleDayCode()
-        {
-          switch(date('N')) {
-            case 1:
-              return 'sun';
-            case 2:
-              return 'mon';
-            case 3:
-              return 'tue';
-            case 4:
-              return 'wed';
-            case 5:
-              return 'thu';
-            case 6:
-              return 'fri';
-            case 7:
-              return 'sat';
-          }
+    private function scheduleDayCode()
+    {
+        switch(date('N')) {
+        case 1:
+            return 'sun';
+        case 2:
+            return 'mon';
+        case 3:
+            return 'tue';
+        case 4:
+            return 'wed';
+        case 5:
+            return 'thu';
+        case 6:
+            return 'fri';
+        case 7:
+            return 'sat';
         }
+    }
 }

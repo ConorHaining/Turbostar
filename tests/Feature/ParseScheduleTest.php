@@ -11,9 +11,9 @@ class ParseScheduleTest extends TestCase
 
     protected function setUp()
     {
-      parent::setUp();
+        parent::setUp();
 
-      mkdir(__DIR__.'/../ParseScheduleTestTemp');
+        mkdir(__DIR__.'/../ParseScheduleTestTemp');
     }
 
 
@@ -31,8 +31,8 @@ class ParseScheduleTest extends TestCase
 
     public function tearDown()
     {
-      parent::tearDown();
+        parent::tearDown();
 
-      exec('rm -rf '.__DIR__.'/../ParseScheduleTestTemp');
+        exec('rm -rf '.__DIR__.'/../ParseScheduleTestTemp');
     }
 }
