@@ -10,7 +10,7 @@ use Basemkhirat\Elasticsearch\Model;
  */
 class Movement extends Model
 {
-    protected $index = 'movement';
+    protected $index = 'movement201820101';
 
     protected $type = 'movement';
     /**
