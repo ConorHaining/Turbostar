@@ -22,6 +22,18 @@ class ScheduleCreateTest extends TestCase
         $this->assertTrue($job->handle()->exists, "Model has not saved");
     }
 
+    public function testCancelSchedule()
+    {
+        $text = '{"JsonScheduleV1":{"CIF_bank_holiday_running":null,"CIF_stp_indicator":"C","CIF_train_uid":"C72413","schedule_days_runs":"0010000","schedule_end_date":"2018-11-07","schedule_segment":{"signalling_id":"    ","CIF_train_category":"","CIF_headcode":"","CIF_course_indicator":1,"CIF_train_service_code":"        ","CIF_business_sector":"??","CIF_power_type":null,"CIF_timing_load":null,"CIF_speed":null,"CIF_operating_characteristics":null,"CIF_train_class":null,"CIF_sleepers":null,"CIF_reservations":null,"CIF_connection_indicator":null,"CIF_catering_code":null,"CIF_service_branding":""},"schedule_start_date":"2018-11-07","train_status":" ","transaction_type":"Create"}}';
+        $text = json_decode($text);
+
+        $payload = $text->JsonScheduleV1;
+
+        $job = new ScheduleCreate($payload);
+
+        $this->assertTrue($job->handle()->exists, "Model has not saved");
+    }
+
     public function testOnMinuteTime()
     {
         $testTime = '0230';
