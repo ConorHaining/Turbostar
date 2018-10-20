@@ -7,7 +7,7 @@ use Basemkhirat\Elasticsearch\Model;
 class Association extends Model
 {
 
-  protected $index = 'association201810201';
+  protected $index = 'association';
 
   protected $type = 'association';
 

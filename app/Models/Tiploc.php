@@ -7,7 +7,7 @@ use Basemkhirat\Elasticsearch\Model;
 class Tiploc extends Model
 {
 
-  protected $index = 'tiploc201810201';
+  protected $index = 'tiploc';
 
   protected $type = 'tiploc';
 

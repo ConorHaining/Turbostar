@@ -7,7 +7,7 @@ use Basemkhirat\Elasticsearch\Model;
 class Schedule extends Model
 {
 
-  protected $index = 'schedule201810101';
+  protected $index = 'schedule';
 
   protected $type = 'schedule';
 
