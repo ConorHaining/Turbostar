@@ -24,7 +24,6 @@ class AssociationDeleteTest extends TestCase
       $testAssociation->base_location_suffix = null;
       $testAssociation->main_train = 'P13474';
       $testAssociation->assoc_train = 'V00975';
-      $testAssociation->location = 'CRDFCEN';
       $testAssociation->stp_indicator = 'N';
       $testAssociation->save();
 

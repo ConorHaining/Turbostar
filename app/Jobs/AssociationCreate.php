@@ -48,13 +48,19 @@ class AssociationCreate implements ShouldQueue
       $association->assoc_train = $this->association->assoc_train_uid;
       $association->category = $this->association->category;
       $association->date_indicator = $this->association->date_indicator;
-      $association->location = $this->association->location;
       $association->stp_indicator = $this->association->CIF_stp_indicator;
+      
+      $tiplocDocument = Tiploc::where('code', $this->association->location)
+                                        ->get()->toArray();
+          unset($tiplocDocument['_index']);
+          unset($tiplocDocument['_type']);
+          unset($tiplocDocument['_id']);
+          unset($tiplocDocument['_score']);
+      $association->location = $tiplocDocument;
 
       if($association->fails_validation)
       {
-        return false;
-        fail();
+        $this->fail();
       }
 
       return $association->save();
