@@ -47,7 +47,7 @@ class ScheduleCreate implements ShouldQueue
           $record = new LocationRecord();
           
           $tiplocDocument = Tiploc::where('code', $recordRaw->tiploc_code)
-                                        ->get()[0]->toArray();
+                                        ->get()->toArray();
           unset($tiplocDocument['_index']);
           unset($tiplocDocument['_type']);
           unset($tiplocDocument['_id']);
