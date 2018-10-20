@@ -21,4 +21,24 @@ class ScheduleCreateTest extends TestCase
 
         $this->assertTrue($job->handle()->exists, "Model has not saved");
     }
+
+    public function testOnMinuteTime()
+    {
+        $testTime = '0230';
+
+        $job = new ScheduleCreate("");
+        $formattedtime = $job->formatTime($testTime);
+
+        $this->assertEquals('02:30:00', $formattedtime);
+    }
+
+    public function testThirtySecondsTime()
+    {
+        $testTime = '1623H';
+
+        $job = new ScheduleCreate("");
+        $formattedtime = $job->formatTime($testTime);
+
+        $this->assertEquals('16:23:30', $formattedtime);
+    }
 }

@@ -23,6 +23,7 @@ class Tiploc extends Model
     'stanox',
     'crs',
     'description',
-    'name'
+    'name',
+    'location',
   ];
 }
