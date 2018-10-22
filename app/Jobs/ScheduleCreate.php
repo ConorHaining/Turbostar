@@ -226,24 +226,25 @@ class ScheduleCreate implements ShouldQueue
             array_push($locationRecords, $record->toArray());
             $schedule->location_records = $locationRecords;
 
-            $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
-            $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
-            $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
-
-            $schedule->atoc_code = $this->schedule->atoc_code;
-            if($schedule->fails_validation) {
-                Log::warn('A Schedule has fail validation', ['field' => 'atoc_code', 'payload' => json_encode($this->schedule)]);
-                $this->fail();
-            }
-
-            $schedule->applicable_timetable = $this->schedule->applicable_timetable;
-            if($schedule->fails_validation) { 
-                Log::warn('A Schedule has fail validation', ['field' => 'applicable_timetable', 'payload' => json_encode($this->schedule)]);
-                $this->fail();
-            }
-
-            return $schedule;
-
         }
+
+        $schedule->traction_class = $this->schedule->new_schedule_segment->traction_class;
+        $schedule->uic_code = $this->schedule->new_schedule_segment->uic_code;
+        $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
+
+        $schedule->atoc_code = $this->schedule->atoc_code;
+        if($schedule->fails_validation) {
+            Log::warn('A Schedule has fail validation', ['field' => 'atoc_code', 'payload' => json_encode($this->schedule)]);
+            $this->fail();
+        }
+
+        $schedule->applicable_timetable = $this->schedule->applicable_timetable;
+        if($schedule->fails_validation) { 
+            Log::warn('A Schedule has fail validation', ['field' => 'applicable_timetable', 'payload' => json_encode($this->schedule)]);
+            $this->fail();
+        }
+
+        return $schedule;
+
     }
 }
