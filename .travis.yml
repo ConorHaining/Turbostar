@@ -27,3 +27,28 @@ notifications:
       - jdmc-team:PLAjCONQPBv9xHabM1fAQ4RT
     on_success: always # default: always
     on_failure: always # default: always
+
+cache:
+  directories:
+    - vendor
+
+deploy:
+- provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: ConorHaining/
+  bucket: turbostar-deploy
+  region: eu-west-1
+- provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: turbostar-deploy
+  key: latest.zip
+  bundle_type: zip
+  application: Turbostar
+  deployment_group: Turbostar
+  region: eu-west-1
+  on: *2
