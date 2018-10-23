@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'default' => env('ELASTIC_CONNECTION', 'default'),
+    'default' => env('ELASTIC_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,6 +25,26 @@ return [
     */
 
     'connections' => [
+
+        'production' => [
+
+            'servers' => [
+
+                [
+                    "host" => env("ELASTIC_HOST"),
+                    "port" => env("ELASTIC_PORT"),
+                    'user' => env('ELASTIC_USER', ''),
+                    'pass' => env('ELASTIC_PASS', ''),
+                    'scheme' => env('ELASTIC_SCHEME', 'https'),
+                ]
+
+            ],
+
+            'index' => env('ELASTIC_INDEX', 'my_index'),
+
+            // Elasticsearch handlers
+            'handler' => new \Aws\ElasticsearchService\ElasticsearchPhpHandler('eu-west-1'),
+        ],
 
         'default' => [
 
@@ -43,7 +63,7 @@ return [
             'index' => env('ELASTIC_INDEX', 'my_index'),
 
             // Elasticsearch handlers
-            // 'handler' => new MyCustomHandler(),
+            // 'handler' => new \Aws\ElasticsearchService\ElasticsearchPhpHandler('eu-west-1'),
         ]
     ],
 
