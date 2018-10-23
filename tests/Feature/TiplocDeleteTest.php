@@ -21,7 +21,7 @@ class TiplocDeleteTest extends TestCase
         $testTiploc->code = 'WLGFSTN';
         $testTiploc->save();
 
-        sleep(1);
+        sleep(2);
 
         $job = new TiplocDelete($payload);
 

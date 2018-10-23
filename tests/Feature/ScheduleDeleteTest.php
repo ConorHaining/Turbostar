@@ -24,7 +24,7 @@ class ScheduleDeleteTest extends TestCase
 
         $testSchedule->save();
 
-        sleep(1);
+        sleep(2);
 
         $job = new ScheduleDelete($payload);
 

@@ -27,7 +27,7 @@ class AssociationDeleteTest extends TestCase
         $testAssociation->stp_indicator = 'N';
         $testAssociation->save();
 
-        sleep(1);
+        sleep(2);
 
         $job = new AssociationDelete($payload);
 
