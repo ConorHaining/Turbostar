@@ -28,10 +28,6 @@ notifications:
     on_success: always # default: always
     on_failure: always # default: always
 
-cache:
-  directories:
-    - vendor
-
 before_deploy:
   - zip -r latest *
   - mkdir -p dpl_cd_upload
