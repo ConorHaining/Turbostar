@@ -6,3 +6,19 @@ files:
   - source: ./
     destination: /var/www/html
 
+hooks:
+  BeforeInstall:
+    - location: scripts/stopStompFeeds.sh
+      timeout: 300
+  AfterInstall:
+    - location: scripts/changeFilePermissions.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/startApplication.sh
+    - location: scripts/startStompFeeds.sh
+      timeout: 300
+  ApplicationStop:
+    - location: scripts/stopApplication.sh
+      timeout: 300
+      runas: root
