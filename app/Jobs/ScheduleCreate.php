@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Schedule;
 use App\Models\LocationRecord;
 use App\Models\Tiploc;
+use Illuminate\Support\Facades\Log;
 
 class ScheduleCreate implements ShouldQueue
 {
