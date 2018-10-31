@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-#php artisan stomp:stop
-pwd > ~/loc
+cd /var/www/html
+php artisan stomp:stop
+pwd > /home/ubuntu/loc.txt
