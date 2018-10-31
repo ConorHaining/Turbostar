@@ -14,7 +14,7 @@ hooks:
   AfterInstall:
     - location: scripts/changeFilePermissions.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
   ApplicationStart:
     - location: scripts/startApplication.sh
     - location: scripts/startStompFeeds.sh
@@ -23,4 +23,4 @@ hooks:
   ApplicationStop:
     - location: scripts/stopApplication.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
