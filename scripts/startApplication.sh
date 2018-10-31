@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-php artisan up
+cd /var/www/html
 php artisan cache:clear
+php artisan up
