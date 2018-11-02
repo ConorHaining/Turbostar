@@ -3,3 +3,4 @@
 cd /var/www/html
 php artisan down
 rm -rf /storage/app/schedule
+php artisan queue:restart
