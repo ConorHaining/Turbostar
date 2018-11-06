@@ -15,12 +15,14 @@ hooks:
     - location: scripts/changeFilePermissions.sh
       timeout: 300
       runas: root
-  ApplicationStart:
-    - location: scripts/startApplication.sh
-    - location: scripts/startStompFeeds.sh
-      timeout: 300
-      runas: ubuntu
-  ApplicationStop:
-    - location: scripts/stopApplication.sh
-      timeout: 300
-      runas: root
+  # ApplicationStart:
+  #   - location: scripts/startApplication.sh
+  #     timeout: 300
+  #     runas: ubuntu
+  #   - location: scripts/startStompFeeds.sh
+  #     timeout: 300
+  #     runas: ubuntu
+  # ApplicationStop:
+  #   - location: scripts/stopApplication.sh
+  #     timeout: 300
+  #     runas: root
