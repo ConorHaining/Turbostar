@@ -18,12 +18,12 @@ files:
 #   For more information, see the documentation.
 permissions:
   - object: /var/www/html
-    pattern: **
+    pattern: *
     owner: ubuntu
     group: ubuntu
     mode: 744
   - object: /var/www/html/storage
-    pattern: **
+    pattern: *
     owner: ubuntu
     group: ubuntu
     mode: 776
