@@ -54,6 +54,9 @@ hooks:
       timeout: 60
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
+  BeforeInstall:
+    - location: scripts/BeforeInstall.sh  
+      timeout: 60 
   ApplicationStart:
     - location: scripts/ApplicationStart.sh  
       timeout: 60 
