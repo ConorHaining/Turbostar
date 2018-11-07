@@ -49,6 +49,6 @@ deploy:
   key: latest.zip
   bundle_type: zip
   application: Turbostar
-  deployment_group: Turbostar
+  deployment_group: Turbostar-DepGrp
   region: eu-west-1
 on: *2
