@@ -18,7 +18,7 @@ files:
 #   For more information, see the documentation.
 permissions:
   - object: /var/www/html
-    except: [/var/www/html/storage]
+    except: [/var/www/html/storage/*]
     pattern: "**"
     owner: ubuntu
     group: ubuntu
