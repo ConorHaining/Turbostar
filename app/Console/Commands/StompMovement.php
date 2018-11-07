@@ -10,11 +10,13 @@ use Stomp\Transport\Message;
 use Stomp\Broker\ActiveMq\Mode\DurableSubscription;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\InteractsWithTime;
 
 use App\Jobs\MovementCreate;
 
 class StompMovement extends Command
 {
+    use InteractsWithTime;
     /**
      * The name and signature of the console command.
      *
@@ -60,7 +62,7 @@ class StompMovement extends Command
         $durableConsumer->activate();
         $msg = false;
         
-        while(!Cache::has('stomp.stop')) {
+        while(Cache::get('stomp.stop') != $this->currentTime()) {
             
             try{
                 $msg = $durableConsumer->read();
@@ -95,8 +97,6 @@ class StompMovement extends Command
             }
         }
 
-        Cache::pull('stomp.stop');
-        // disconnect durable consumer
         $durableConsumer->inactive();
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
