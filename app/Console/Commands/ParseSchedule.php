@@ -42,7 +42,7 @@ class ParseSchedule extends Command
     {
         parent::__construct();
     }
-
+    
     /**
      * Execute the console command.
      *
@@ -50,6 +50,8 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
+        Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has started to queue.');
+
         if($this->option('file') == null) {
             $filePath = $this->downloadDailyFile();
         } else {
