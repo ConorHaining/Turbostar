@@ -4,3 +4,5 @@ cd /var/www/html
 
 php artisan cache:clear
 rm -rf storage/app/schedule/*
+
+php artisan down
