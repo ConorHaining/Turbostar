@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+# #!/usr/bin/env bash
 
-cd /var/www/html
+# cd /var/www/html
 
-php artisan down
-php artisan stomp:stop
-php artisan queue:restart
+# php artisan down
+# php artisan stomp:stop
+# php artisan queue:restart
