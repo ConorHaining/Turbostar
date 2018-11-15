@@ -58,9 +58,9 @@ class StompMovement extends Command
      */
     public function handle()
     {   
-        pcntl_signal(SIGINT,  "sig_handler");
-        pcntl_signal(SIGTERM, "sig_handler");
-        pcntl_signal(SIGHUP,  "sig_handler");
+        pcntl_signal(SIGINT,  [$this, "shutdown"]);
+        pcntl_signal(SIGTERM, [$this, "shutdown"]);
+        pcntl_signal(SIGHUP,  [$this, "shutdown"]);
 
         $this->halt = false;
 
@@ -118,7 +118,7 @@ class StompMovement extends Command
         Log::warn('Movement feed has gracefully stopped');
     }
 
-    public function sig_handler() {
+    public function shutdown($signalNumber) {
         $this->halt = true;
     }
 
