@@ -1,5 +1,7 @@
 <?php
 
+declare(ticks = 1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -32,6 +34,13 @@ class StompMovement extends Command
     protected $description = 'Command description';
 
     /**
+     * A flag to stop the feed
+     * 
+     * @var bool
+     */
+    private $halt;
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -40,6 +49,7 @@ class StompMovement extends Command
     {
         parent::__construct();
     }
+    
 
     /**
      * Execute the console command.
@@ -47,8 +57,13 @@ class StompMovement extends Command
      * @return mixed
      */
     public function handle()
-    {
-        
+    {   
+        pcntl_signal(SIGINT,  "shutdown");
+        pcntl_signal(SIGTERM, "shutdown");
+        pcntl_signal(SIGHUP,  "shutdown");
+
+        $this->halt = false;
+
         // create a consumer
         $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61618');
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
@@ -62,7 +77,7 @@ class StompMovement extends Command
         $durableConsumer->activate();
         $msg = false;
         
-        while(Cache::get('stomp.stop') != $this->currentTime()) {
+        while(Cache::get('stomp.stop') != $this->currentTime() || $this->halt) {
             
             try{
                 $msg = $durableConsumer->read();
@@ -101,6 +116,10 @@ class StompMovement extends Command
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
         Log::warn('Movement feed has gracefully stopped');
+    }
+
+    public function shutdown() {
+        $this->halt = true;
     }
 
 }
