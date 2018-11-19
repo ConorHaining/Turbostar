@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class QueueInfo extends Command
 {
@@ -40,19 +40,27 @@ class QueueInfo extends Command
     {
         $headers = ['Queue Name', 'Items in Queue'];
 
-        $jobs = DB::table('jobs')
-            ->selectRaw('DISTINCT(queue), COUNT(queue)')
-            ->groupBy('queue')
-            ->get()
-            ->toArray();
+        // $jobs = DB::table('jobs')
+        //     ->selectRaw('DISTINCT(queue), COUNT(queue)')
+        //     ->groupBy('queue')
+        //     ->get()
+        //     ->toArray();
         
-        $rows = [];
+        // $rows = [];
 
-        foreach ($jobs as $value) {
-            $row = [$value->queue, $value->{'COUNT(queue)'}];
-            array_push($rows, $row);
+        // foreach ($jobs as $value) {
+        //     $row = [$value->queue, $value->{'COUNT(queue)'}];
+        //     array_push($rows, $row);
+        // }
+
+        
+        $queues = Redis::command('scan', ['0']);
+        $rows = array();
+        
+        foreach ($queues[1] as $queue) {
+            array_push($rows, array($queue, Redis::llen($queue)));
         }
-
+        
         $this->table($headers, $rows);
     }
 }
