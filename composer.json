@@ -13,6 +13,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "php-coord/php-coord": "^2.1",
+        "predis/predis": "~1.0",
         "stomp-php/stomp-php": "4.*"
     },
     "require-dev": {
