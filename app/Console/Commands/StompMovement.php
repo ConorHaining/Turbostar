@@ -58,11 +58,11 @@ class StompMovement extends Command
     public function handle()
     {   
         // create a consumer
-        $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61617');
+        $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61618');
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
         $consumer->getConnection()->setReadTimeout(1);
         // set clientId on a consumer to make it durable
-        $consumer->setClientId('Turbostar-Test');
+        $consumer->setClientId('Turbostar');
 
         
         // subscribe to the topic
