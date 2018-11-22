@@ -40,25 +40,15 @@ class QueueInfo extends Command
     {
         $headers = ['Queue Name', 'Items in Queue'];
 
-        // $jobs = DB::table('jobs')
-        //     ->selectRaw('DISTINCT(queue), COUNT(queue)')
-        //     ->groupBy('queue')
-        //     ->get()
-        //     ->toArray();
-        
-        // $rows = [];
-
-        // foreach ($jobs as $value) {
-        //     $row = [$value->queue, $value->{'COUNT(queue)'}];
-        //     array_push($rows, $row);
-        // }
-
-        
         $queues = Redis::command('scan', ['0']);
         $rows = array();
         
         foreach ($queues[1] as $queue) {
-            array_push($rows, array($queue, Redis::llen($queue)));
+            if (Redis::type($queue) == 'list') {
+                array_push($rows, array($queue, Redis::llen($queue)));
+            } else {
+                array_push($rows, array($queue, 'NULL'));
+            }
         }
         
         $this->table($headers, $rows);
