@@ -11,6 +11,7 @@ use Stomp\Broker\ActiveMq\Mode\DurableSubscription;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\InteractsWithTime;
+use Stomp\Exception\ConnectionException;
 
 use App\Jobs\MovementCreate;
 
@@ -32,6 +33,13 @@ class StompMovement extends Command
     protected $description = 'Command description';
 
     /**
+     * The timeout value, in seconds
+     * 
+     * @var int
+     */
+    private $timeoutCount = 0;
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -50,17 +58,27 @@ class StompMovement extends Command
     public function handle()
     {   
         // create a consumer
-        $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61618');
+        $consumer = new Client('tcp://datafeeds.networkrail.co.uk:61617');
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
         $consumer->getConnection()->setReadTimeout(1);
         // set clientId on a consumer to make it durable
-        $consumer->setClientId('Turbostar');
+        $consumer->setClientId('Turbostar-Test');
 
         
         // subscribe to the topic
-        $durableConsumer = new DurableSubscription($consumer, '/topic/TRAIN_MVT_ALL_TOC', null, 'client');
-        $durableConsumer->activate();
-        $msg = false;
+        try {
+            $durableConsumer = new DurableSubscription($consumer, '/topic/TRAIN_MVT_ALL_TOC', null, 'client');
+            $durableConsumer->activate();
+            $msg = false;
+        } catch (ConnectionException $e) {
+            $this->error($e->getMessage());
+
+            sleep(pow(2, $this->timeoutCount));
+            $this->timeoutCount++;
+
+            $this->handle();
+            
+        }
         
         while(Cache::get('stomp.stop') != $this->currentTime()) {
             
@@ -72,6 +90,19 @@ class StompMovement extends Command
                 Log::emergency('Movement feed has stopped');
             } catch (MissingReceiptException $e) {
                 Log::critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+            } catch (ConnectionException $e) {
+                $this->error($e->getMessage());
+                $this->error('Timeout: ' . pow(2, $this->timeoutCount) . 's');
+
+                sleep(pow(2, $this->timeoutCount));
+                $this->timeoutCount++;
+
+                if (pow(2, $this->timeoutCount) >= 30) {
+                    Log::Emergency('Movement Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
+                }
+
+                continue;
+                
             }
 
             if ($msg != null) {
