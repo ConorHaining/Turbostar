@@ -99,6 +99,11 @@ class StompMovement extends Command
 
                 if (pow(2, $this->timeoutCount) >= 30) {
                     Log::Emergency('Movement Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
+                    Log::Emergency('Forcing daemon restart');
+
+                    Artisan::call('stomp:stop');
+                    shell_exec('supervisorctl -c scripts/supervisord.conf restart StompMovementWorker');
+
                 }
 
                 continue;
