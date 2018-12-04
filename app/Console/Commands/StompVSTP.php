@@ -10,7 +10,11 @@ use Stomp\Transport\Message;
 use Stomp\Broker\ActiveMq\Mode\DurableSubscription;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\InteractsWithTime;
+use Stomp\Exception\ConnectionException;
+
+use App\Jobs\ScheduleVSTPCreate;
 
 class StompVSTP extends Command
 {
@@ -69,19 +73,34 @@ class StompVSTP extends Command
                 Log::emergency('VSTP feed has stopped');
             } catch (MissingReceiptException $e) {
                 Log::critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+            } catch (ConnectionException $e) {
+                $this->error($e->getMessage());
+                $this->error('Timeout: ' . pow(2, $this->timeoutCount) . 's');
+
+                sleep(pow(2, $this->timeoutCount));
+                $this->timeoutCount++;
+
+                if (pow(2, $this->timeoutCount) >= 30) {
+                    Log::Emergency('VSTP Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
+                    Log::Emergency('Forcing daemon restart');
+
+                    Artisan::call('stomp:stop');
+                    // shell_exec('supervisorctl -c scripts/supervisord.conf restart StompMovementWorker');
+
+                }
+
+                continue;
+                
             }
 
             if ($msg != null) {
-                $json = json_decode($msg->body);
-
-                foreach($json as $item){
-                    // $this->info('Message '. $item->header->msg_type .' Received: ' . date('H:i:s.u'));
-
-                    // $item->header->received_at = now()->format('U') * 1000;
-
-                    // MovementCreate::dispatch($item)->onQueue('movement-' . $item->header->msg_type);
-                    dump($json);
-                }
+                $json = json_decode($msg->body)->VSTPCIFMsgV1;
+                
+                $this->info('VSTP Schedule received: ' . date('H:i:s.u'));
+                
+                $json->timestamp = now()->format('U') * 1000;
+                
+                ScheduleVSTPCreate::dispatch($json)->onQueue('schedule-create');
                 
                 try{
                     $durableConsumer->ack($msg);
@@ -94,6 +113,7 @@ class StompVSTP extends Command
                 }
             }
         }
+
 
         $durableConsumer->inactive();
         $consumer->disconnect();
