@@ -10,6 +10,7 @@ use Stomp\Transport\Message;
 use Stomp\Broker\ActiveMq\Mode\DurableSubscription;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\InteractsWithTime;
 use Stomp\Exception\ConnectionException;
 
