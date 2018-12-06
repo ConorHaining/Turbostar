@@ -1,0 +1,179 @@
+2018-12-04 16:45:15,546 INFO RPC interface 'supervisor' initialized
+2018-12-04 16:45:15,546 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2018-12-04 16:45:15,546 INFO supervisord started with pid 19862
+2018-12-04 16:45:16,548 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-04 16:45:16,549 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-04 16:45:16,550 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-04 16:45:16,551 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-04 16:45:16,552 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:16,553 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-04 16:45:16,554 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:17,556 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-04 16:45:17,589 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-04 16:45:17,591 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-04 16:45:17,593 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-04 16:45:17,594 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:17,595 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-04 16:45:17,596 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:19,601 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-04 16:45:19,602 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-04 16:45:19,603 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-04 16:45:19,604 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-04 16:45:19,605 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:19,605 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-04 16:45:19,605 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:22,611 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-04 16:45:22,611 INFO gave up: Movement0003 entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,612 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-04 16:45:22,613 INFO gave up: Tiploc entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,614 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-04 16:45:22,614 INFO gave up: Schedule entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,615 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-04 16:45:22,615 INFO gave up: Association entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,615 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:22,615 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,615 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-04 16:45:22,615 INFO gave up: VSTP entered FATAL state, too many start retries too quickly
+2018-12-04 16:45:22,615 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-04 16:45:22,615 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:29,903 INFO RPC interface 'supervisor' initialized
+2018-12-05 10:59:29,903 CRIT Server 'inet_http_server' running without any HTTP authentication checking
+2018-12-05 10:59:29,903 INFO daemonizing the supervisord process
+2018-12-05 10:59:29,904 INFO supervisord started with pid 10492
+2018-12-05 10:59:30,908 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 10:59:30,910 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 10:59:30,912 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 10:59:30,913 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 10:59:30,915 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:30,916 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 10:59:30,917 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:31,920 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 10:59:31,922 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 10:59:31,924 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 10:59:31,926 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 10:59:31,927 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:31,929 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 10:59:31,930 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:34,719 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 10:59:34,721 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 10:59:34,722 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 10:59:34,723 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 10:59:34,724 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:34,725 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 10:59:34,726 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:37,731 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 10:59:37,732 INFO gave up: Movement0003 entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,733 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 10:59:37,733 INFO gave up: Tiploc entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,736 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 10:59:37,736 INFO gave up: Schedule entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,738 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 10:59:37,738 INFO gave up: Association entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,743 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:37,744 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,744 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 10:59:37,745 INFO gave up: VSTP entered FATAL state, too many start retries too quickly
+2018-12-05 10:59:37,746 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 10:59:37,746 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:15,026 CRIT Supervisor running as root (no user in config file)
+2018-12-05 11:00:25,515 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 11:00:25,515 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 11:00:25,516 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 11:00:25,516 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 11:00:25,516 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:25,516 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 11:00:25,517 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:26,521 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 11:00:26,523 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 11:00:26,525 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 11:00:26,527 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 11:00:26,528 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:26,529 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 11:00:26,530 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:28,534 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 11:00:28,536 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 11:00:28,540 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 11:00:28,542 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 11:00:28,544 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:28,545 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 11:00:28,547 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:32,407 INFO spawnerr: unknown error making dispatchers for 'Movement0003': EACCES
+2018-12-05 11:00:32,408 INFO gave up: Movement0003 entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,410 INFO spawnerr: unknown error making dispatchers for 'Tiploc': EACCES
+2018-12-05 11:00:32,410 INFO gave up: Tiploc entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,412 INFO spawnerr: unknown error making dispatchers for 'Schedule': EACCES
+2018-12-05 11:00:32,412 INFO gave up: Schedule entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,414 INFO spawnerr: unknown error making dispatchers for 'Association': EACCES
+2018-12-05 11:00:32,414 INFO gave up: Association entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,416 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:32,416 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,418 INFO spawnerr: unknown error making dispatchers for 'VSTP': EACCES
+2018-12-05 11:00:32,418 INFO gave up: VSTP entered FATAL state, too many start retries too quickly
+2018-12-05 11:00:32,420 INFO spawnerr: unknown error making dispatchers for 'Movement': EACCES
+2018-12-05 11:00:32,420 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:09,607 INFO spawned: 'Movement0003' with pid 10609
+2018-12-05 11:02:09,609 INFO spawned: 'Tiploc' with pid 10610
+2018-12-05 11:02:09,611 INFO spawned: 'Schedule' with pid 10611
+2018-12-05 11:02:09,613 INFO spawned: 'Association' with pid 10612
+2018-12-05 11:02:09,616 INFO spawned: 'Movement' with pid 10613
+2018-12-05 11:02:09,621 INFO spawned: 'VSTP' with pid 10614
+2018-12-05 11:02:09,624 INFO spawned: 'Movement' with pid 10615
+2018-12-05 11:02:11,541 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:11,541 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:11,547 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:12,709 INFO spawned: 'Movement' with pid 10667
+2018-12-05 11:02:12,715 INFO spawned: 'VSTP' with pid 10668
+2018-12-05 11:02:12,717 INFO spawned: 'Movement' with pid 10669
+2018-12-05 11:02:13,334 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:13,411 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:13,495 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:15,614 INFO spawned: 'Movement' with pid 10691
+2018-12-05 11:02:15,646 INFO spawned: 'VSTP' with pid 10692
+2018-12-05 11:02:15,661 INFO spawned: 'Movement' with pid 10693
+2018-12-05 11:02:16,276 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:16,334 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:16,490 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:19,312 INFO spawned: 'Movement' with pid 10717
+2018-12-05 11:02:19,413 INFO spawned: 'Movement' with pid 10718
+2018-12-05 11:02:19,533 INFO spawned: 'VSTP' with pid 10731
+2018-12-05 11:02:19,641 INFO success: Movement0003 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2018-12-05 11:02:19,641 INFO success: Tiploc entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2018-12-05 11:02:19,641 INFO success: Schedule entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2018-12-05 11:02:19,641 INFO success: Association entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2018-12-05 11:02:19,773 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:19,904 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:19,969 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:20,041 INFO gave up: VSTP entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:20,047 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:20,168 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:47,516 INFO spawned: 'Movement' with pid 10749
+2018-12-05 11:02:47,517 INFO spawned: 'VSTP' with pid 10750
+2018-12-05 11:02:47,519 INFO spawned: 'Movement' with pid 10751
+2018-12-05 11:02:48,239 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:48,239 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:48,415 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:49,338 INFO spawned: 'Movement' with pid 10773
+2018-12-05 11:02:49,346 INFO spawned: 'Movement' with pid 10774
+2018-12-05 11:02:49,598 INFO spawned: 'VSTP' with pid 10787
+2018-12-05 11:02:49,982 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:49,982 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:50,287 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:52,018 INFO spawned: 'Movement' with pid 10797
+2018-12-05 11:02:52,028 INFO spawned: 'Movement' with pid 10798
+2018-12-05 11:02:52,532 INFO spawned: 'VSTP' with pid 10813
+2018-12-05 11:02:52,662 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:52,832 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:53,179 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:55,701 INFO spawned: 'Movement' with pid 10821
+2018-12-05 11:02:55,941 INFO spawned: 'Movement' with pid 10828
+2018-12-05 11:02:56,185 INFO spawned: 'VSTP' with pid 10836
+2018-12-05 11:02:56,198 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:56,416 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:56,457 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 11:02:56,703 INFO gave up: Movement entered FATAL state, too many start retries too quickly
+2018-12-05 11:02:56,768 INFO exited: VSTP (exit status 1; not expected)
+2018-12-05 11:02:56,996 INFO gave up: VSTP entered FATAL state, too many start retries too quickly
+2018-12-05 11:03:44,979 INFO spawned: 'Movement' with pid 10938
+2018-12-05 11:03:55,123 INFO success: Movement entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2018-12-05 17:14:22,479 INFO exited: Movement (exit status 1; not expected)
+2018-12-05 17:14:23,724 INFO spawned: 'Movement' with pid 19217
