@@ -63,7 +63,7 @@ class StompMovement extends Command
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
         $consumer->getConnection()->setReadTimeout(1);
         // set clientId on a consumer to make it durable
-        $consumer->setClientId('TurbostarMovement');
+        $consumer->setClientId('TurbostarMovement0001');
 
         
         // subscribe to the topic
@@ -73,11 +73,11 @@ class StompMovement extends Command
             $msg = false;
         } catch (ConnectionException $e) {
             $this->error($e->getMessage());
+            $this->error('Movement Feed could not start');
 
-            sleep(pow(2, $this->timeoutCount));
-            $this->timeoutCount++;
+            Log::Emergency('Movement Feed could not start');
 
-            $this->handle();
+            return;
             
         }
         
