@@ -100,9 +100,9 @@ class StompMovement extends Command
 
                 if (pow(2, $this->timeoutCount) >= 30) {
                     Log::Emergency('Movement Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
-                    Log::Emergency('Forcing daemon restart');
+                    Log::Emergency('Stopping Movement Feed');
 
-                    Artisan::call('stomp:stop');
+                    break;
 
                 }
 
