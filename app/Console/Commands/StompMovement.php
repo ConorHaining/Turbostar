@@ -103,7 +103,6 @@ class StompMovement extends Command
                     Log::Emergency('Forcing daemon restart');
 
                     Artisan::call('stomp:stop');
-                    shell_exec('supervisorctl -c scripts/supervisord.conf restart StompMovementWorker');
 
                 }
 
