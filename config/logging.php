@@ -56,6 +56,22 @@ return [
             'level' => 'info',
         ],
 
+        'slack_schedule' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SCHEDULE_WEBHOOK'),
+            'username' => 'Turbostar Schedule',
+            'emoji' => ':information_source: ',
+            'level' => 'info',
+        ],
+
+        'slack_stomp' => [
+            'driver' => 'slack',
+            'url' => env('LOG_STOMP_WEBHOOK'),
+            'username' => 'Turbostar Stomp',
+            'emoji' => ':information_source: ',
+            'level' => 'info',
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => 'debug',
