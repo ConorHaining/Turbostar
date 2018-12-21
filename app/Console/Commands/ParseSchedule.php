@@ -50,7 +50,7 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
-        Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has started to queue.');
+        Log::channel('slack_schedule')->info('Today\'s ('.$this->formatFilename().') SCHEDULE has started to queue.');
 
         if($this->option('file') == null) {
             $filePath = $this->downloadDailyFile();
@@ -102,7 +102,7 @@ class ParseSchedule extends Command
 
         fclose($scheduleJSON);
 
-        Log::info('Today\'s ('.$this->formatFilename().') SCHEDULE has been sucessfully queued.');
+        Log::channel('slack_schedule')->info('Today\'s ('.$this->formatFilename().') SCHEDULE has been successfully queued.');
       
     }
 

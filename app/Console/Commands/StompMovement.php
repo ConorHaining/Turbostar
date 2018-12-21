@@ -75,7 +75,7 @@ class StompMovement extends Command
             $this->error($e->getMessage());
             $this->error('Movement Feed could not start');
 
-            Log::Emergency('Movement Feed could not start');
+            Log::channel('slack_stomp')->Emergency('Movement Feed could not start');
 
             return;
             
@@ -88,9 +88,9 @@ class StompMovement extends Command
             } catch (Exception $e) {
                 $durableConsumer->inactive();
                 $consumer->disconnect();
-                Log::emergency('Movement feed has stopped');
+                Log::channel('slack_stomp')->emergency('Movement feed has stopped');
             } catch (MissingReceiptException $e) {
-                Log::critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+                Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
             } catch (ConnectionException $e) {
                 $this->error($e->getMessage());
                 $this->error('Timeout: ' . pow(2, $this->timeoutCount) . 's');
@@ -99,8 +99,8 @@ class StompMovement extends Command
                 $this->timeoutCount++;
 
                 if (pow(2, $this->timeoutCount) >= 30) {
-                    Log::Emergency('Movement Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
-                    Log::Emergency('Stopping Movement Feed');
+                    Log::channel('slack_stomp')->Emergency('Movement Stomp Client disconnected for ' . pow(2, $this->timeoutCount) . ' seconds');
+                    Log::channel('slack_stomp')->Emergency('Stopping Movement Feed');
 
                     break;
 
@@ -126,9 +126,9 @@ class StompMovement extends Command
                 } catch (Exception $e) {
                     $durableConsumer->inactive();
                     $consumer->disconnect();
-                    Log::emergency('Movement feed has stopped');
+                    Log::channel('slack_stomp')->emergency('Movement feed has stopped');
                 } catch (MissingReceiptException $e) {
-                    Log::critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+                    Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
                 }
             }
         }
@@ -136,7 +136,7 @@ class StompMovement extends Command
         $durableConsumer->inactive();
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
-        Log::warn('Movement feed has gracefully stopped');
+        Log::channel('slack_stomp')->warn('Movement feed has gracefully stopped');
     }
 
 }
