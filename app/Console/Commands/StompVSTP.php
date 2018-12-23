@@ -1,5 +1,7 @@
 <?php
 
+declare(ticks = 1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -41,6 +43,12 @@ class StompVSTP extends Command
     public function __construct()
     {
         parent::__construct();
+
+        pcntl_signal(SIGTERM, [$this, "sig_handler"]);
+        pcntl_signal(SIGHUP,  [$this, "sig_handler"]);
+        pcntl_signal(SIGUSR1, [$this, "sig_handler"]);
+        pcntl_signal(SIGINT, [$this, "sig_handler"]);
+        pcntl_signal(SIGQUIT, [$this, "sig_handler"]);
     }
 
     /**
@@ -128,5 +136,10 @@ class StompVSTP extends Command
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
         Log::channel('slack_stomp')->warn('VSTP feed has gracefully stopped');
+    }
+
+    public function sig_handler() {
+        Log::channel('slack_stomp')->emergency('Unexpected signal, shutting down all STOMP connections.');
+        Cache::forever('stomp.stop', $this->currentTime());
     }
 }
