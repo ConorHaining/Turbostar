@@ -69,7 +69,7 @@ class Schedule extends Model
         preg_match('/(0|1)*/', $runningDays, $characterCheck);
 
         if(strlen($runningDays) != 7 || in_array("", $characterCheck)) {
-            $this->attributes['fails_validation'] = true;
+            return null;
             return;
         }
 
@@ -92,7 +92,7 @@ class Schedule extends Model
 
         } else if ($bankholidayRunning != 'G' && $bankholidayRunning != 'X') {
         
-            $this->attributes['fails_validation'] = true;
+            return null;
             return;
 
         } else {
@@ -124,7 +124,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -148,7 +148,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -172,7 +172,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -201,7 +201,7 @@ class Schedule extends Model
 
             } else {
 
-                $this->attributes['fails_validation'] = true;
+                return null;
                 return;
 
             }
@@ -220,7 +220,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -242,7 +242,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
     }
@@ -263,7 +263,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
     }
@@ -291,7 +291,7 @@ class Schedule extends Model
 
             } else {
 
-                $this->attributes['fails_validation'] = true;
+                return null;
                 return;
 
             }
@@ -317,7 +317,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -339,7 +339,7 @@ class Schedule extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -361,7 +361,7 @@ class Schedule extends Model
 
         } else {
 
-                         $this->attributes['fails_validation'] = true;
+                         return null;
 
         }
 
@@ -383,7 +383,7 @@ class Schedule extends Model
 
         } else {
 
-                          $this->attributes['fails_validation'] = true;
+                          return null;
 
         }
 

@@ -53,83 +53,18 @@ class ScheduleCreate implements ShouldQueue
         $schedule->connection_indicator = $this->schedule->schedule_segment->CIF_connection_indicator;
 
         $schedule->running_days = $this->schedule->schedule_days_runs;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'running_days', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->bank_holiday_running = $this->schedule->CIF_bank_holiday_running;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'bank_holiday_running', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->train_status = $this->schedule->train_status;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'train_status', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->train_category = $this->schedule->schedule_segment->CIF_train_category;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'train_category', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->power_type = $this->schedule->schedule_segment->CIF_power_type;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'power_type', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->timing_load = $this->schedule->schedule_segment->CIF_timing_load;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'timing_load', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->operating_characteristics = $this->schedule->schedule_segment->CIF_operating_characteristics;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'operating_characteristics', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->train_class = $this->schedule->schedule_segment->CIF_train_class;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'train_class', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->sleepers = $this->schedule->schedule_segment->CIF_sleepers;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'sleepers', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->reservations = $this->schedule->schedule_segment->CIF_reservations;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'reservations', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->catering_code = $this->schedule->schedule_segment->CIF_catering_code;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'catering_code', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->service_branding = $this->schedule->schedule_segment->CIF_service_branding;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'service_branding', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'stp_indicator', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         
         return $schedule->save();
     }
@@ -234,17 +169,7 @@ class ScheduleCreate implements ShouldQueue
         $schedule->portion_id = $this->schedule->schedule_segment->CIF_business_sector;
 
         $schedule->atoc_code = $this->schedule->atoc_code;
-        if($schedule->fails_validation) {
-            Log::warn('A Schedule has fail validation', ['field' => 'atoc_code', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         $schedule->applicable_timetable = $this->schedule->applicable_timetable;
-        if($schedule->fails_validation) { 
-            Log::warn('A Schedule has fail validation', ['field' => 'applicable_timetable', 'payload' => json_encode($this->schedule)]);
-            $this->fail();
-        }
-
         return $schedule;
 
     }

@@ -67,7 +67,7 @@ class StompVSTP extends Command
             $this->error($e->getMessage());
             $this->error('VSTP Feed could not start');
 
-            Log::channel('slack_stomp')->emergency('Movement Feed could not start');
+            Log::channel('slack_stomp')->emergency('VSTP Feed could not start');
 
             return;
             
@@ -116,7 +116,7 @@ class StompVSTP extends Command
                 } catch (Exception $e) {
                     $durableConsumer->inactive();
                     $consumer->disconnect();
-                    Log::channel('slack_stomp')->emergency('Movement feed has stopped');
+                    Log::channel('slack_stomp')->emergency('VSTP feed has stopped');
                 } catch (MissingReceiptException $e) {
                     Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
                 }
@@ -127,6 +127,6 @@ class StompVSTP extends Command
         $durableConsumer->inactive();
         $consumer->disconnect();
         $this->alert('Disconnecting consumer');
-        Log::channel('slack_stomp')->warn('Movement feed has gracefully stopped');
+        Log::channel('slack_stomp')->warn('VSTP feed has gracefully stopped');
     }
 }

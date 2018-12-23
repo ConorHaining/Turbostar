@@ -30,7 +30,7 @@ class ScheduleTest extends TestCase
 
         $schedule->running_days = $runningDays;
 
-        $this->assertTrue($schedule->fails_validation, "Fails for too few characters");
+        $this->assertEquals($schedule->running_days, null, "Fails for too few characters");
 
         $schedule = new Schedule();
 
@@ -38,7 +38,7 @@ class ScheduleTest extends TestCase
 
         $schedule->running_days = $runningDays;
 
-        $this->assertTrue($schedule->fails_validation, "Fails for invalid characters but valid length");
+        $this->assertEquals($schedule->running_days, null, "Fails for invalid characters but valid length");
 
         $schedule = new Schedule();
 
@@ -46,7 +46,7 @@ class ScheduleTest extends TestCase
 
         $schedule->running_days = $runningDays;
 
-        $this->assertTrue($schedule->fails_validation, "Fails for invalid characters and invalid length");
+        $this->assertEquals($schedule->running_days, null, "Fails for invalid characters and invalid length");
 
     }
 
@@ -78,7 +78,7 @@ class ScheduleTest extends TestCase
 
         $schedule->bank_holiday_running = $bankholidayRunning;
 
-        $this->assertTrue($schedule->fails_validation, "Fails for invalid character");
+        $this->assertEquals($schedule->bank_holiday_running, null, "Fails for invalid character");
     }
 
     public function testSetTrainStatusValid()
@@ -111,7 +111,7 @@ class ScheduleTest extends TestCase
 
             $schedule->train_status = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
+            $this->assertEquals($schedule->train_status, null, "Fails for invalid character: '".$value."'");
 
         }
 
@@ -146,7 +146,7 @@ class ScheduleTest extends TestCase
 
             $schedule->train_category = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
+            $this->assertEquals($schedule->train_category, null, "Fails for invalid character: '".$value."'");
 
         }
     }
@@ -180,7 +180,7 @@ class ScheduleTest extends TestCase
 
             $schedule->power_type = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid character: '".$value."'");
+            $this->assertEquals($schedule->power_type, null, "Fails for invalid character: '".$value."'");
 
         }
     }
@@ -217,7 +217,7 @@ class ScheduleTest extends TestCase
 
             $schedule->operating_characteristics = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->operating_characteristics, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -255,7 +255,7 @@ class ScheduleTest extends TestCase
 
             $schedule->train_class = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->train_class, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -293,7 +293,7 @@ class ScheduleTest extends TestCase
 
             $schedule->sleepers = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->sleepers, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -331,7 +331,7 @@ class ScheduleTest extends TestCase
 
             $schedule->reservations = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->reservations, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -369,7 +369,7 @@ class ScheduleTest extends TestCase
 
             $schedule->catering_code = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->catering_code, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -407,7 +407,7 @@ class ScheduleTest extends TestCase
 
             $schedule->service_branding = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->service_branding, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -445,7 +445,7 @@ class ScheduleTest extends TestCase
 
             $schedule->stp_indicator = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->stp_indicator, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -483,7 +483,7 @@ class ScheduleTest extends TestCase
 
             $schedule->atoc_code = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->atoc_code, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -521,7 +521,7 @@ class ScheduleTest extends TestCase
 
             $schedule->applicable_timetable = $value;
 
-            $this->assertTrue($schedule->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($schedule->applicable_timetable, null, "Fails for invalid string: ".$value);
 
         }
 
