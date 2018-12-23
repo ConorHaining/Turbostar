@@ -63,7 +63,7 @@ class StompMovement extends Command
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
         $consumer->getConnection()->setReadTimeout(1);
         // set clientId on a consumer to make it durable
-        $consumer->setClientId('TurbostarMovement');
+        $consumer->setClientId(env('STOMP_MOVEMENT_NAME'));
 
         
         // subscribe to the topic

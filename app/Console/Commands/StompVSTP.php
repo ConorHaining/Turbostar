@@ -55,7 +55,7 @@ class StompVSTP extends Command
         $consumer->setLogin(env('NR_USERNAME'), env('NR_PASSWORD'));
         $consumer->getConnection()->setReadTimeout(1);
         // set clientId on a consumer to make it durable
-        $consumer->setClientId('TurbostarVSTP');
+        $consumer->setClientId(env('STOMP_VSTP_NAME'));
 
         
         // subscribe to the topic
