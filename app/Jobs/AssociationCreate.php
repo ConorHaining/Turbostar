@@ -58,10 +58,6 @@ class AssociationCreate implements ShouldQueue
           unset($tiplocDocument['_score']);
         $association->location = $tiplocDocument;
 
-        if($association->fails_validation) {
-            $this->fail();
-        }
-
         return $association->save();
 
     }

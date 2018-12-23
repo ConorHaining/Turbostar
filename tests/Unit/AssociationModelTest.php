@@ -61,7 +61,7 @@ class AssociationTest extends TestCase
 
             $association->category = $value;
 
-            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($association->category, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -118,7 +118,7 @@ class AssociationTest extends TestCase
 
             $association->date_indicator = $value;
 
-            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($association->date_indicator, null, "Fails for invalid string: ".$value);
 
         }
 
@@ -156,7 +156,7 @@ class AssociationTest extends TestCase
 
             $association->stp_indicator = $value;
 
-            $this->assertTrue($association->fails_validation, "Fails for invalid string: ".$value);
+            $this->assertEquals($association->stp_indicator, null, "Fails for invalid string: ".$value);
 
         }
 

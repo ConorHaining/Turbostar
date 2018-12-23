@@ -60,7 +60,7 @@ class Association extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -86,7 +86,7 @@ class Association extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
@@ -108,7 +108,7 @@ class Association extends Model
 
         } else {
 
-            $this->attributes['fails_validation'] = true;
+            return null;
 
         }
 
