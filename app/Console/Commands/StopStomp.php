@@ -5,11 +5,10 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\InteractsWithTime;
+use Carbon\Carbon;
 
 class StopStomp extends Command
 {
-    use InteractsWithTime;
 
     /**
      * The name and signature of the console command.
@@ -42,7 +41,7 @@ class StopStomp extends Command
      */
     public function handle()
     {
-        Cache::forever('stomp.stop', $this->currentTime());
+        Cache::forever('stomp.stop', Carbon::now()->addSeconds(15)->getTimestamp());
         $this->info('All STOMP connections stopping.');
 
         Log::warn('All STOMP connections stopped.');

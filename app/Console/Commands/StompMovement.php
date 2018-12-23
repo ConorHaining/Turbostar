@@ -89,7 +89,7 @@ class StompMovement extends Command
             
         }
         
-        while(Cache::get('stomp.stop') != $this->currentTime()) {
+        while($this->currentTime() >= Cache::get('stomp.stop')) {
             
             try{
                 $msg = $durableConsumer->read();
