@@ -126,7 +126,7 @@ class StompMovement extends Command
 
                     $item->header->received_at = now()->format('U') * 1000;
 
-                    MovementCreate::dispatch($item)->onQueue('movement-' . $item->header->msg_type);
+                    MovementCreate::dispatch($item)->onQueue('movement');
                 }
                 
                 try{
