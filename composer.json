@@ -11,6 +11,7 @@
         "fideloper/proxy": "^4.0",
         "jsq/amazon-es-php": "^0.2.3",
         "laravel/framework": "5.7.*",
+        "laravel/horizon": "^2.0",
         "laravel/tinker": "^1.0",
         "php-coord/php-coord": "^2.1",
         "predis/predis": "~1.0",
