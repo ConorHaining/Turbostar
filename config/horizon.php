@@ -103,8 +103,17 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
+                'queue' => [
+                    'movement',
+                    'schedule-create',
+                    'schedule-delete',
+                    'association-create',
+                    'association-delete',
+                    'tiploc-create',
+                    'tiploc-delete',
+                    'tiploc-update',
+                ],
+                'balance' => 'auto',
                 'processes' => 10,
                 'tries' => 3,
             ],
@@ -114,11 +123,16 @@ return [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'queue' => [
-                    'default',
                     'movement',
-                    'schedule-create'
+                    'schedule-create',
+                    'schedule-delete',
+                    'association-create',
+                    'association-delete',
+                    'tiploc-create',
+                    'tiploc-delete',
+                    'tiploc-update',
                 ],
-                'balance' => 'simple',
+                'balance' => 'auto',
                 'processes' => 1,
                 'tries' => 3,
             ],
