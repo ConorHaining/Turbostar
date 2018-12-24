@@ -31,6 +31,16 @@ class MovementCreate implements ShouldQueue
     }
 
     /**
+     * Get the tags that should be assigned to the job.
+     *
+     * @return array
+     */
+    public function tags()
+    {
+        return ['movement', 'movement:'.$this->payload->header->msg_type];
+    }
+
+    /**
      * Execute the job.
      *
      * @return void
