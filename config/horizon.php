@@ -113,9 +113,13 @@ return [
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => [
+                    'default',
+                    'movement',
+                    'schedule-create'
+                ],
                 'balance' => 'simple',
-                'processes' => 3,
+                'processes' => 1,
                 'tries' => 3,
             ],
         ],
