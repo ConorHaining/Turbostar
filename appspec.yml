@@ -20,7 +20,7 @@ permissions:
   - object: /var/www/html
     pattern: "**"
     owner: ubuntu
-    group: ubuntu
+    group: www-data
     mode: 766
 # If you are not running any commands on the Amazon EC2 instance, then remove 
 #   the "hooks" section altogether. A blank or incomplete "hooks" section
