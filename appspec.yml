@@ -26,7 +26,7 @@ permissions:
     pattern: "**"
     owner: ubuntu
     group: www-data
-    mode: 755
+    mode: 777
 # If you are not running any commands on the Amazon EC2 instance, then remove 
 #   the "hooks" section altogether. A blank or incomplete "hooks" section
 #   may cause associated deployments to fail.
