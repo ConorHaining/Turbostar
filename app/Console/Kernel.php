@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('parse:schedule')
                     ->dailyAt('04:00');
+
+        $schedule->command('horizon:snapshot')
+                    ->everyFiveMinutes();
     }
 
     /**
