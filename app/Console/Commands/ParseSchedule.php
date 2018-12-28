@@ -60,26 +60,6 @@ class ParseSchedule extends Command
 
         $filePath = $this->decompressFile($filePath);
 
-        if (App::environment('production')) {
-            $glacierClient = GlacierClient::factory(
-                [
-                'credentials' => [
-                'key'    => env('AWS_ACCESS_KEY_ID'),
-                'secret' => env('AWS_SECRET_ACCESS_KEY'),
-                ],
-                'region' => 'eu-west-1'
-                ]
-            );
-  
-            $archiveResult = $glacierClient->uploadArchive(
-                [
-                'vaultName' => 'NR_SCHEDULE',
-                'accountId' => '-',
-                'body' => Storage::get('schedule/' . $this->formatFilename() . '.gz'),
-                ]
-            );
-        }
-      
         $scheduleJSON = fopen($filePath, 'r');
 
         $headerLine = fgets($scheduleJSON);
