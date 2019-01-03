@@ -59,7 +59,7 @@ class ScheduleVSTPCreate implements ShouldQueue
             $schedule->headcode = $this->schedule->schedule_segment[0]->CIF_headcode;
             $schedule->course_indicator = $this->schedule->schedule_segment[0]->CIF_course_indicator;
             $schedule->train_service_code = $this->schedule->schedule_segment[0]->CIF_train_service_code;
-            $schedule->speed = $this->schedule->schedule_segment[0]->CIF_speed / 2.24;
+            $schedule->speed = intval($this->schedule->schedule_segment[0]->CIF_speed) / 2.24;
             $schedule->connection_indicator = $this->schedule->schedule_segment[0]->CIF_connection_indicator;
     
             $schedule->running_days = $this->schedule->schedule_days_runs;
