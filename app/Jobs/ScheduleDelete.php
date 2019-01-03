@@ -37,8 +37,6 @@ class ScheduleDelete implements ShouldQueue
                                           ->where('start_date', 'like', $this->schedule->schedule_start_date)
                                           ->where('stp_indicator', 'like', $this->schedule->CIF_stp_indicator)
                                           ->first();
-        $expiredSchedule->active = false;
-
-        return $expiredSchedule->save();
+        return $expiredSchedule->delete();
     }
 }

@@ -28,7 +28,6 @@ class ScheduleDeleteTest extends TestCase
 
         $job = new ScheduleDelete($payload);
 
-        $this->assertTrue($job->handle()->exists, "Model stil exists");
-        $this->assertFalse($job->handle()->attributes['active'], "Model has been set to inactive");
+        $this->assertFalse($job->handle()->exists, "Model still exists");
     }
 }
