@@ -36,37 +36,49 @@ class ScheduleVSTPCreate implements ShouldQueue
      */
     public function handle()
     {
-        $schedule = new Schedule();
+        if(strtolower($this->schedule->transaction_type) == "delete") {
 
-        if($this->schedule->CIF_stp_indicator != 'C') {
-            $schedule = $this->createLocationRecords($schedule);
+            $expiredSchedule = Schedule::where('uid', 'like', $this->schedule->CIF_train_uid)
+                                          ->where('start_date', 'like', $this->schedule->schedule_start_date)
+                                          ->where('stp_indicator', 'like', $this->schedule->CIF_stp_indicator)
+                                          ->first();
+            $expiredSchedule->delete();                              
+
+        } else if(strtolower($this->schedule->transaction_type) == "create") {
+
+            $schedule = new Schedule();
+    
+            if($this->schedule->CIF_stp_indicator != 'C') {
+                $schedule = $this->createLocationRecords($schedule);
+            }
+    
+            $schedule->uid = $this->schedule->CIF_train_uid;
+            $schedule->start_date = $this->schedule->schedule_start_date;
+            $schedule->end_start = $this->schedule->schedule_end_date;
+            $schedule->signalling_id = $this->schedule->schedule_segment[0]->signalling_id;
+            $schedule->headcode = $this->schedule->schedule_segment[0]->CIF_headcode;
+            $schedule->course_indicator = $this->schedule->schedule_segment[0]->CIF_course_indicator;
+            $schedule->train_service_code = $this->schedule->schedule_segment[0]->CIF_train_service_code;
+            $schedule->speed = $this->schedule->schedule_segment[0]->CIF_speed / 2.24;
+            $schedule->connection_indicator = $this->schedule->schedule_segment[0]->CIF_connection_indicator;
+    
+            $schedule->running_days = $this->schedule->schedule_days_runs;
+            $schedule->bank_holiday_running = $this->schedule->CIF_bank_holiday_running;
+            $schedule->train_status = $this->schedule->train_status;
+            $schedule->train_category = $this->schedule->schedule_segment[0]->CIF_train_category;
+            $schedule->power_type = $this->schedule->schedule_segment[0]->CIF_power_type;
+            $schedule->timing_load = $this->schedule->schedule_segment[0]->CIF_timing_load;
+            $schedule->operating_characteristics = $this->schedule->schedule_segment[0]->CIF_operating_characteristics;
+            $schedule->train_class = $this->schedule->schedule_segment[0]->CIF_train_class;
+            $schedule->sleepers = $this->schedule->schedule_segment[0]->CIF_sleepers;
+            $schedule->reservations = $this->schedule->schedule_segment[0]->CIF_reservations;
+            $schedule->catering_code = $this->schedule->schedule_segment[0]->CIF_catering_code;
+            $schedule->service_branding = $this->schedule->schedule_segment[0]->CIF_service_branding;
+            $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
+            
+            return $schedule->save();
         }
 
-        $schedule->uid = $this->schedule->CIF_train_uid;
-        $schedule->start_date = $this->schedule->schedule_start_date;
-        $schedule->end_start = $this->schedule->schedule_end_date;
-        $schedule->signalling_id = $this->schedule->schedule_segment[0]->signalling_id;
-        $schedule->headcode = $this->schedule->schedule_segment[0]->CIF_headcode;
-        $schedule->course_indicator = $this->schedule->schedule_segment[0]->CIF_course_indicator;
-        $schedule->train_service_code = $this->schedule->schedule_segment[0]->CIF_train_service_code;
-        $schedule->speed = $this->schedule->schedule_segment[0]->CIF_speed;
-        $schedule->connection_indicator = $this->schedule->schedule_segment[0]->CIF_connection_indicator;
-
-        $schedule->running_days = $this->schedule->schedule_days_runs;
-        $schedule->bank_holiday_running = $this->schedule->CIF_bank_holiday_running;
-        $schedule->train_status = $this->schedule->train_status;
-        $schedule->train_category = $this->schedule->schedule_segment[0]->CIF_train_category;
-        $schedule->power_type = $this->schedule->schedule_segment[0]->CIF_power_type;
-        $schedule->timing_load = $this->schedule->schedule_segment[0]->CIF_timing_load;
-        $schedule->operating_characteristics = $this->schedule->schedule_segment[0]->CIF_operating_characteristics;
-        $schedule->train_class = $this->schedule->schedule_segment[0]->CIF_train_class;
-        $schedule->sleepers = $this->schedule->schedule_segment[0]->CIF_sleepers;
-        $schedule->reservations = $this->schedule->schedule_segment[0]->CIF_reservations;
-        $schedule->catering_code = $this->schedule->schedule_segment[0]->CIF_catering_code;
-        $schedule->service_branding = $this->schedule->schedule_segment[0]->CIF_service_branding;
-        $schedule->stp_indicator = $this->schedule->CIF_stp_indicator;
-        
-        return $schedule->save();
     }
 
     /**
