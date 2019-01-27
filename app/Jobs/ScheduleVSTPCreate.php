@@ -59,7 +59,7 @@ class ScheduleVSTPCreate implements ShouldQueue
             $schedule->headcode = $this->schedule->schedule_segment[0]->CIF_headcode;
             $schedule->course_indicator = $this->schedule->schedule_segment[0]->CIF_course_indicator;
             $schedule->train_service_code = $this->schedule->schedule_segment[0]->CIF_train_service_code;
-            if(is_int($this->schedule->schedule_segment[0]->CIF_speed)){
+            if(is_numeric($this->schedule->schedule_segment[0]->CIF_speed)){
                 $schedule->speed = intval($this->schedule->schedule_segment[0]->CIF_speed) / 2.24;
             } else {
                 $schedule->speed = null;
