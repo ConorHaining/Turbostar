@@ -131,19 +131,20 @@ class StompMovement extends Command
     
                         MovementCreate::dispatch($item)->onQueue('movement');
                     }
-
+                    
+                    try{
+                        $durableConsumer->ack($msg);
+                    } catch (Exception $e) {
+                        $durableConsumer->inactive();
+                        $consumer->disconnect();
+                        Log::channel('slack_stomp')->emergency('Movement feed has stopped');
+                    } catch (MissingReceiptException $e) {
+                        // Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+                    }
+                    
                 }
 
                 
-                try{
-                    $durableConsumer->ack($msg);
-                } catch (Exception $e) {
-                    $durableConsumer->inactive();
-                    $consumer->disconnect();
-                    Log::channel('slack_stomp')->emergency('Movement feed has stopped');
-                } catch (MissingReceiptException $e) {
-                    // Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
-                }
             }
         }
 
