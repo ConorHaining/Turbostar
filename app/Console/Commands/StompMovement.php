@@ -122,13 +122,18 @@ class StompMovement extends Command
             if ($msg != null) {
                 $json = json_decode($msg->body);
 
-                foreach($json as $item){
-                    $this->info('Message '. $item->header->msg_type .' Received: ' . date('H:i:s.u'));
+                if (is_array($json) || is_object($json)){
 
-                    $item->header->received_at = now()->format('U') * 1000;
+                    foreach($json as $item){
+                        $this->info('Message '. $item->header->msg_type .' Received: ' . date('H:i:s.u'));
+    
+                        $item->header->received_at = now()->format('U') * 1000;
+    
+                        MovementCreate::dispatch($item)->onQueue('movement');
+                    }
 
-                    MovementCreate::dispatch($item)->onQueue('movement');
                 }
+
                 
                 try{
                     $durableConsumer->ack($msg);
@@ -137,7 +142,7 @@ class StompMovement extends Command
                     $consumer->disconnect();
                     Log::channel('slack_stomp')->emergency('Movement feed has stopped');
                 } catch (MissingReceiptException $e) {
-                    Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
+                    // Log::channel('slack_stomp')->critical('Missing Receipt Exception', ['message' => $e->getMessage()]);
                 }
             }
         }
