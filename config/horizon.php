@@ -133,7 +133,7 @@ return [
                     'tiploc-update',
                 ],
                 'balance' => 'auto',
-                'processes' => 1,
+                'processes' => 10,
                 'tries' => 3,
             ],
         ],
