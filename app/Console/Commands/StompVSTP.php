@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\InteractsWithTime;
 use Stomp\Exception\ConnectionException;
+use Stomp\Exception\MissingReceiptException;
 
 use App\Jobs\ScheduleVSTPCreate;
 
