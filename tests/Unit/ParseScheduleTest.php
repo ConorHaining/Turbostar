@@ -59,7 +59,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueSchedule($schedule);
 
-        Queue::assertPushedOn('schedule-create', ScheduleCreate::class);
+        Queue::assertPushedOn('schedule', ScheduleCreate::class);
     }
 
     public function testDeleteSchedule()
@@ -70,7 +70,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueSchedule($schedule);
 
-        Queue::assertPushedOn('schedule-delete', ScheduleDelete::class);
+        Queue::assertPushedOn('schedule', ScheduleDelete::class);
     }
 
     public function testInvalidSchedule()
@@ -82,8 +82,8 @@ class ParseScheduleTest extends TestCase
         $this->expectException(\Exception::class);
         self::$command->queueSchedule($schedule);
 
-        Queue::assertNotPushed('schedule-create');
-        Queue::assertNotPushed('schedule-delete');
+        Queue::assertNotPushed('schedule');
+        Queue::assertNotPushed('schedule');
     }
 
     public function testCreateAssociation()
@@ -94,7 +94,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueAssociation($association);
 
-        Queue::assertPushedOn('association-create', AssociationCreate::class);
+        Queue::assertPushedOn('association', AssociationCreate::class);
     }
 
     public function testDeleteAssociation()
@@ -105,7 +105,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueAssociation($association);
 
-        Queue::assertPushedOn('association-delete', AssociationDelete::class);
+        Queue::assertPushedOn('association', AssociationDelete::class);
     }
 
     public function testInvalidAssociation()
@@ -117,8 +117,8 @@ class ParseScheduleTest extends TestCase
         $this->expectException(\Exception::class);
         self::$command->queueAssociation($association);
 
-        Queue::assertNotPushed('association-create');
-        Queue::assertNotPushed('association-delete');
+        Queue::assertNotPushed('association');
+        Queue::assertNotPushed('association');
     }
 
     public function testCreateTiploc()
@@ -129,7 +129,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueTiploc($tiploc);
 
-        Queue::assertPushedOn('tiploc-create', TiplocCreate::class);
+        Queue::assertPushedOn('tiploc', TiplocCreate::class);
     }
 
     public function testDeleteTipcloc()
@@ -140,7 +140,7 @@ class ParseScheduleTest extends TestCase
 
         self::$command->queueTiploc($tiploc);
 
-        Queue::assertPushedOn('tiploc-delete', TiplocDelete::class);
+        Queue::assertPushedOn('tiploc', TiplocDelete::class);
     }
 
     // public function testUpdateTipcloc()
@@ -151,7 +151,7 @@ class ParseScheduleTest extends TestCase
     //
     //   self::$command->queueTiploc($tiploc);
     //
-    //   Queue::assertPushedOn('tiploc-update', TiplocCreate::class);
+    //   Queue::assertPushedOn('tiploc', TiplocCreate::class);
     // }
 
     public function testInvalidTiploc()
@@ -163,9 +163,9 @@ class ParseScheduleTest extends TestCase
         $this->expectException(\Exception::class);
         self::$command->queueTiploc($tiploc);
 
-        Queue::assertNotPushed('tiploc-create');
-        Queue::assertNotPushed('tiploc-delete');
-        Queue::assertNotPushed('tiploc-update');
+        Queue::assertNotPushed('tiploc');
+        Queue::assertNotPushed('tiploc');
+        Queue::assertNotPushed('tiploc');
     }
 
     public function tearDown()

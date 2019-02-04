@@ -175,11 +175,11 @@ class ParseSchedule extends Command
         $scheduleJSON =  $scheduleJSON->JsonScheduleV1;
         if ($scheduleJSON->transaction_type == "Create") {
 
-            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule-create');
+            ScheduleCreate::dispatch($scheduleJSON)->onQueue('schedule');
 
         } else if ($scheduleJSON->transaction_type == "Delete") {
 
-            ScheduleDelete::dispatch($scheduleJSON)->onQueue('schedule-delete');
+            ScheduleDelete::dispatch($scheduleJSON)->onQueue('schedule');
 
         } else {
 
@@ -201,11 +201,11 @@ class ParseSchedule extends Command
         $associationJSON =  $associationJSON->JsonAssociationV1;
         if ($associationJSON->transaction_type == "Create") {
 
-             AssociationCreate::dispatch($associationJSON)->onQueue('association-create');
+             AssociationCreate::dispatch($associationJSON)->onQueue('association');
 
         } else if ($associationJSON->transaction_type == "Delete") {
 
-            AssociationDelete::dispatch($associationJSON)->onQueue('association-delete');
+            AssociationDelete::dispatch($associationJSON)->onQueue('association');
 
         } else {
 
@@ -221,13 +221,13 @@ class ParseSchedule extends Command
         $tiplocJSON =  $tiplocJSON->TiplocV1;
         if ($tiplocJSON->transaction_type == "Create") {
 
-             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc-create');
+             TiplocCreate::dispatch($tiplocJSON)->onQueue('tiploc');
 
         } else if ($tiplocJSON->transaction_type == "Delete") {
 
-            TiplocDelete::dispatch($tiplocJSON)->onQueue('tiploc-delete');
+            TiplocDelete::dispatch($tiplocJSON)->onQueue('tiploc');
 
-        } else if ($tiplocJSON->transaction_type == "Update") {
+        } else if ($tiplocJSON->transaction_type == "tiploc") {
 
             throw new \Exception("Unknown Tiploc Transaction Type", 1);
             // TODO Log this if it ever happens
