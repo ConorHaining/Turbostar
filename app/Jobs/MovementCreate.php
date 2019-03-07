@@ -126,7 +126,7 @@ class MovementCreate implements ShouldQueue
         $movement->processed_at = now()->format('U') * 1000;
         $movement->nr_queue_timestamp = intval($payload->header->msg_queue_timestamp);
 
-        
+        $movement->train_id = $payload->body->train_id;
         $movement->origin_location_stanox = $payload->body->orig_loc_stanox;
         $movement->departure_time = intval($payload->body->dep_timestamp);
         $movement->location_stanox = $payload->body->loc_stanox;
