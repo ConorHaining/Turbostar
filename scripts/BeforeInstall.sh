@@ -2,6 +2,6 @@
 
 cd /var/www/html
 
-# php artisan cache:clear
+php artisan cache:clear
 rm -rf storage/app/schedule/*
 rm -rf storage/framework/*

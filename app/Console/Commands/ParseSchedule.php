@@ -94,7 +94,8 @@ class ParseSchedule extends Command
       */
     public function downloadDailyFile()
     {
-        $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
+        // $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
+        $fileURL = 'https://datafeeds.networkrail.co.uk/ntrod/CifFileAuthenticate?type=CIF_ALL_FULL_DAILY&day=toc-full';
         $fileLocalPath = storage_path('app/schedule/' . $this->formatFilename() . '.gz');
 
         $fileHandler = fopen($fileLocalPath, "w");

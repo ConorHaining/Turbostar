@@ -3,19 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
-class StopStomp extends Command
+class MovementProcessing extends Command
 {
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stomp:stop';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
@@ -41,9 +37,6 @@ class StopStomp extends Command
      */
     public function handle()
     {
-        Cache::forever('stomp.stop', Carbon::now()->addSeconds(15)->getTimestamp());
-        $this->info('All STOMP connections stopping.');
-
-        Log::warn('All STOMP connections stopped.');
+        //
     }
 }
