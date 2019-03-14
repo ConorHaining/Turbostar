@@ -53,7 +53,7 @@ class MovementProcessing extends Command
     {
         $startDate = new Carbon($this->argument('startDate'), new DateTimeZone('Europe/London'));
         $endDate = new Carbon($this->argument('endDate'), new DateTimeZone('Europe/London'));
-        $period = CarbonPeriod::since($startDate)->minutes(1)->until($endDate);
+        $period = CarbonPeriod::since($startDate)->hours(1)->until($endDate);
 
         $bar = $this->output->createProgressBar(count($period));
         $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% <info>%elapsed:6s%/%estimated:-6s%</info> <fg=black;bg=cyan>%message%</>');
@@ -108,7 +108,7 @@ class MovementProcessing extends Command
                 foreach ($json as $item) {
                     
                     while($queueSize >= 200000) {
-                        $this->warn('Too many keys in Redis, pausing for 1 minute');
+                        $bar->setMessage('Too many keys in Redis, pausing for 1 minute');
                         sleep(60);
                         $queueSize = Queue::size('movement');
                     }
