@@ -16,6 +16,8 @@ use App\Jobs\TiplocDelete;
 use Aws\Glacier\GlacierClient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Queue;
+use Redis;
 
 class ParseSchedule extends Command
 {
@@ -24,7 +26,7 @@ class ParseSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'parse:schedule {--file=}';
+    protected $signature = 'parse:schedule {--file=} {--full}';
 
     /**
      * The console command description.
@@ -50,26 +52,49 @@ class ParseSchedule extends Command
      */
     public function handle()
     {
-        Log::channel('slack_schedule')->info('Today\'s ('.$this->formatFilename().') SCHEDULE has started to queue.');
-
-        if($this->option('file') == null) {
-            $filePath = $this->downloadDailyFile();
+        if($this->option('file') == null && $this->option('full') == null) {
+            $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
+            $filePath = $this->downloadFile($fileURL);
+        } else if($this->option('full')) {
+            $fileURL = env("NR_FULL_SCHEDULE_URL");
+            $filePath = $this->downloadFile($fileURL);
         } else {
             $filePath = storage_path('app/schedule/' . $this->option('file'));
         }
-
+        
+        Log::channel('slack_schedule')->info('Today\'s ('.$this->formatFilename().') SCHEDULE has started to queue.');
         $filePath = $this->decompressFile($filePath);
+
+        $counter = fopen($filePath, 'r');
+        $lines = 0;
+        while (!feof($counter)) {
+            fgets($counter);
+            $lines++;
+        }
+        fclose($counter);
 
         $scheduleJSON = fopen($filePath, 'r');
 
-        $headerLine = fgets($scheduleJSON);
+        // $headerLine = fgets($scheduleJSON);
 
-        if(!$this->isHeaderValid($headerLine)) {
-            throw new \Exception('Already used header');
-        }
+        // if(!$this->isHeaderValid($headerLine)) {
+        //     throw new \Exception('Already used header');
+        // }
+        $this->info('SCHEDULE contains ' . $lines . ' lines.');
+        $bar = $this->output->createProgressBar($lines);
+        $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% <info>%elapsed:6s%/%estimated:-6s%</info> %message%');
+        $bar->setProgressCharacter("\xF0\x9F\x9A\x82");
+        $bar->start();
 
         while(!feof($scheduleJSON)){
+            $queueSize = Redis::dbSize();
             $line = fgets($scheduleJSON);
+
+            while($queueSize >= 100000) {
+                $bar->setMessage('<warn>Too many keys in Redis, pausing for 1 minute</warn>');
+                sleep(60);
+                $queueSize = Redis::dbSize();
+            }
 
             if (strpos($line, 'JsonAssociationV1') !== false) {
                 $this->queueAssociation($line);
@@ -78,7 +103,11 @@ class ParseSchedule extends Command
             } else if (strpos($line, 'JsonScheduleV1') !== false) {
                 $this->queueSchedule($line);
             }
+
+            $bar->advance();
         }
+
+        $bar->finish();
 
         fclose($scheduleJSON);
 
@@ -92,10 +121,10 @@ class ParseSchedule extends Command
       * @see    https://wiki.openraildata.com/index.php/SCHEDULE
       * @return void
       */
-    public function downloadDailyFile()
+    public function downloadFile($fileURL)
     {
-        // $fileURL = env("NR_DAILY_SCHEDULE_URL") . $this->scheduleDayCode();
-        $fileURL = 'https://datafeeds.networkrail.co.uk/ntrod/CifFileAuthenticate?type=CIF_ALL_FULL_DAILY&day=toc-full';
+        
+        // $fileURL = 'https://datafeeds.networkrail.co.uk/ntrod/CifFileAuthenticate?type=CIF_ALL_FULL_DAILY&day=toc-full';
         $fileLocalPath = storage_path('app/schedule/' . $this->formatFilename() . '.gz');
 
         $fileHandler = fopen($fileLocalPath, "w");
