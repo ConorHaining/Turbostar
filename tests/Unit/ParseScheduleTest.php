@@ -31,7 +31,7 @@ class ParseScheduleTest extends TestCase
     public function testDailyFileDownload()
     {
 
-        self::$command->downloadDailyFile();
+        self::$command->downloadFile("www.google.com");
 
         $date = Carbon::today();
         $date = $date->format('Y-m-d');
@@ -42,7 +42,7 @@ class ParseScheduleTest extends TestCase
 
     public function testDecompressFile()
     {
-        $filepath = self::$command->downloadDailyFile();
+        $filepath = self::$command->downloadFile("www.google.com");
         self::$command->decompressFile($filepath);
 
         $date = Carbon::today();
