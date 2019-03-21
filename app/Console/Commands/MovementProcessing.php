@@ -57,8 +57,7 @@ class MovementProcessing extends Command
 
         $bar = $this->output->createProgressBar(count($period));
         $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% <info>%elapsed:6s%/%estimated:-6s%</info> <fg=black;bg=cyan>%message%</>');
-        // $bar->setRedrawFrequency(100);
-        $bar->setMessage('Start');
+        $bar->setProgressCharacter("\xF0\x9F\x9A\x82");
         $bar->start();
 
         foreach ($period as $key => $date) {
