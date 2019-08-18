@@ -96,11 +96,12 @@ class ParseSchedule extends Command
                 $queueSize = Redis::dbSize();
             }
 
-            if (strpos($line, 'JsonAssociationV1') !== false) {
-                $this->queueAssociation($line);
-            } else if (strpos($line, 'TiplocV1') !== false) {
-                $this->queueTiploc($line);
-            } else if (strpos($line, 'JsonScheduleV1') !== false) {
+            // if (strpos($line, 'JsonAssociationV1') !== false) {
+            //     $this->queueAssociation($line);
+            // } else if (strpos($line, 'TiplocV1') !== false) {
+            //     $this->queueTiploc($line);
+            // } else 
+            if (strpos($line, 'JsonScheduleV1') !== false) {
                 $this->queueSchedule($line);
             }
 
