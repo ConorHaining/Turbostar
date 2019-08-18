@@ -118,7 +118,7 @@ class StompVSTP extends Command
                 
                 $json->timestamp = now()->format('U') * 1000;
                 
-                ScheduleVSTPCreate::dispatch($json)->onQueue('schedule');
+                // ScheduleVSTPCreate::dispatch($json)->onQueue('schedule');
                 
                 try{
                     $durableConsumer->ack($msg);

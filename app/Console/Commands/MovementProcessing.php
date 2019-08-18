@@ -112,7 +112,7 @@ class MovementProcessing extends Command
                         $queueSize = Queue::size('movement');
                     }
                     $item->header->received_at = now()->format('U') * 1000;
-                    MovementCreate::dispatch($item)->onQueue('movement');
+                    // MovementCreate::dispatch($item)->onQueue('movement');
                 }
 
             }
